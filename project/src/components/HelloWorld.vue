@@ -1,7 +1,7 @@
 <template>
   <div>
     <br>
-    This is a web application under development for CS4WW3 at McMaster University.<br>
+    This is a web application under development for CS4WW3 (Fall 2021) at McMaster University.<br>
     Developed by: Anant Jain and Kuber Khanna
     </div>
 </template>
