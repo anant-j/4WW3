@@ -63,17 +63,3 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-div {
-  padding: 30px;
-}
-.mapStyle {
-  padding: 0px !important;
-  margin: 0px !important;
-}
-listStyle {
-  padding: 0px !important;
-  margin: 0px !important;
-}
-</style>
