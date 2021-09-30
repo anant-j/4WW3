@@ -31,7 +31,7 @@
         </div>
         <br />
         <p>
-          <button class="btn btn-secondary">Search</button>
+          <button class="btn btn-secondary" @click="search()">Search</button>
         </p>
       </div>
     </div>
@@ -58,6 +58,11 @@ export default {
       if (newVal == "") {
         this.selectedRating = 0;
       }
+    }
+  },
+  methods: {
+    search() {
+      this.$router.push({ path: 'search' });
     }
   }
 };
