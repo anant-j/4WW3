@@ -23,7 +23,9 @@
             <router-link class="nav-link" to="/submit"
               >Add Restaurant</router-link
             >
-            <!-- <router-view class="nav-link active" aria-current="page" href="#">Home</router-view> -->
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/about">About</router-link>
           </li>
         </ul>
       </div>

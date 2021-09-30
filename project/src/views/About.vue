@@ -1,5 +1,9 @@
 <template>
-  <div class="about">
-    <h1>This is the about page</h1>
+  <div class="container text-center">
+    <br />
+    <p>
+      This is a website developed for CS4WW3 Fall 2021 by Anant Jain and Kuber
+      Khanna.
+    </p>
   </div>
 </template>
