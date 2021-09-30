@@ -10,7 +10,7 @@
               placeholder="Restaurant's name"
               aria-label="Restaurant name"
               v-model="searchText"
-              :disabled="!(this.selectedRating==0)"
+              :disabled="!(this.selectedRating == 0)"
             />
           </div>
           <span>Or</span>
@@ -18,14 +18,16 @@
             <select
               class="form-select"
               v-model="selectedRating"
-              :disabled="!(this.searchText=='')"
+              :disabled="!(this.searchText == '')"
               aria-label="Search by ratings"
             >
               <option
                 v-for="rating in ratingOptions"
                 :key="rating"
                 :value="rating.key"
-              >{{rating.text}}</option>
+              >
+                {{ rating.text }}
+              </option>
             </select>
           </div>
         </div>
@@ -49,8 +51,8 @@ export default {
         { text: "Select One", key: 0, value: null },
         { text: "One", key: 1, value: 1 },
         { text: "One point five", key: 2, value: 1.5 },
-        { text: "Two", key: 3, value: 2 }
-      ]
+        { text: "Two", key: 3, value: 2 },
+      ],
     };
   },
   watch: {
@@ -58,13 +60,24 @@ export default {
       if (newVal == "") {
         this.selectedRating = 0;
       }
-    }
+    },
   },
   methods: {
     search() {
-      this.$router.push({ path: 'search' });
-    }
-  }
+      if (this.searchText) {
+        this.$router.push({
+          path: "search",
+          query: { keyword: this.searchText },
+        });
+      }
+      if (this.selectedRating) {
+        this.$router.push({
+          path: "search",
+          query: { rating: this.selectedRating },
+        });
+      }
+    },
+  },
 };
 </script>
 
