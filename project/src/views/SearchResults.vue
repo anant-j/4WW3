@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <Map class="mapStyle col"/>
-    <List class="listStyle col"/>
+    <List class="listStyle col-3"/>
   </div>
 </template>
 
@@ -21,6 +21,14 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 div{
-    padding-right:30px;
+    padding:30px;
+}
+.mapStyle{
+  padding: 0px!important;
+  margin: 0px!important;
+}
+listStyle{
+  padding: 0px!important;
+  margin: 0px!important;  
 }
 </style>

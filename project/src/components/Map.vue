@@ -5,7 +5,7 @@
 </template>
 <style scoped>
 img{
-    width: 90%;
+    width: 100%;
     object-fit: cover;
     padding: 0!important;
     margin: 0!important;
