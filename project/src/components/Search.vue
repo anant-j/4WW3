@@ -42,7 +42,6 @@
 
 <script>
 export default {
-  name: "Search",
   data() {
     return {
       searchText: "",
@@ -64,16 +63,15 @@ export default {
   },
   methods: {
     search() {
-      if (this.searchText) {
-        this.$router.push({
-          path: "search",
-          query: { keyword: this.searchText },
-        });
-      }
       if (this.selectedRating) {
         this.$router.push({
           path: "search",
           query: { rating: this.selectedRating },
+        });
+      } else {
+        this.$router.push({
+          path: "search",
+          query: { keyword: this.searchText || "random" },
         });
       }
     },

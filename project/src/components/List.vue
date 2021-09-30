@@ -1,5 +1,6 @@
 <template>
   <div class="list-group">
+    <a class="list-group-item"><b>Results:</b></a>
     <a
       v-for="item in listData"
       :key="item.id"
@@ -13,7 +14,6 @@
 
 <script>
 export default {
-  name: "Search",
   data() {
     return {
       listData: [

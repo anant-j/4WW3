@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mt-3">
     <form class="row g-3">
       <div class="col-md-4">
         <label for="inputEmail4" class="form-label">Email</label>
@@ -54,12 +54,4 @@
     </form>
   </div>
 </template>
-
-<script>
-export default {
-  name: "Search",
-  data() {},
-  components: {},
-};
-</script>
 

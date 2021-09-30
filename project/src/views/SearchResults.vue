@@ -1,7 +1,7 @@
 <template>
-  <div class="row">
-    <Map id="resultMap" class="col" />
-    <List id="resultList" class="col-3" />
+  <div class="row container-fluid mt-3">
+    <Map class="col mb-1" />
+    <List class="col-md-3" />
   </div>
 </template>
 
@@ -9,8 +9,6 @@
 import List from "@/components/List.vue";
 import Map from "@/components/Map.vue";
 export default {
-  name: "Search",
-  data() {},
   components: {
     List,
     Map,

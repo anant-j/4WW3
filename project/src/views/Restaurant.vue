@@ -90,8 +90,6 @@
 <script>
 import Map from "@/components/Map.vue";
 export default {
-  name: "Search",
-  data() {},
   components: {
     Map,
   },

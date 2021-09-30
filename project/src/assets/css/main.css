@@ -51,21 +51,11 @@ a {
   margin: 0 !important;
 }
 
-#resultMap {
-  width: 50vw;
-  margin: auto;
-}
-
-#resultList {
-  padding: 0px !important;
-  margin: 0px !important;
-}
-
 .top2rem {
   top: 2rem;
 }
 
 #restaurantMap {
-  padding: 0px !important;
-  margin: 0px !important;
+  width: 50vw;
+  margin: auto;
 }
