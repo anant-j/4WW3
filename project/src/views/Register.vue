@@ -43,7 +43,7 @@
         </div>
       </div>
       <div class="row justify-content-center">
-        <div class="col-3">
+        <div class="col-sm-6 col-md-3">
           <select class="form-select" aria-label="Default select example">
             <option selected>Select Location</option>
             <option value="1">Hamilton</option>
@@ -52,7 +52,7 @@
             <option value="3">Vancouver</option>
           </select>
         </div>
-        <div class="col-3">
+        <div class="col-sm-3 col-md-3">
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value id="flexCheckChecked" checked />
             <label class="form-check-label" for="flexCheckChecked">Remember My Location</label>
