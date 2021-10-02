@@ -60,6 +60,12 @@ a {
   margin: auto;
 }
 
-.submitObject > .row {
+.submitObject {
+  margin-top:50px!important;
+}
+.submitObject > h1{
+  text-align:center;
+}
+.submitObject > form> .row {
   margin-bottom: 10px;
 }
