@@ -59,3 +59,7 @@ a {
   width: 50vw;
   margin: auto;
 }
+
+.submitObject > .row {
+  margin-bottom: 10px;
+}
