@@ -1,27 +1,32 @@
 <template>
   <div class="container mt-3 submitObject">
-  <h1>Submit a Restaurant for Review</h1>
+    <h1>Submit a Restaurant for Review</h1>
     <form class="align-items-center">
       <div class="row justify-content-center">
         <div class="col-md-6">
-          <label for="inputEmail4">Restaurant Name</label>
-          <input type="text" class="form-control" placeholder="Enter Name" />
+          <label for="name">Restaurant Name</label>
+          <input type="text" id="name" class="form-control" placeholder="Enter Name" />
         </div>
       </div>
       <div class="row justify-content-center">
         <div class="col-md-6">
-          <label>Restaurant Description</label>
-          <textarea type="text" class="form-control" placeholder="Enter Description" />
+          <label for="description">Restaurant Description</label>
+          <textarea
+            type="text"
+            id="description"
+            class="form-control"
+            placeholder="Enter Description"
+          />
         </div>
       </div>
       <div class="row justify-content-center">
         <div class="col-md-3">
-          <label for="inputAddress">Latitude</label>
-          <input type="text" class="form-control" placeholder="Enter Latitude" />
+          <label for="latitude">Latitude</label>
+          <input type="text" id="latitude" class="form-control" placeholder="Enter Latitude" />
         </div>
         <div class="col-md-3">
-          <label for="inputAddress">Longitude</label>
-          <input type="text" class="form-control" placeholder="Enter Longitude" />
+          <label for="longitude">Longitude</label>
+          <input type="text" id="longitude" class="form-control" placeholder="Enter Longitude" />
         </div>
       </div>
       <div class="row justify-content-center mt-3">
@@ -49,7 +54,7 @@
         </div>
       </div>
       <div class="row justify-content-center mt-3">
-          <button type="button" class="col-3 btn btn-primary">Submit</button>
+        <button type="button" class="col-3 btn btn-primary">Submit</button>
       </div>
     </form>
   </div>
