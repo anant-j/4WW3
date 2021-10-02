@@ -21,13 +21,10 @@
               :disabled="!(this.searchText == '')"
               aria-label="Search by ratings"
             >
-              <option
-                v-for="rating in ratingOptions"
-                :key="rating"
-                :value="rating.key"
-              >
-                {{ rating.text }}
-              </option>
+              <option value="0">Search by ratings</option>
+              <option value="1">1 Star</option>
+              <option value="2">2 Star</option>
+              <option value="3">3 Star</option>
             </select>
           </div>
         </div>
@@ -45,13 +42,7 @@ export default {
   data() {
     return {
       searchText: "",
-      selectedRating: 0,
-      ratingOptions: [
-        { text: "Select One", key: 0, value: null },
-        { text: "One", key: 1, value: 1 },
-        { text: "One point five", key: 2, value: 1.5 },
-        { text: "Two", key: 3, value: 2 },
-      ],
+      selectedRating: 0
     };
   },
   watch: {
@@ -59,22 +50,22 @@ export default {
       if (newVal == "") {
         this.selectedRating = 0;
       }
-    },
+    }
   },
   methods: {
     search() {
       if (this.selectedRating) {
         this.$router.push({
           path: "search",
-          query: { rating: this.selectedRating },
+          query: { rating: this.selectedRating }
         });
       } else {
         this.$router.push({
           path: "search",
-          query: { keyword: this.searchText || "random" },
+          query: { keyword: this.searchText || "random" }
         });
       }
-    },
-  },
+    }
+  }
 };
 </script>

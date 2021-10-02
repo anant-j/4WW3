@@ -1,33 +1,21 @@
 <template>
   <div class="list-group">
-    <a class="list-group-item"><b>Results:</b></a>
-    <a
-      v-for="item in listData"
-      :key="item.id"
-      @click="openPage()"
-      class="list-group-item list-group-item-action"
-    >
-      {{ item.name }}
+    <a class="list-group-item">
+      <b>Results:</b>
     </a>
+    <a @click="openPage()" class="list-group-item list-group-item-action">Osmows</a>
+    <a @click="openPage()" class="list-group-item list-group-item-action">Basilique</a>
+    <a @click="openPage()" class="list-group-item list-group-item-action">Lazeez</a>
+    <a @click="openPage()" class="list-group-item list-group-item-action">Ginos</a>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      listData: [
-        { id: 1, name: "Osmows", age: 30 },
-        { id: 2, name: "Basilique", age: 25 },
-        { id: 3, name: "Lazeez", age: 28 },
-        { id: 4, name: "Ginos", age: 26 },
-      ],
-    };
-  },
   methods: {
     openPage() {
       this.$router.push({ path: "restaurant" });
-    },
-  },
+    }
+  }
 };
 </script>
