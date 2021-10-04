@@ -31,7 +31,10 @@
           <hr />
           <h4>Expensive</h4>
           <p>⭐⭐</p>
-          <p>Low quantity.<br />Not good for wallet.</p>
+          <p>
+            Low quantity.
+            <br />Not good for wallet.
+          </p>
           <hr />
           <h4>Rude staff</h4>
           <p>⭐</p>
@@ -89,10 +92,82 @@
 
 <script>
 import Map from "@/components/Map.vue";
+import { computed, reactive } from "vue";
+import { useHead } from "@vueuse/head";
+
 export default {
   components: {
-    Map,
+    Map
   },
+  setup() {
+    const siteData = reactive({
+      title: `Osmows`,
+      description: `Osmow's is a fast casual Mediterranean restaurant capturing a
+                truly modern taste while giving customers the luxury of
+                customizing their preferences.`,
+      image: `https://mrosmow.com/wp-content/uploads/thegem-logos/logo_d6dca3cb55348ce5d331cb257b06811f_1x.png`,
+      url: `https://mrosmow.com/`
+    });
+
+    useHead({
+      // Can be static or computed
+      title: computed(() => siteData.title),
+      meta: [
+        {
+          name: `description`,
+          content: computed(() => siteData.description)
+        },
+        {
+          property: "og:title",
+          content: computed(() => siteData.title)
+        },
+        {
+          property: "og:type",
+          content: "website",
+        },
+        {
+          property: "og:url",
+          content: "https://mrosmow.com/"
+        },
+        {
+          property: "og:description",
+          content: computed(() => siteData.description)
+        },
+        {
+          property: "og:image",
+          content: computed(() => siteData.image)
+        },
+        {
+          property: "og:image:alt",
+          content: "Osmows"
+        },
+        {
+          property: "og:image:type",
+          content: "image/png"
+        },
+        {
+          property: "twitter:card",
+          content:  computed(() => siteData.title)
+        },
+        {
+          property: "twitter:url",
+          content: computed(() => siteData.url)
+        },
+        {
+          property: "twitter:title",
+          content: computed(() => siteData.title)
+        },
+        {
+          property: "twitter:description",
+          content: computed(() => siteData.description)
+        },
+        {
+          property: "twitter:image",
+          content:  computed(() => siteData.image)
+        },
+      ]
+    });
+  }
 };
 </script>
 
