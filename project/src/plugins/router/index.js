@@ -30,11 +30,11 @@ const routes = [
     name: 'SearchResult',
     component: () => import(/* webpackChunkName: "about" */ '@/views/SearchResults.vue')
   },
-  {
-    path: '/restaurant',
-    name: 'Restaurant',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/Restaurant.vue')
-  },
+  // {
+  //   path: '/restaurant',
+  //   name: 'Restaurant',
+  //   component: () => import(/* webpackChunkName: "about" */ '@/views/Restaurant.vue')
+  // },
   {
     path: '/submit',
     name: 'Add Restaurant',

@@ -14,7 +14,8 @@
 export default {
   methods: {
     openPage() {
-      this.$router.push({ path: "restaurant" });
+      // this.$router.push({ path: "restaurant" });
+      location.replace("osmows.html");
     }
   }
 };
