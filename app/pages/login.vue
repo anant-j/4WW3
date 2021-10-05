@@ -4,9 +4,9 @@
     <form class="align-items-center">
       <div class="row justify-content-center">
         <div class="col-md-6">
-          <label for="description">Email</label>
+          <label for="email">Email</label>
           <input
-            id="description"
+            id="email"
             v-model="email"
             type="email"
             class="form-control"
@@ -16,9 +16,9 @@
       </div>
       <div class="row justify-content-center">
         <div class="col-md-6">
-          <label for="Password">Password</label>
+          <label for="password">Password</label>
           <input
-            id="description"
+            id="password"
             v-model="password"
             type="password"
             class="form-control"
