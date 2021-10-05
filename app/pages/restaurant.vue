@@ -31,10 +31,7 @@
           <hr />
           <h4>Expensive</h4>
           <p>⭐⭐</p>
-          <p>
-            Low quantity.
-            <br />Not good for wallet.
-          </p>
+          <p>Low quantity.<br />Not good for wallet.</p>
           <hr />
           <h4>Rude staff</h4>
           <p>⭐</p>
@@ -91,12 +88,53 @@
 </template>
 
 <script>
-import Map from "@/components/Map.vue";
-
+import Map from '@/components/Map.vue'
 export default {
   components: {
-    Map
+    Map,
   },
-};
+  head: {
+    title: 'Osmows',
+    meta: [
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      {
+        name: 'og:title',
+        content: 'Osmows',
+      },
+      {
+        name: 'og:type',
+        content: 'Website',
+      },
+      {
+        name: 'og:image',
+        content:
+          'https://mrosmow.com/wp-content/uploads/2019/01/Osmows-Straight-Logo.png',
+      },
+      {
+        name: 'og:url',
+        content: 'https://mrosmow.com/',
+      },
+      {
+        name: 'twitter:card',
+        content: 'summary_large_image',
+      },
+      {
+        name: 'twitter:title',
+        content: 'Osmows',
+      },
+      {
+        name: 'twitter:description',
+        content:
+          "Osmow's is a fast casual Mediterranean restaurant capturing a truly modern taste while giving customers the luxury of customizing their preferences.",
+      },
+      {
+        name: 'twitter:image',
+        content:
+          'https://mrosmow.com/wp-content/uploads/2019/01/Osmows-Straight-Logo.png',
+      },
+    ],
+  },
+}
 </script>
 

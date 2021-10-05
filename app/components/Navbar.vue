@@ -13,23 +13,19 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
+      <div id="navbarNav" class="collapse navbar-collapse">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <router-link class="nav-link" to="/">Home</router-link>
+            <NuxtLink class="nav-link" to="/">Home</NuxtLink>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/submit"
-              >Add Restaurant</router-link
-            >
+            <NuxtLink class="nav-link" to="/Add">Add Restaurant</NuxtLink>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/login"
-              >Login</router-link
-            >
+            <NuxtLink class="nav-link" to="/Login">Login</NuxtLink>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/about">About</router-link>
+            <NuxtLink class="nav-link" to="/About">About</NuxtLink>
           </li>
         </ul>
       </div>
