@@ -18,16 +18,15 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   // css: [
   // ],
-  css: ['~/assets/bootstrap/bootstrap.min.css', '~/assets/css/main.css'],
-  script: [
-    {
-      src: '~/assets/bootstrap/bootstrap.bundle.min.js',
-      type: 'text/javascript',
-    },
+
+  css: [
+    { src: '~/assets/bootstrap/main.scss', lang: 'scss' },
+    '~/assets/css/main.css',
   ],
+  script: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [{ src: '~/assets/bootstrap/main.js', mode: 'client' }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
