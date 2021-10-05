@@ -5,15 +5,20 @@
       <div class="row justify-content-center">
         <div class="col-md-6">
           <label for="name">Restaurant Name</label>
-          <input type="text" id="name" class="form-control" placeholder="Enter Name" />
+          <input
+            id="name"
+            type="text"
+            class="form-control"
+            placeholder="Enter Name"
+          />
         </div>
       </div>
       <div class="row justify-content-center">
         <div class="col-md-6">
           <label for="description">Restaurant Description</label>
           <textarea
-            type="text"
             id="description"
+            type="text"
             class="form-control"
             placeholder="Enter Description"
           />
@@ -22,20 +27,30 @@
       <div class="row justify-content-center">
         <div class="col-md-3">
           <label for="latitude">Latitude</label>
-          <input type="text" id="latitude" class="form-control" placeholder="Enter Latitude" />
+          <input
+            id="latitude"
+            type="text"
+            class="form-control"
+            placeholder="Enter Latitude"
+          />
         </div>
         <div class="col-md-3">
           <label for="longitude">Longitude</label>
-          <input type="text" id="longitude" class="form-control" placeholder="Enter Longitude" />
+          <input
+            id="longitude"
+            type="text"
+            class="form-control"
+            placeholder="Enter Longitude"
+          />
         </div>
       </div>
       <div class="row justify-content-center mt-3">
         <div class="col-md-6">
           <label for="image">Upload an Image :</label>&nbsp;
           <input
+            id="image"
             type="file"
             class="form-control"
-            id="image"
             name="image"
             accept="image/png, image/jpeg"
           />
@@ -45,9 +60,9 @@
         <div class="col-md-6">
           <label for="video">Upload a Video &nbsp;&nbsp;&nbsp;:</label>&nbsp;
           <input
+            id="video"
             type="file"
             class="form-control"
-            id="video"
             name="video"
             accept="image/png, image/jpeg"
           />

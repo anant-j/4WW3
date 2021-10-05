@@ -1,0 +1,55 @@
+#app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* text-align: center; */
+    color: #2c3e50;
+  }
+  
+  #footer {
+    bottom: 0;
+    height: 2em;
+    position: relative;
+    width: 100%;
+  }
+  
+  h3 {
+    margin: 40px 0 0;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    display: inline-block;
+    margin: 0 10px;
+  }
+  
+  #mapImg {
+    width: 100%;
+    object-fit: cover;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  .top2rem {
+    top: 2rem;
+  }
+  
+  #restaurantMap {
+    width: 50vw;
+    margin: auto;
+  }
+  
+  .submitObject {
+    margin-top:50px!important;
+  }
+  
+  .submitObject > h1{
+    text-align:center;
+  }
+  .submitObject > form> .row {
+    margin-bottom: 10px;
+  }

@@ -5,20 +5,20 @@
         <div class="row">
           <div class="col">
             <input
+              v-model="searchText"
               type="text"
               class="form-control"
               placeholder="Restaurant's name"
               aria-label="Restaurant name"
-              v-model="searchText"
-              :disabled="!(this.selectedRating == 0)"
+              :disabled="!(selectedRating == 0)"
             />
           </div>
           <span>Or</span>
           <div class="col">
             <select
-              class="form-select"
               v-model="selectedRating"
-              :disabled="!(this.searchText == '')"
+              class="form-select"
+              :disabled="!(searchText == '')"
               aria-label="Search by ratings"
             >
               <option value="0">Search by ratings</option>
@@ -41,31 +41,31 @@
 export default {
   data() {
     return {
-      searchText: "",
-      selectedRating: 0
-    };
+      searchText: '',
+      selectedRating: 0,
+    }
   },
   watch: {
     searchText(oldVal, newVal) {
-      if (newVal == "") {
-        this.selectedRating = 0;
+      if (newVal === '') {
+        this.selectedRating = 0
       }
-    }
+    },
   },
   methods: {
     search() {
       if (this.selectedRating) {
         this.$router.push({
-          path: "search",
-          query: { rating: this.selectedRating }
-        });
+          path: 'search',
+          query: { rating: this.selectedRating },
+        })
       } else {
         this.$router.push({
-          path: "search",
-          query: { keyword: this.searchText || "random" }
-        });
+          path: 'search',
+          query: { keyword: this.searchText || 'random' },
+        })
       }
-    }
-  }
-};
+    },
+  },
+}
 </script>
