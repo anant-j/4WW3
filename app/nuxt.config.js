@@ -1,19 +1,18 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
+  telemetry: false,
   head: {
     title: 'AK-4WW3',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'en',
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+      { name: 'format-detection', content: 'telephone=no' },
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -21,15 +20,14 @@ export default {
   // ],
   css: ['~/assets/bootstrap/bootstrap.min.css', '~/assets/css/main.css'],
   script: [
-   {
-     src: "~/assets/bootstrap/bootstrap.bundle.min.js",
-     type: "text/javascript"
-   }
+    {
+      src: '~/assets/bootstrap/bootstrap.bundle.min.js',
+      type: 'text/javascript',
+    },
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-  ],
+  plugins: [],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -41,15 +39,13 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-  ],
+  modules: [],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-  },
-  
+  build: {},
+
   server: {
     host: '0.0.0.0',
-    port: 8080
-  }
+    port: 8080,
+  },
 }
