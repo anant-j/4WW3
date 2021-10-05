@@ -50,7 +50,6 @@
           <input
             id="image"
             type="file"
-            class="form-control"
             name="image"
             accept="image/png, image/jpeg"
           />
@@ -59,13 +58,7 @@
       <div class="row justify-content-center">
         <div class="col-md-6">
           <label for="video">Upload a Video &nbsp;&nbsp;&nbsp;:</label>&nbsp;
-          <input
-            id="video"
-            type="file"
-            class="form-control"
-            name="video"
-            accept="image/png, image/jpeg"
-          />
+          <input id="video" type="file" name="video" accept="video/*" />
         </div>
       </div>
       <div class="row justify-content-center mt-3">
@@ -74,4 +67,3 @@
     </form>
   </div>
 </template>
-
