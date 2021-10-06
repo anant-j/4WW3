@@ -1,15 +1,15 @@
 <template>
   <div>
-    <Search />
+    <SearchArea />
   </div>
 </template>
 
 <script>
-import Search from "@/components/Search.vue";
+import SearchArea from '@/components/SearchArea.vue'
 
 export default {
   components: {
-    Search,
+    SearchArea,
   },
-};
+}
 </script>
