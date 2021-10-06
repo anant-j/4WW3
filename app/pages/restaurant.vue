@@ -11,7 +11,7 @@
       <h3 class="pb-4 mb-4 border-bottom text-center">Osmows</h3>
       <div class="row g-5">
         <div class="col-md-4">
-          <div class="position-sticky top2rem">
+          <div class="position-sticky">
             <div class="p-4 bg-light rounded">
               <h4 class="fst-italic">About</h4>
               <p class="mb-0">

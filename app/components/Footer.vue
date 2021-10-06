@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid background-dark text-light">
     <footer
       class="
         d-flex
@@ -7,7 +7,6 @@
         justify-content-between
         align-items-center
         py-2
-        my-1
         border-top
       "
     >
@@ -17,7 +16,7 @@
         >
       </div>
 
-      All rights reserved. Developed by Anant Jain & Kuber Khanna.
+      All rights reserved. Developed by Anant Jain and Kuber Khanna.
     </footer>
   </div>
 </template>

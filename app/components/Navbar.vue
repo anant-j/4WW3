@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark background-dark">
     <div class="container-fluid">
       <NuxtLink class="navbar-brand" to="/">OuseMouse</NuxtLink>
       <button

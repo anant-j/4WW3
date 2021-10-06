@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper background-light text-dark">
     <header>
       <Navbar />
     </header>
