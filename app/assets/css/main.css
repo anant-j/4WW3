@@ -8,6 +8,10 @@
   background-color: #212529;
 }
 
+.background-black{
+  background-color: #000;
+}
+
 .background-light{
   background-color: white;
 }
@@ -32,6 +36,7 @@
 
 footer {
   margin-top: auto;
+  min-height:60px;
 }
 
 h3 {
@@ -70,6 +75,14 @@ li {
 }
 .alignForm > form > .row {
   margin-bottom: 10px;
+}
+
+.borderWhite{
+  border: 2px dotted white;
+}
+
+.borderDark{
+  border: 2px dotted black;
 }
 
 .fade-enter-active,

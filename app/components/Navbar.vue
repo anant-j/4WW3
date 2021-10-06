@@ -1,5 +1,11 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark background-dark">
+  <nav
+    class="navbar navbar-expand-lg navbar-dark"
+    :class="{
+      'background-black': $store.state.nightMode,
+      'background-dark': !$store.state.nightMode,
+    }"
+  >
     <div class="container-fluid">
       <NuxtLink class="navbar-brand" to="/">OuseMouse</NuxtLink>
       <button
@@ -14,7 +20,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div id="navbarNav" class="collapse navbar-collapse">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav me-auto">
           <li class="nav-item">
             <NuxtLink class="nav-link" to="/">Home</NuxtLink>
           </li>
@@ -28,6 +34,15 @@
             <NuxtLink class="nav-link" to="/About">About</NuxtLink>
           </li>
         </ul>
+        <div class="d-flex">
+          <button
+            class="btn btn-outline-success"
+            @click="$store.commit('toggleDarkMode')"
+          >
+            <span v-if="$store.state.nightMode"> Light Mode </span>
+            <span v-else> Dark Mode </span>
+          </button>
+        </div>
       </div>
     </div>
   </nav>

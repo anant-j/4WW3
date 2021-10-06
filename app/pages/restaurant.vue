@@ -12,7 +12,13 @@
       <div class="row g-5">
         <div class="col-md-4">
           <div class="position-sticky">
-            <div class="p-4 bg-light rounded">
+            <div
+              class="p-4 rounded"
+              :class="{
+                borderWhite: $store.state.nightMode,
+                borderDark: !$store.state.nightMode,
+              }"
+            >
               <h4 class="fst-italic">About</h4>
               <p class="mb-0">
                 Osmow's is a fast casual Mediterranean restaurant capturing a

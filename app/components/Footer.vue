@@ -1,14 +1,13 @@
 <template>
-  <div class="container-fluid background-dark text-light">
+  <div
+    class="container-fluid text-light"
+    :class="{
+      'background-black': $store.state.nightMode,
+      'background-dark': !$store.state.nightMode,
+    }"
+  >
     <footer
-      class="
-        d-flex
-        flex-wrap
-        justify-content-between
-        align-items-center
-        py-2
-        border-top
-      "
+      class="d-flex flex-wrap justify-content-between align-items-center py-2"
     >
       <div class="col-md-4 d-flex align-items-center">
         <span class="text-muted"

@@ -1,5 +1,13 @@
 <template>
-  <div class="wrapper background-light text-dark">
+  <div
+    class="wrapper"
+    :class="{
+      'background-light': !$store.state.nightMode,
+      'text-dark': !$store.state.nightMode,
+      'background-dark': $store.state.nightMode,
+      'text-light': $store.state.nightMode,
+    }"
+  >
     <header>
       <Navbar />
     </header>
