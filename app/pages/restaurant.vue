@@ -5,6 +5,7 @@
       <img
         class="col-md-6"
         src="https://dynamicmedia.zuza.com/zz/m/original_/7/2/7266f0c7-32b2-4514-af18-1b9dd948b072/Osmow%20s%2004_Super_Portrait.jpg"
+        loading="lazy"
       />
     </div>
     <div class="container mt-5">
