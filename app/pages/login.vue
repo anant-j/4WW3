@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-3 submitObject">
+  <div class="container mt-3 alignForm">
     <h1>Login</h1>
     <form class="align-items-center">
       <div class="row justify-content-center">

@@ -46,13 +46,13 @@ li {
   top: 2rem;
 }
 
-.submitObject {
+.alignForm {
   margin-top: 50px !important;
 }
 
-.submitObject > h1 {
+.alignForm > h1 {
   text-align: center;
 }
-.submitObject > form > .row {
+.alignForm > form > .row {
   margin-bottom: 10px;
 }
