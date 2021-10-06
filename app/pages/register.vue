@@ -85,11 +85,13 @@
       <div class="row justify-content-center mt-3">
         <button type="button" class="col-3 btn btn-primary">Submit</button>
       </div>
-      <div
-        v-if="email == '' && password == ''"
-        class="row justify-content-center mt-3"
-      >
-        <button type="button" class="col-3 btn" @click="openPage()">
+      <div class="row justify-content-center mt-3">
+        <button
+          type="button"
+          class="col-3 btn btn-outline-info"
+          :disabled="email != '' || password != ''"
+          @click="openPage()"
+        >
           Login Page
         </button>
       </div>
