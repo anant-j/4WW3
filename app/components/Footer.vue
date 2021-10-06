@@ -6,8 +6,8 @@
         flex-wrap
         justify-content-between
         align-items-center
-        py-3
-        my-4
+        py-2
+        my-1
         border-top
       "
     >

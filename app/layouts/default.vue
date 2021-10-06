@@ -1,8 +1,14 @@
 <template>
-  <div>
-    <Navbar />
-    <Nuxt />
-    <Footer />
+  <div class="wrapper">
+    <header>
+      <Navbar />
+    </header>
+    <article>
+      <Nuxt />
+    </article>
+    <footer>
+      <Footer />
+    </footer>
   </div>
 </template>
 
