@@ -1,15 +1,79 @@
 <template>
-  <div>
-    <SearchArea />
+  <div class="container mt-3 alignForm">
+    <h1>Search a Restaurant</h1>
+    <form class="align-items-center">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <label for="searchText">Restaurant's Name</label>
+          <input
+            id="searchText"
+            v-model="searchText"
+            type="text"
+            class="form-control"
+            placeholder="Enter Restaurant's name"
+            aria-label="Restaurant name"
+            :disabled="!(selectedRating == 0)"
+          />
+        </div>
+      </div>
+      <div class="row justify-content-center mb-0">
+        <p class="col-md-6 text-center mb-0">OR</p>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <label for="searchRating">Search By Ratings</label>
+          <select
+            id="searchRating"
+            v-model="selectedRating"
+            class="form-select"
+            :disabled="!(searchText == '')"
+            aria-label="Search by ratings"
+          >
+            <option value="0">Search by ratings</option>
+            <option value="1">1 Star</option>
+            <option value="2">2 Star</option>
+            <option value="3">3 Star</option>
+          </select>
+        </div>
+      </div>
+      <div class="row justify-content-center mt-3">
+        <button type="button" class="col-3 btn btn-primary" @click="search()">
+          Search
+        </button>
+      </div>
+    </form>
   </div>
 </template>
 
 <script>
-import SearchArea from '@/components/SearchArea.vue'
-
 export default {
-  components: {
-    SearchArea,
+  data() {
+    return {
+      searchText: '',
+      selectedRating: 0,
+    }
+  },
+  watch: {
+    searchText(oldVal, newVal) {
+      if (newVal === '') {
+        this.selectedRating = 0
+      }
+    },
+  },
+  methods: {
+    search() {
+      if (this.selectedRating) {
+        this.$router.push({
+          path: 'search',
+          query: { rating: this.selectedRating },
+        })
+      } else {
+        this.$router.push({
+          path: 'search',
+          query: { keyword: this.searchText || 'random' },
+        })
+      }
+    },
   },
 }
 </script>
