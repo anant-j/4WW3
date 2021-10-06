@@ -26,7 +26,7 @@
         <div class="col-md-6">
           <label for="email">Email</label>
           <input
-            id="description"
+            id="email"
             v-model="email"
             type="email"
             class="form-control"
@@ -38,7 +38,7 @@
         <div class="col-md-6">
           <label for="password">Password</label>
           <input
-            id="description"
+            id="password"
             v-model="password"
             type="password"
             class="form-control"
@@ -70,13 +70,13 @@
         <div class="col-sm-3 col-md-3">
           <div class="form-check">
             <input
-              id="flexCheckChecked"
+              id="rememberLocation"
               class="form-check-input"
               type="checkbox"
               value
               checked
             />
-            <label class="form-check-label" for="flexCheckChecked"
+            <label class="form-check-label" for="rememberLocation"
               >Remember My Location</label
             >
           </div>
