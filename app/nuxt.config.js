@@ -2,14 +2,14 @@ export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   telemetry: false,
   head: {
-    title: 'AK-4WW3',
+    title: 'OuseMouse',
     htmlAttrs: {
       lang: 'en',
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      { hid: 'description', name: 'description', content: 'OuseMouse is a web application that enables users to search and add reviews for restaurants. What distinguishes us over other similar platforms is the ability for our users to add restaurants they wish to see on the platform.' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }],
