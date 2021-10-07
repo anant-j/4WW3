@@ -54,6 +54,10 @@ li {
   margin: 0 10px;
 }
 
+.heading {
+  font-size: 3em;
+}
+
 .plain-link {
   color: #17a2b8;
   text-decoration: none;
@@ -81,7 +85,9 @@ li {
   margin-top: 50px !important;
 }
 
-.align-form > h1 {
+.align-form > h1,
+h2,
+h3 {
   text-align: center;
 }
 .align-form > form > .row {

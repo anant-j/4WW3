@@ -1,6 +1,15 @@
 <template>
-  <div class="container mt-3 align-form">
-    <h1>Search a Restaurant</h1>
+  <div class="container align-form">
+    <h1 class="heading">OuseMouse</h1>
+    <!-- <div class="text-center align-items-center justify-content-center"> -->
+    <p class="text-center">
+      Using OuseMouse, you can search a restaurant for reviews and ratings, add
+      your own reviews, and even add your favourite restaurants for others to
+      review!
+    </p>
+    <!-- </div> -->
+    <hr />
+    <h2>Search for a Restaurant</h2>
     <form class="align-items-center">
       <div class="row justify-content-center">
         <div class="col-md-6">

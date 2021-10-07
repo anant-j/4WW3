@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-3 align-form">
-    <h1>Submit a Restaurant for Review</h1>
+    <h1>Add a Restaurant</h1>
     <form class="align-items-center">
       <div class="row justify-content-center">
         <div class="col-md-6">
