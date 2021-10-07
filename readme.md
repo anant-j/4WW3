@@ -3,6 +3,7 @@ Group Name: AK-4WW3 \
 Member 1: Anant Jain, jaina17, 400110406 \
 Member 2: Kuber Khanna, khannk1, 400121439
 
+### Access the application here: https://4ww3.anant-j.com or http://3.23.29.177/
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
 - [About](#about)
@@ -29,6 +30,7 @@ This application enables the users to performs the following tasks:
 - Login/Register using secure authentication (coming soon).
 - Add restaurants to the database.
 - Publish reviews for a particular restaurant
+
 
 ## Folder Structure
 
@@ -67,17 +69,17 @@ This application is structured in the following format
 
   - [static/favicon.png](app/static/favicon.png): This is the favicon used for the website. (Attributed: https://images.squarespace-cdn.com/content/v1/5935792bd1758ee3e38c4f46/1546466805757-90N3MXRSFFDTYAR9XJE0/dine-around-favicon.png?format=1000w) 
 
-  - [store/index.js](app/static/favicon.png): This is a common store used by the application to keep a track if dark mode is enabled or not. This store is based on [Vuex](https://vuex.vuejs.org/) which is being utilized by the [nuxt.js](https://nuxtjs.org/) SSR application.
+  - [store/index.js](app/static/favicon.png): This is a common store used by the application to keep a track if dark mode is enabled or not. This store is based on [Vuex](https://vuex.vuejs.org/) which is being utilized by the [Nuxt.js](https://nuxtjs.org/) SSR application.
 
 
 ## Technologies Used
 This application has been developed using HTML5, CSS and Vue.js. \
-We have utilized the [nuxt.js](https://nuxtjs.org/).js framework to render this application using Server Side Rendering (SSR) which is hosted on an Amazon EC2 instance.
+We have utilized the [Nuxt.js](https://nuxtjs.org/) framework to render this application using Server Side Rendering (SSR) which is hosted on an Amazon EC2 instance.
 
 ## How is it built and rendered
-[nuxt.js](https://nuxtjs.org/).js provides us (the developers) an option to compile/build the project either as a static Client Side Rendered (CSR) application or as a Server Side Rendered application (SSR).
+[Nuxt.js](https://nuxtjs.org/) provides us (the developers) an option to compile/build the project either as a static Client Side Rendered (CSR) application or as a Server Side Rendered application (SSR).
 
-We have chosen to compile and render our application server side as it enables us to compute the Meta tags (required for Add On Task 1) on the fly which would not be possible with a CSR since Twitter, Facebook and other Open Graph Format consumers do not execute JavaScript while fetching metadata.
+We have chosen to compile and render our application server side as it enables us to compute the Meta tags (required for Add On Task 1) on the fly which would not be possible with CSR since Twitter, Facebook and other Open Graph Format consumers do not execute JavaScript while fetching metadata.
 
 - We have used PM2 as our Node process manager to maintain uptime once the Putty/SSH terminal session is disconnected, or if the server has to restart.
 - Nginx as our reverse proxy to allow [the domain](https://4ww3.anant-j.com) to connect to the application and then issued a certificate via [certbot](https://www.digitalocean.com/community/tutorials/how-to-set-up-let-s-encrypt-with-nginx-server-blocks-on-ubuntu-16-04).
