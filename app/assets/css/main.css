@@ -77,6 +77,34 @@ li {
   margin-bottom: 10px;
 }
 
+.resultsList{
+  overflow:hidden; 
+  overflow-y:scroll;
+  max-height: 70vh;
+}
+
+.resultsListDark > li {
+  background-color: black;
+  color: white;
+}
+.resultsListDark > li:hover {
+  background-color: white;
+  color: black;
+}
+
+.resultsListLight > li {
+  background-color: white;
+  color: black;
+}
+.resultsListLight > li:hover {
+  background-color: black;
+  color: white;
+}
+
+.list-group-item-action{
+  cursor: pointer;
+}
+
 .borderWhite{
   border: 2px dotted white;
 }

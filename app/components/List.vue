@@ -1,20 +1,41 @@
 <template>
-  <div class="list-group">
-    <a class="list-group-item">
-      <b>Results:</b>
-    </a>
-    <a class="list-group-item list-group-item-action" @click="openPage()"
-      >Osmows</a
+  <div>
+    <h2
+      :class="{'text-light': $store.state.nightMode, 'text-dark': !$store.state.nightMode}"
+    >Results:</h2>
+    <ul
+      class="resultsList"
+      :class="{'resultsListDark': $store.state.nightMode, 'resultsListLight': !$store.state.nightMode}"
     >
-    <a class="list-group-item list-group-item-action" @click="openPage()"
-      >Basilique</a
-    >
-    <a class="list-group-item list-group-item-action" @click="openPage()"
-      >Lazeez</a
-    >
-    <a class="list-group-item list-group-item-action" @click="openPage()"
-      >Ginos</a
-    >
+      <li class="list-group-item list-group-item-action" @click="openPage()">Lazeez</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Osmows</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Ginos</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Basilique</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Lazeez</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Osmows</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Ginos</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Basilique</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Lazeez</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Osmows</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Ginos</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Basilique</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Lazeez</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Osmows</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Ginos</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Basilique</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Lazeez</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Osmows</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Ginos</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Basilique</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Lazeez</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Osmows</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Ginos</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Basilique</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Lazeez</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Osmows</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Ginos</li>
+      <li class="list-group-item list-group-item-action" @click="openPage()">Basilique</li>
+    </ul>
   </div>
 </template>
 
