@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="restaurantTopBar" class="row">
+    <div id="restaurant-top-bar" class="row">
       <Map class="col-md-6 mb-4" />
       <img
         class="col-md-6"
@@ -17,8 +17,8 @@
             <div
               class="p-4 rounded"
               :class="{
-                borderWhite: $store.state.nightMode,
-                borderDark: !$store.state.nightMode,
+                'border-white': $store.state.nightMode,
+                'border-dark': !$store.state.nightMode,
               }"
             >
               <section id="about">
@@ -48,10 +48,11 @@
               <br />
               <section id="website">
                 <h4 class="fst-italic">Website</h4>
-                <a href="https://mrosmow.com/" class="plainLink" target="_"
+                <a href="https://mrosmow.com/" class="plain-link" target="_"
                   >https://mrosmow.com/</a
                 >
               </section>
+              <h4 class="fst-italic">Website</h4>
             </div>
           </div>
         </div>

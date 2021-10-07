@@ -54,60 +54,60 @@ li {
   margin: 0 10px;
 }
 
-.plainLink {
+.plain-link {
   color: #17a2b8;
   text-decoration: none;
 }
 
-.plainLink:hover {
+.plain-link:hover {
   color: #17a2b8 !important;
   text-decoration: underline !important;
 }
 
-#mapImg {
+#map-img {
   width: 100%;
   object-fit: cover;
   padding: 0 !important;
   margin: 0 !important;
 }
 
-#restaurantTopBar {
+#restaurant-top-bar {
   margin: auto;
   width: 99%;
   margin-top: 5px;
 }
 
-.alignForm {
+.align-form {
   margin-top: 50px !important;
 }
 
-.alignForm > h1 {
+.align-form > h1 {
   text-align: center;
 }
-.alignForm > form > .row {
+.align-form > form > .row {
   margin-bottom: 10px;
 }
 
-.resultsList {
+.results-list {
   overflow: hidden;
   overflow-y: scroll;
   max-height: 70vh;
 }
 
-.resultsListDark > li {
+.results-list-dark > li {
   background-color: black;
   color: white;
 }
-.resultsListDark > li:hover {
+.results-list-dark > li:hover {
   background-color: white;
   color: black;
 }
 
-.resultsListLight > li {
+.results-list-light > li {
   background-color: white;
   color: black;
 }
-.resultsListLight > li:hover {
+.results-list-light > li:hover {
   background-color: black;
   color: white;
 }
@@ -116,11 +116,11 @@ li {
   cursor: pointer;
 }
 
-.borderWhite {
+.border-white {
   border: 2px dotted white;
 }
 
-.borderDark {
+.border-dark {
   border: 2px dotted black;
 }
 
