@@ -5,7 +5,7 @@
       <img
         class="col-md-6"
         src="https://dynamicmedia.zuza.com/zz/m/original_/7/2/7266f0c7-32b2-4514-af18-1b9dd948b072/Osmow%20s%2004_Super_Portrait.jpg"
-        alt = "Restaurant Image"
+        alt="Restaurant Image"
         loading="lazy"
       />
     </div>
@@ -41,7 +41,12 @@
               <p class="mb-0">Sunday - 10:00 A.M - 9:00 P.M</p>
               <br />
               <h4 class="fst-italic">Website</h4>
-              <a href="https://mrosmow.com/" target="_">https://mrosmow.com/</a>
+              <a
+                class="btn btn-outline-info"
+                href="https://mrosmow.com/"
+                target="_"
+                >https://mrosmow.com/</a
+              >
             </div>
           </div>
         </div>
