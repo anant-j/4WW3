@@ -52,7 +52,6 @@
                   >https://mrosmow.com/</a
                 >
               </section>
-              <h4 class="fst-italic">Website</h4>
             </div>
           </div>
         </div>
