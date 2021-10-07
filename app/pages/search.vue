@@ -1,5 +1,5 @@
 <template>
-  <div class="row container-fluid mt-3 alignForm">
+  <div class="row container-fluid mt-3 align-form">
     <Map class="col mb-1" />
     <List class="col-md-3" />
   </div>
