@@ -53,6 +53,16 @@ li {
   margin: 0 10px;
 }
 
+.plainLink{
+  color: #17a2b8;
+  text-decoration: none;
+}
+
+.plainLink:hover{
+  color: #17a2b8!important;
+  text-decoration: underline!important;
+}
+
 #mapImg {
   width: 100%;
   object-fit: cover;

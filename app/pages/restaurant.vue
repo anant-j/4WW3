@@ -42,8 +42,8 @@
               <br />
               <h4 class="fst-italic">Website</h4>
               <a
-                class="btn btn-outline-info"
                 href="https://mrosmow.com/"
+                class="plainLink"
                 target="_"
                 >https://mrosmow.com/</a
               >
