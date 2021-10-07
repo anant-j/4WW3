@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-3 alignForm">
+  <div class="container mt-3 align-form">
     <h1>Create Account</h1>
     <form class="align-items-center">
       <div class="row justify-content-center">

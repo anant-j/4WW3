@@ -21,37 +21,46 @@
                 'border-dark': !$store.state.nightMode,
               }"
             >
-              <h4 class="fst-italic">About</h4>
-              <p class="mb-0">
-                Osmow's is a fast casual Mediterranean restaurant capturing a
-                truly modern taste while giving customers the luxury of
-                customizing their preferences.
-              </p>
+              <section id="about">
+                <h4 class="fst-italic">About</h4>
+                <p class="mb-0">
+                  Osmow's is a fast casual Mediterranean restaurant capturing a
+                  truly modern taste while giving customers the luxury of
+                  customizing their preferences.
+                </p>
+              </section>
               <br />
-              <h4 class="fst-italic">Location</h4>
-              <p class="mb-0">Hamilton, Ontario</p>
+              <section id="location">
+                <h4 class="fst-italic">Location</h4>
+                <p class="mb-0">Hamilton, Ontario</p>
+              </section>
               <br />
-              <h4 class="fst-italic">Hours</h4>
-              <p class="mb-0">Monday - 10:00 A.M - 9:00 P.M</p>
-              <p class="mb-0">Tuesday - 10:00 A.M - 9:00 P.M</p>
-              <p class="mb-0">Wednesday - 10:00 A.M - 9:00 P.M</p>
-              <p class="mb-0">Thursday - 10:00 A.M - 9:00 P.M</p>
-              <p class="mb-0">Friday - 10:00 A.M - 9:00 P.M</p>
-              <p class="mb-0">Saturday - 10:00 A.M - 9:00 P.M</p>
-              <p class="mb-0">Sunday - 10:00 A.M - 9:00 P.M</p>
+              <section id="hours">
+                <h4 class="fst-italic">Hours</h4>
+                <p class="mb-0">Monday - 10:00 A.M - 9:00 P.M</p>
+                <p class="mb-0">Tuesday - 10:00 A.M - 9:00 P.M</p>
+                <p class="mb-0">Wednesday - 10:00 A.M - 9:00 P.M</p>
+                <p class="mb-0">Thursday - 10:00 A.M - 9:00 P.M</p>
+                <p class="mb-0">Friday - 10:00 A.M - 9:00 P.M</p>
+                <p class="mb-0">Saturday - 10:00 A.M - 9:00 P.M</p>
+                <p class="mb-0">Sunday - 10:00 A.M - 9:00 P.M</p>
+              </section>
               <br />
+              <section id="website">
+                <h4 class="fst-italic">Website</h4>
+                <a href="https://mrosmow.com/" class="plain-link" target="_"
+                  >https://mrosmow.com/</a
+                >
+              </section>
               <h4 class="fst-italic">Website</h4>
-              <a
-                href="https://mrosmow.com/"
-                class="plain-link"
-                target="_"
-                >https://mrosmow.com/</a
-              >
             </div>
           </div>
         </div>
         <div class="col-md-8">
-          <h3>9 Reviews</h3>
+          <div class="row">
+            <h4 class="col">9 Reviews</h4>
+            <SubmitReview class="col" />
+          </div>
           <hr />
           <h4>Perfect place for dinner</h4>
           <p>⭐⭐⭐⭐</p>
@@ -107,10 +116,18 @@
 
 <script>
 import Map from '@/components/Map.vue'
+import SubmitReview from '@/components/SubmitReview.vue'
 export default {
   components: {
     Map,
+    SubmitReview,
   },
+  data() {
+    return {
+      submitReviewEnabled: false,
+    }
+  },
+
   head: {
     title: 'Osmows',
     meta: [
