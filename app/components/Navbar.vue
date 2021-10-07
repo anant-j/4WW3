@@ -35,7 +35,7 @@
           </li>
         </ul>
         <div class="d-flex">
-          <button class="btn btn-outline-success" @click="$store.commit('toggleDarkMode')">
+          <button class="btn btn-outline-success" aria-label="dark-mode" @click="$store.commit('toggleDarkMode')">
             <span v-if="$store.state.nightMode">
              <font-awesome-icon :icon="['fas', 'moon']"/>
             </span>
