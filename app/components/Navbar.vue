@@ -35,12 +35,13 @@
           </li>
         </ul>
         <div class="d-flex">
-          <button
-            class="btn btn-outline-success"
-            @click="$store.commit('toggleDarkMode')"
-          >
-            <span v-if="$store.state.nightMode"> Light Mode </span>
-            <span v-else> Dark Mode </span>
+          <button class="btn btn-outline-success" @click="$store.commit('toggleDarkMode')">
+            <span v-if="$store.state.nightMode">
+             <font-awesome-icon :icon="['fas', 'moon']"/>
+            </span>
+            <span v-else>
+                       <font-awesome-icon :icon="['far', 'moon']"/>
+            </span>
           </button>
         </div>
       </div>
