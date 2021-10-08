@@ -1,4 +1,5 @@
 <template>
+  <!-- The div below represents the image of the map that is displayed in the search results page after a search has been made, and as the map for a specific restaurant's result page -->
   <div>
     <img
       id="map-img"
