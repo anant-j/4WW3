@@ -69,13 +69,6 @@ export default {
       selectedRating: 0, // Data property for the rating selected
     }
   },
-  watch: {
-    searchText(oldVal, newVal) {
-      if (newVal === '') {
-        this.selectedRating = 0 // If search text is entered, make the selected rating 0.
-      }
-    },
-  },
   methods: {
     search() {
       // This method adds page redirection with query fields to search for the restaurant.
