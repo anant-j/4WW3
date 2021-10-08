@@ -4,18 +4,20 @@ Member 1: Anant Jain, jaina17, 400110406 \
 Member 2: Kuber Khanna, khannk1, 400121439
 
 ### Access the application here: https://4ww3.anant-j.com or http://3.23.29.177/
+
 ## Table of Contents
+- [Table of Contents](#table-of-contents)
 - [About](#about)
 - [Folder Structure](#folder-structure)
-- [Technologies Used](#technologies-used)
 - [How is it built and rendered](#how-is-it-built-and-rendered)
 - [Running Locally](#running-locally)
 - [Building for production](#building-for-production)
 - [Additional Features](#additional-features)
 - [Add On Tasks](#add-on-tasks)
 - [Resources Used](#resources-used)
-  - [Technologies](#technologies)
+  - [Technologies Used](#technologies-used)
   - [Dev Environment](#dev-environment)
+  - [Prod Environment](#prod-environment)
   - [Tutorials/Guidance](#tutorialsguidance)
 
 ## About
@@ -30,6 +32,7 @@ This application enables the users to performs the following tasks:
 - Add restaurants to the database.
 - Publish reviews for a particular restaurant
 
+This application was built using HTML5, CSS, Vue.js and Nuxt.js. It is rendered Server Side using PM2 and Nginx.
 
 ## Folder Structure
 
@@ -70,22 +73,18 @@ This application is structured in the following format
 
   - [store/index.js](app/static/favicon.png): This is a common store used by the application to keep a track if dark mode is enabled or not. This store is based on [Vuex](https://vuex.vuejs.org/) which is being utilized by the [Nuxt.js](https://nuxtjs.org/) SSR application.
 
-
-## Technologies Used
-This application has been developed using HTML5, CSS and Vue.js. \
-We have utilized the [Nuxt.js](https://nuxtjs.org/) framework to render this application using Server Side Rendering (SSR) which is hosted on an Amazon EC2 instance.
-
 ## How is it built and rendered
 [Nuxt.js](https://nuxtjs.org/) provides us (the developers) an option to compile/build the project either as a static Client Side Rendered (CSR) application or as a Server Side Rendered application (SSR).
 
-We have chosen to compile and render our application server side as it enables us to compute the Meta tags (required for Add On Task 1) on the fly which would not be possible with CSR since Twitter, Facebook and other Open Graph Format consumers do not execute JavaScript while fetching metadata.
+We have chosen to compile and render our application server side as it enables us to compute the Meta tags (required for Add On Task 1) on the fly which would not be possible with CSR since Twitter, Facebook and other Open Graph Protocol consumers do not execute JavaScript while fetching metadata.
 
 - We have used PM2 as our Node process manager to maintain uptime once the Putty/SSH terminal session is disconnected, or if the server has to restart.
-- Nginx as our reverse proxy to allow [the domain](https://4ww3.anant-j.com) to connect to the application and then issued a certificate via [certbot](https://www.digitalocean.com/community/tutorials/how-to-set-up-let-s-encrypt-with-nginx-server-blocks-on-ubuntu-16-04).
+- Nginx as our reverse proxy to allow [the domain](https://4ww3.anant-j.com) to connect to the application and then issued a certificate via [Certbot](https://www.digitalocean.com/community/tutorials/how-to-set-up-let-s-encrypt-with-nginx-server-blocks-on-ubuntu-16-04).
 
 This is how our site is deployed and rendered:
 - An Amazon EC2 server instance has been provisioned on AWS.
 - An Elastic IP has been mapped to this instance.
+- Our domain has been pointed to this elastic IP.
 - At the time of deployment, [the build script](app/deploy.sh) is run on EC2 instance which does the following:
     - Installs all the required dependencies (npm install)
     - Builds the application (npm run build)
@@ -129,12 +128,14 @@ Add‐on task 1: Meta‐data and Microdata has been attempted via our applicatio
 - Metadata fields have been added for Twitter Cards.
 
 ## Resources Used
-### Technologies
-- https://vuejs.org/
-- https://nuxtjs.org/
-- https://fontawesome.com/
-- https://www.npmjs.com/package/nuxt-fontawesome
-- https://getbootstrap.com/docs/5.0/
+### Technologies Used
+- HTML5
+- Cascading Style Sheets (CSS)
+- Vue.js : https://vuejs.org/
+- Nuxt.js : https://nuxtjs.org/ with SSR
+- FontAwesome: https://fontawesome.com/
+- Bootstrap 5.0 : https://getbootstrap.com/docs/5.0/
+- Nuxt FontAwesome: https://www.npmjs.com/package/nuxt-fontawesome
 
 ### Dev Environment
 - VsCode (IDE)
@@ -144,6 +145,11 @@ Add‐on task 1: Meta‐data and Microdata has been attempted via our applicatio
 - Prettier (Formatting)
 - GitLens (Git SCM)
 - Windows 10, MacOs with Node.js version 16.19.1
+
+### Prod Environment
+- Amazon EC2 T2 Micro Instance running ubuntu-focal-20.04
+- PM2 Node Process Manager
+- Nginx Reverse Proxy
 
 ### Tutorials/Guidance
 - [Setting up Nuxt on EC2/DigitalOcean](https://medium.com/codeartisan/how-to-run-nuxt-js-on-digitalocean-159fc558d2ab)
