@@ -3,10 +3,19 @@
   <!-- This component has been borrowed from the Bootstrap component example library and then modified to satisfy our requirements (https://getbootstrap.com/docs/4.0/examples/blog/) -->
   <div>
     <div id="restaurant-top-bar" class="row">
-      <Map class="col-md-6 mb-4" />
+      <img
+        class="col-md-6 food-img"
+        height="500"
+        width="100"
+        src="https://www.hamiltonhealthsciences.ca/wp-content/uploads/2018/12/mcmaster_university_medical_centre.jpg"
+        alt="Location Map"
+        loading="lazy"
+      />
       <!-- Restaurant's image -->
       <img
-        class="col-md-6"
+        class="col-md-6 food-img"
+        height="500"
+        width="100"
         src="https://dynamicmedia.zuza.com/zz/m/original_/7/2/7266f0c7-32b2-4514-af18-1b9dd948b072/Osmow%20s%2004_Super_Portrait.jpg"
         alt="Restaurant Image"
         loading="lazy"
@@ -143,13 +152,11 @@
 </template>
 
 <script>
-import Map from '@/components/Map.vue'
 import Review from '@/components/Review.vue'
 import SubmitReview from '@/components/SubmitReview.vue'
 export default {
   components: {
     // Registering components
-    Map,
     SubmitReview,
     Review,
   },

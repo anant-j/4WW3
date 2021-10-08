@@ -83,6 +83,10 @@ li {
   margin: 0 !important;
 }
 
+.food-img {
+  max-height: 55vh;
+}
+
 #restaurant-top-bar {
   margin: auto;
   width: 99%;
