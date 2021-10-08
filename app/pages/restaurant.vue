@@ -72,52 +72,50 @@
           </div>
           <!-- Restaurant reviews-->
           <hr />
-          <h4>Perfect place for dinner</h4>
-          <p>⭐⭐⭐⭐</p>
-          <p>
-            Amazing restaurant. Had the Philly Veggie Wrap. Be careful as the
-            sauce drips and can get stuck in beard.
-          </p>
-          <hr />
-          <h4>Owner is friedly</h4>
-          <p>⭐⭐⭐⭐⭐</p>
-          <p>
-            He is always serving customers with a smile on his face. He is like
-            a family member.
-          </p>
-          <hr />
-          <h4>Always out of mushrooms</h4>
-          <p>⭐</p>
-          <p>
-            I have never found mushrooms at this restaurant. I don't understand
+          <Review
+            title="Perfect place for dinner"
+            rating="4"
+            review="Amazing restaurant. Had the Philly Veggie Wrap. Be careful as the sauce drips and can get stuck in beard."
+            username="Alice Franklin"
+            imageurl="https://randomuser.me/api/portraits/women/55.jpg"
+          />
+          <Review
+            title="Owner is friedly"
+            rating="5"
+            review="He is always serving customers with a smile on his face. He is like a family member."
+            username="Logan Craig"
+            imageurl="https://randomuser.me/api/portraits/men/12.jpg"
+          />
+          <Review
+            title="Always out of mushrooms"
+            rating="2"
+            review="I have never found mushrooms at this restaurant. I don't understand
             how they can operate such a big business but always be out of
-            mushrooms. They need to fix this.
-          </p>
-          <hr />
-          <h4>Expensive</h4>
-          <p>⭐⭐</p>
-          <p>Low quantity.<br />Not good for wallet.</p>
-          <hr />
-          <h4>Rude staff</h4>
-          <p>⭐</p>
-          <p>They need to learn customer service.</p>
-          <hr />
-          <h4>Better than Lazeez</h4>
-          <p>⭐⭐⭐⭐</p>
-          <p>Would buy again.</p>
-          <hr />
-          <h4>Better than Lazeez</h4>
-          <p>⭐⭐⭐⭐</p>
-          <p>Would buy again.</p>
-          <hr />
-          <h4>Better than Lazeez</h4>
-          <p>⭐⭐⭐⭐</p>
-          <p>Would buy again.</p>
-          <hr />
-          <h4>Better than Lazeez</h4>
-          <p>⭐⭐⭐⭐</p>
-          <p>Would buy again.</p>
-          <hr />
+            mushrooms. They need to fix this."
+            username="Andy Mckinney"
+            imageurl="https://randomuser.me/api/portraits/men/67.jpg"
+          />
+          <Review
+            title="Expensive"
+            rating="2"
+            review="Low quantity. Not good for wallet."
+            username="Mason Lowe"
+            imageurl="https://randomuser.me/api/portraits/men/73.jpg"
+          />
+          <Review
+            title="Rude Staff"
+            rating="1"
+            review="They need to learn customer service."
+            username="Lynn Crawford"
+            imageurl="https://randomuser.me/api/portraits/women/4.jpg"
+          />
+          <Review
+            title="Better than Lazeez"
+            rating="4"
+            review="Would buy again."
+            username="Justin Carter"
+            imageurl="https://randomuser.me/api/portraits/men/77.jpg"
+          />
         </div>
       </div>
     </div>
@@ -125,56 +123,58 @@
 </template>
 
 <script>
-import Map from "@/components/Map.vue";
-import SubmitReview from "@/components/SubmitReview.vue";
+import Map from '@/components/Map.vue'
+import Review from '@/components/Review.vue'
+import SubmitReview from '@/components/SubmitReview.vue'
 export default {
   components: {
     // Registering components
     Map,
     SubmitReview,
+    Review,
   },
   head: {
     // Meta tag descriptions for Facebook's Open Graph Protocol and Twitter Cards
-    title: "Osmows",
+    title: 'Osmows',
     meta: [
-      { charset: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
-        name: "og:title",
-        content: "Osmows",
+        name: 'og:title',
+        content: 'Osmows',
       },
       {
-        name: "og:type",
-        content: "Website",
+        name: 'og:type',
+        content: 'Website',
       },
       {
-        name: "og:image",
+        name: 'og:image',
         content:
-          "https://mrosmow.com/wp-content/uploads/2019/01/Osmows-Straight-Logo.png",
+          'https://mrosmow.com/wp-content/uploads/2019/01/Osmows-Straight-Logo.png',
       },
       {
-        name: "og:url",
-        content: "https://mrosmow.com/",
+        name: 'og:url',
+        content: 'https://mrosmow.com/',
       },
       {
-        name: "twitter:card",
-        content: "summary_large_image",
+        name: 'twitter:card',
+        content: 'summary_large_image',
       },
       {
-        name: "twitter:title",
-        content: "Osmows",
+        name: 'twitter:title',
+        content: 'Osmows',
       },
       {
-        name: "twitter:description",
+        name: 'twitter:description',
         content:
           "Osmow's is a fast casual Mediterranean restaurant capturing a truly modern taste while giving customers the luxury of customizing their preferences.",
       },
       {
-        name: "twitter:image",
+        name: 'twitter:image',
         content:
-          "https://mrosmow.com/wp-content/uploads/2019/01/Osmows-Straight-Logo.png",
+          'https://mrosmow.com/wp-content/uploads/2019/01/Osmows-Straight-Logo.png',
       },
     ],
   },
-};
+}
 </script>
