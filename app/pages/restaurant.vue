@@ -3,10 +3,19 @@
   <!-- This component has been borrowed from the Bootstrap component example library and then modified to satisfy our requirements (https://getbootstrap.com/docs/4.0/examples/blog/) -->
   <div>
     <div id="restaurant-top-bar" class="row">
-      <Map class="col-md-6 mb-4" />
+      <img
+        class="col-md-6 food-img"
+        height="500"
+        width="100"
+        src="https://www.hamiltonhealthsciences.ca/wp-content/uploads/2018/12/mcmaster_university_medical_centre.jpg"
+        alt="Location Map"
+        loading="lazy"
+      />
       <!-- Restaurant's image -->
       <img
-        class="col-md-6"
+        class="col-md-6 food-img"
+        height="500"
+        width="100"
         src="https://dynamicmedia.zuza.com/zz/m/original_/7/2/7266f0c7-32b2-4514-af18-1b9dd948b072/Osmow%20s%2004_Super_Portrait.jpg"
         alt="Restaurant Image"
         loading="lazy"
@@ -125,56 +134,54 @@
 </template>
 
 <script>
-import Map from "@/components/Map.vue";
-import SubmitReview from "@/components/SubmitReview.vue";
+import SubmitReview from '@/components/SubmitReview.vue'
 export default {
   components: {
     // Registering components
-    Map,
     SubmitReview,
   },
   head: {
     // Meta tag descriptions for Facebook's Open Graph Protocol and Twitter Cards
-    title: "Osmows",
+    title: 'Osmows',
     meta: [
-      { charset: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
-        name: "og:title",
-        content: "Osmows",
+        name: 'og:title',
+        content: 'Osmows',
       },
       {
-        name: "og:type",
-        content: "Website",
+        name: 'og:type',
+        content: 'Website',
       },
       {
-        name: "og:image",
+        name: 'og:image',
         content:
-          "https://mrosmow.com/wp-content/uploads/2019/01/Osmows-Straight-Logo.png",
+          'https://mrosmow.com/wp-content/uploads/2019/01/Osmows-Straight-Logo.png',
       },
       {
-        name: "og:url",
-        content: "https://mrosmow.com/",
+        name: 'og:url',
+        content: 'https://mrosmow.com/',
       },
       {
-        name: "twitter:card",
-        content: "summary_large_image",
+        name: 'twitter:card',
+        content: 'summary_large_image',
       },
       {
-        name: "twitter:title",
-        content: "Osmows",
+        name: 'twitter:title',
+        content: 'Osmows',
       },
       {
-        name: "twitter:description",
+        name: 'twitter:description',
         content:
           "Osmow's is a fast casual Mediterranean restaurant capturing a truly modern taste while giving customers the luxury of customizing their preferences.",
       },
       {
-        name: "twitter:image",
+        name: 'twitter:image',
         content:
-          "https://mrosmow.com/wp-content/uploads/2019/01/Osmows-Straight-Logo.png",
+          'https://mrosmow.com/wp-content/uploads/2019/01/Osmows-Straight-Logo.png',
       },
     ],
   },
-};
+}
 </script>
