@@ -72,6 +72,7 @@
           </div>
           <!-- Restaurant reviews-->
           <hr />
+          <!-- Reusing the review component as defined in components/Review.vue -->
           <Review
             title="Perfect place for dinner"
             rating="4"
