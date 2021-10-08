@@ -63,14 +63,14 @@
 export default {
   data() {
     return {
-      searchText: "", // Data property for the search text entered
+      searchText: '', // Data property for the search text entered
       selectedRating: 0, // Data property for the rating selected
-    };
+    }
   },
   watch: {
     searchText(oldVal, newVal) {
-      if (newVal === "") {
-        this.selectedRating = 0; // If search text is entered, make the selected rating 0.
+      if (newVal === '') {
+        this.selectedRating = 0 // If search text is entered, make the selected rating 0.
       }
     },
   },
@@ -80,16 +80,16 @@ export default {
       // Currently, this is dumb redirection logic and will not impact the results page in any manner.
       if (this.selectedRating) {
         this.$router.push({
-          path: "search",
+          path: 'search',
           query: { rating: this.selectedRating },
-        });
+        })
       } else {
         this.$router.push({
-          path: "search",
-          query: { keyword: this.searchText || "random" },
-        });
+          path: 'search',
+          query: { keyword: this.searchText || 'random' },
+        })
       }
     },
   },
-};
+}
 </script>
