@@ -44,9 +44,11 @@
             aria-label="Search by ratings"
           >
             <option value="0">Search by ratings</option>
-            <option value="1">1 Star</option>
-            <option value="2">2 Star</option>
-            <option value="3">3 Star</option>
+            <option value="1">⭐</option>
+            <option value="2">⭐⭐</option>
+            <option value="3">⭐⭐⭐</option>
+            <option value="4">⭐⭐⭐⭐</option>
+            <option value="5">⭐⭐⭐⭐⭐</option>
           </select>
         </div>
       </div>
