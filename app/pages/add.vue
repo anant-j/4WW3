@@ -49,6 +49,18 @@
           />
         </div>
       </div>
+      <!-- The div below takes the website for the restaurant -->
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <label for="website">Restaurant's Website</label>
+          <input
+            id="website"
+            type="text"
+            class="form-control"
+            placeholder="Enter Website"
+          />
+        </div>
+      </div>
       <!-- The div below allows the user to upload an image of the restaurant -->
       <div class="row justify-content-center mt-3">
         <div class="col-md-6">
