@@ -1,4 +1,6 @@
 <template>
+  <!-- This component is used inside the Restaurant's object page as a modal when a User adds their own review -->
+  <!-- This component has been borrowed from the Bootstrap component example library and then modified to satisfy our requirements -->
   <div>
     <button
       type="button"
@@ -8,8 +10,6 @@
     >
       Add your review
     </button>
-
-    <!-- Modal -->
     <div
       id="staticBackdrop"
       class="modal fade"
