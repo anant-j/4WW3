@@ -1,4 +1,6 @@
 <template>
+  <!-- The component below represents the navbar that is displayed on top of each page -->
+  <!-- We use Vue's class binding to assign the respective classes based on the night mode status -->
   <nav
     class="navbar navbar-expand-lg navbar-dark"
     :class="{
@@ -7,7 +9,9 @@
     }"
   >
     <div class="container-fluid">
+      <!-- Nuxtlink is Nuxt's builtin component that manages routing automatically -->
       <NuxtLink class="navbar-brand" to="/">OuseMouse</NuxtLink>
+      <!-- The button below is the hamburger menu toggle that shows up on the top right in mobile device's view -->
       <button
         class="navbar-toggler"
         type="button"
@@ -35,12 +39,17 @@
           </li>
         </ul>
         <div class="d-flex">
-          <button class="btn btn-outline-success" aria-label="dark-mode" @click="$store.commit('toggleDarkMode')">
+          <!-- The button below is used to turn the night/dark mode on or off using Vuex mutations-->
+          <button
+            class="btn btn-outline-success"
+            aria-label="dark-mode"
+            @click="$store.commit('toggleDarkMode')"
+          >
             <span v-if="$store.state.nightMode">
-             <font-awesome-icon :icon="['fas', 'moon']"/>
+              <font-awesome-icon :icon="['fas', 'moon']" />
             </span>
             <span v-else>
-                       <font-awesome-icon :icon="['far', 'moon']"/>
+              <font-awesome-icon :icon="['far', 'moon']" />
             </span>
           </button>
         </div>
