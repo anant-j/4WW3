@@ -90,6 +90,7 @@ h2,
 h3 {
   text-align: center;
 }
+
 .align-form > form > .row {
   margin-bottom: 10px;
 }
@@ -126,6 +127,9 @@ h3 {
   cursor: pointer;
 }
 
+.github-url{
+  font-size: 40px;
+}
 .border-white {
   border: 2px dotted white;
 }
