@@ -7,6 +7,8 @@
         class="col-3 col-md-2 user-image"
         :src="imageurl"
         :alt="username"
+        height="100"
+        width="50"
         loading="lazy"
       />
       <!-- Review Title -->

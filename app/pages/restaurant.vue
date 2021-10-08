@@ -4,7 +4,7 @@
   <div>
     <div id="restaurant-top-bar" class="row">
       <img
-        class="col-md-6 food-img"
+        class="col-md-6 food-img mb-3"
         height="500"
         width="100"
         src="https://www.hamiltonhealthsciences.ca/wp-content/uploads/2018/12/mcmaster_university_medical_centre.jpg"
