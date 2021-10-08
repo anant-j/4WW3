@@ -29,6 +29,14 @@ html.body,
   color: #212529;
 }
 
+.border-white {
+  border: 2px dotted white;
+}
+
+.border-dark {
+  border: 2px dotted black;
+}
+
 .nuxt-link-exact-active {
   color: white !important;
 }
@@ -129,13 +137,6 @@ h3 {
 
 .github-url{
   font-size: 40px;
-}
-.border-white {
-  border: 2px dotted white;
-}
-
-.border-dark {
-  border: 2px dotted black;
 }
 
 .fade-enter-active,
