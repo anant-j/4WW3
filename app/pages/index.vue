@@ -44,9 +44,11 @@
             aria-label="Search by ratings"
           >
             <option value="0">Search by ratings</option>
-            <option value="1">1 Star</option>
-            <option value="2">2 Star</option>
-            <option value="3">3 Star</option>
+            <option value="1">⭐</option>
+            <option value="2">⭐⭐</option>
+            <option value="3">⭐⭐⭐</option>
+            <option value="4">⭐⭐⭐⭐</option>
+            <option value="5">⭐⭐⭐⭐⭐</option>
           </select>
         </div>
       </div>
@@ -63,16 +65,9 @@
 export default {
   data() {
     return {
-      searchText: "", // Data property for the search text entered
+      searchText: '', // Data property for the search text entered
       selectedRating: 0, // Data property for the rating selected
-    };
-  },
-  watch: {
-    searchText(oldVal, newVal) {
-      if (newVal === "") {
-        this.selectedRating = 0; // If search text is entered, make the selected rating 0.
-      }
-    },
+    }
   },
   methods: {
     search() {
@@ -80,16 +75,16 @@ export default {
       // Currently, this is dumb redirection logic and will not impact the results page in any manner.
       if (this.selectedRating) {
         this.$router.push({
-          path: "search",
+          path: 'search',
           query: { rating: this.selectedRating },
-        });
+        })
       } else {
         this.$router.push({
-          path: "search",
-          query: { keyword: this.searchText || "random" },
-        });
+          path: 'search',
+          query: { keyword: this.searchText || 'random' },
+        })
       }
     },
   },
-};
+}
 </script>
