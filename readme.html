@@ -1,0 +1,353 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome file</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><p>Course Name: Web Computing and Web Systems</p>
+<p>Group Name: AK-4WW3</p>
+<p>Member 1: Anant Jain, jaina17, 400110406</p>
+<p>Member 2: Kuber Khanna, khannk1, 400121439</p>
+<h3 id="access-the-application-here-https4ww3.anant-j.com-or-http3.23.29.177">Access the application here: <a href="https://4ww3.anant-j.com">https://4ww3.anant-j.com</a> or <a href="http://3.23.29.177/">http://3.23.29.177/</a></h3>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li>
+<p><a href="#table-of-contents">Table of Contents</a></p>
+</li>
+<li>
+<p><a href="#about">About</a></p>
+</li>
+<li>
+<p><a href="#folder-structure">Folder Structure</a></p>
+</li>
+<li>
+<p><a href="#technologies-used">Technologies Used</a></p>
+</li>
+<li>
+<p><a href="#how-is-it-built-and-rendered">How is it built and rendered</a></p>
+</li>
+<li>
+<p><a href="#running-locally">Running Locally</a></p>
+</li>
+<li>
+<p><a href="#building-for-production">Building for production</a></p>
+</li>
+<li>
+<p><a href="#additional-features">Additional Features</a></p>
+</li>
+<li>
+<p><a href="#add-on-tasks">Add On Tasks</a></p>
+</li>
+<li>
+<p><a href="#resources-used">Resources Used</a></p>
+</li>
+<li>
+<p><a href="#technologies">Technologies</a></p>
+</li>
+<li>
+<p><a href="#dev-environment">Dev Environment</a></p>
+</li>
+<li>
+<p><a href="#tutorialsguidance">Tutorials/Guidance</a></p>
+</li>
+</ul>
+<h2 id="about">About</h2>
+<p>This web application has been developed for CS4WW3 Fall 2021 at McMaster University.</p>
+<p>This application enables the users to performs the following tasks:</p>
+<ul>
+<li>
+<p>Search for a restaurant based on keywords or by ratings.</p>
+</li>
+<li>
+<p>View all restaurants based on search criteria.</p>
+</li>
+<li>
+<p>View ratings and reviews for selected restaurant.</p>
+</li>
+<li>
+<p>Login/Register using secure authentication (coming soon).</p>
+</li>
+<li>
+<p>Add restaurants to the database.</p>
+</li>
+<li>
+<p>Publish reviews for a particular restaurant</p>
+</li>
+</ul>
+<h2 id="folder-structure">Folder Structure</h2>
+<p>This application is structured in the following format</p>
+<ul>
+<li>
+<p>app</p>
+</li>
+<li>
+<p><a href="app/assets">assets</a> : All static assets are stored here.</p>
+</li>
+<li>
+<p><a href="app/assets/bootstrap">bootstrap</a> : The required configuration and files required to load Bootstrap v5.0 into the application.4WW3</p>
+</li>
+<li>
+<p><a href="app/assets/css/main.css">css/main.css</a> : The external stylesheet utilized by the application in order to apply custom styles.</p>
+</li>
+<li>
+<p><a href="app/components">components</a> : These components are small snippets of code that can be utilized multiple times within the application.</p>
+</li>
+<li>
+<p><a href="app/components/Footer.vue">Footer.vue</a> : The standard footer which will be present in all pages.</p>
+</li>
+<li>
+<p><a href="app/components/List.vue">List.vue</a> : This is the list of results that will be displayed when a user searches for a restaurant and views the results of that search.</p>
+</li>
+<li>
+<p><a href="app/components/Map.vue">Map.vue</a> : A reusable component that will render the map on the screen based on the results of the search or restaurant selected. (As part of the requirements of A1, this component just displays a static image as a live dynamic map would require the use of JavaScript).</p>
+</li>
+<li>
+<p><a href="app/components/Navbar.vue">Navbar.vue</a> : The standard navbar which will be present in all pages.</p>
+</li>
+<li>
+<p><a href="app/components/SubmitReview.vue">SubmitReview.vue</a> : A Bootstrap 5 Modal element, customized to enable the user to enter a restaurant’s review. (Used in restaurant.vue)</p>
+</li>
+<li>
+<p><a href="app/layouts">layouts</a>:</p>
+</li>
+<li>
+<p><a href="app/layouts/default.vue">default.vue</a> : This is the standard layout that aligns the components within the application in the desired format. This module is utilized so that the Navbar and Footer are only loaded once and present in all views with the same alignment to ensure design consistency and performance.</p>
+</li>
+<li>
+<p><a href="app/node_modules">node_modules</a>: Used to save all downloaded packages from NPM.</p>
+</li>
+<li>
+<p><a href="app/pages">pages</a>:</p>
+</li>
+<li>
+<p><a href="app/pages/about.vue">about.vue</a> : An about page stating the purpose of this application.</p>
+</li>
+<li>
+<p><a href="app/pages/add.vue">add.vue</a> : This page enabled the users to add a new restaurant for reviews.</p>
+</li>
+<li>
+<p><a href="app/pages/index.vue">index.vue</a> : This is the initial landing page and home page of the application. This page consists of a search area which enables the users to search for a restaurant by using either keywords or by average ratings.</p>
+</li>
+<li>
+<p><a href="app/pages/login.vue">login.vue</a> : This page will be displayed to users if they try to add a review or add a restaurant while they are not logged in.</p>
+</li>
+<li>
+<p><a href="app/pages/register.vue">register.vue</a> : If a user is not logged in and do not have an account, they will utilize this page to create an account.</p>
+</li>
+<li>
+<p><a href="app/pages/restaurant.vue">restaurant.vue</a> : This page displays the information, images, location and reviews of the selected restaurant.</p>
+</li>
+<li>
+<p><a href="app/pages/search.vue">search.vue</a> : This page will display the search results with multiple restaurants based on the provided keyword or average ratings.</p>
+</li>
+<li>
+<p><a href="app/static/favicon.png">static/favicon.png</a>: This is the favicon used for the website. (Attributed: <a href="https://images.squarespace-cdn.com/content/v1/5935792bd1758ee3e38c4f46/1546466805757-90N3MXRSFFDTYAR9XJE0/dine-around-favicon.png?format=1000w">https://images.squarespace-cdn.com/content/v1/5935792bd1758ee3e38c4f46/1546466805757-90N3MXRSFFDTYAR9XJE0/dine-around-favicon.png?format=1000w</a>)</p>
+</li>
+<li>
+<p><a href="app/static/favicon.png">store/index.js</a>: This is a common store used by the application to keep a track if dark mode is enabled or not. This store is based on <a href="https://vuex.vuejs.org/">Vuex</a> which is being utilized by the <a href="https://nuxtjs.org/">Nuxt.js</a> SSR application.</p>
+</li>
+</ul>
+<h2 id="technologies-used">Technologies Used</h2>
+<p>This application has been developed using HTML5, CSS and Vue.js.</p>
+<p>We have utilized the <a href="https://nuxtjs.org/">Nuxt.js</a> framework to render this application using Server Side Rendering (SSR) which is hosted on an Amazon EC2 instance.</p>
+<h2 id="how-is-it-built-and-rendered">How is it built and rendered</h2>
+<p><a href="https://nuxtjs.org/">Nuxt.js</a> provides us (the developers) an option to compile/build the project either as a static Client Side Rendered (CSR) application or as a Server Side Rendered application (SSR).</p>
+<p>We have chosen to compile and render our application server side as it enables us to compute the Meta tags (required for Add On Task 1) on the fly which would not be possible with CSR since Twitter, Facebook and other Open Graph Format consumers do not execute JavaScript while fetching metadata.</p>
+<ul>
+<li>
+<p>We have used PM2 as our Node process manager to maintain uptime once the Putty/SSH terminal session is disconnected, or if the server has to restart.</p>
+</li>
+<li>
+<p>Nginx as our reverse proxy to allow <a href="https://4ww3.anant-j.com">the domain</a> to connect to the application and then issued a certificate via <a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-let-s-encrypt-with-nginx-server-blocks-on-ubuntu-16-04">certbot</a>.</p>
+</li>
+</ul>
+<p>This is how our site is deployed and rendered:</p>
+<ul>
+<li>
+<p>An Amazon EC2 server instance has been provisioned on AWS.</p>
+</li>
+<li>
+<p>An Elastic IP has been mapped to this instance.</p>
+</li>
+<li>
+<p>At the time of deployment, <a href="app/deploy.sh">the build script</a> is run on EC2 instance which does the following:</p>
+</li>
+<li>
+<p>Installs all the required dependencies (npm install)</p>
+</li>
+<li>
+<p>Builds the application (npm run build)</p>
+</li>
+<li>
+<p>Stops the existing deployment process (PM2 stop)</p>
+</li>
+<li>
+<p>Start the PM2 process manager again with new files (PM2 Start)</p>
+</li>
+</ul>
+<h2 id="running-locally">Running Locally</h2>
+<p>To run this application locally, follow these steps:</p>
+<ul>
+<li>
+<p>Clone Repository</p>
+</li>
+<li>
+<p>Open the cloned repository in terminal/Bash shell/Powershell.</p>
+</li>
+<li>
+<p>Install <a href="https://nodejs.org/en/">Node</a> and <a href="https://docs.npmjs.com/downloading-and-installing-node-js-and-npm">NPM</a> if not already present on the system.</p>
+</li>
+<li>
+<p><code>cd AK-4WW3/app</code></p>
+</li>
+<li>
+<p><code>npm install</code></p>
+</li>
+<li>
+<p><code>npm run dev</code></p>
+</li>
+<li>
+<p>Notice the deployment link on the terminal and open in a browser.</p>
+</li>
+</ul>
+<h2 id="building-for-production">Building for production</h2>
+<p>To build for production, follow these steps:</p>
+<ul>
+<li>
+<p>Clone Repository</p>
+</li>
+<li>
+<p>Open the cloned repository in terminal/Bash shell/Powershell.</p>
+</li>
+<li>
+<p>Install <a href="https://nodejs.org/en/">Node</a>, <a href="https://docs.npmjs.com/downloading-and-installing-node-js-and-npm">NPM</a> if not already present on the system and PM2.</p>
+</li>
+<li>
+<p><code>cd AK-4WW3/app</code></p>
+</li>
+<li>
+<p><code>npm install</code></p>
+</li>
+<li>
+<p><code>npm run build</code></p>
+</li>
+<li>
+<p><code>pm2 start npm -- start</code></p>
+</li>
+<li>
+<p>Ensure PM2 is working by checking <code>pm2 log</code> and <code>pm2 status</code></p>
+</li>
+<li>
+<p>Visit website and verify deployment</p>
+</li>
+<li>
+<p>Ensure Firewalls are enabled on server. Monitor usage carefully and scale accordingly.</p>
+</li>
+</ul>
+<h2 id="additional-features">Additional Features</h2>
+<ul>
+<li>
+<p>Dark Mode and Light Mode is present in the application which can be toggled by the user.</p>
+</li>
+<li>
+<p>Validation is present such that users are only able to search by keywords or ratings (this might change in the future versions of this application).</p>
+</li>
+<li>
+<p>An option to upload a video is present when adding a restaurant.js</p>
+</li>
+<li>
+<p>Validation is present to ensure no future date is set as Date of Birth while registering a user, or while submitting a review.</p>
+</li>
+</ul>
+<h2 id="add-on-tasks">Add On Tasks</h2>
+<p>Add‐on task 1: Meta‐data and Microdata has been attempted via our application.</p>
+<ul>
+<li>
+<p>Metadata fields have been added for Facebook’s Open Graph Protocol.</p>
+</li>
+<li>
+<p>Metadata fields have been added for Twitter Cards.</p>
+</li>
+</ul>
+<h2 id="resources-used">Resources Used</h2>
+<h3 id="technologies">Technologies</h3>
+<ul>
+<li>
+<p><a href="https://vuejs.org/">https://vuejs.org/</a></p>
+</li>
+<li>
+<p><a href="https://nuxtjs.org/">https://nuxtjs.org/</a></p>
+</li>
+<li>
+<p><a href="https://fontawesome.com/">https://fontawesome.com/</a></p>
+</li>
+<li>
+<p><a href="https://www.npmjs.com/package/nuxt-fontawesome">https://www.npmjs.com/package/nuxt-fontawesome</a></p>
+</li>
+<li>
+<p><a href="https://getbootstrap.com/docs/5.0/">https://getbootstrap.com/docs/5.0/</a></p>
+</li>
+</ul>
+<h3 id="dev-environment">Dev Environment</h3>
+<ul>
+<li>
+<p>VsCode (IDE)</p>
+</li>
+<li>
+<p>VsCode Live Share (Pair Programming)</p>
+</li>
+<li>
+<p>EsLint (Linting)</p>
+</li>
+<li>
+<p>Vetur (Vue tooling extension for VsCode)</p>
+</li>
+<li>
+<p>Prettier (Formatting)</p>
+</li>
+<li>
+<p>GitLens (Git SCM)</p>
+</li>
+<li>
+<p>Windows 10, MacOs with Node.js version 16.19.1</p>
+</li>
+</ul>
+<h3 id="tutorialsguidance">Tutorials/Guidance</h3>
+<ul>
+<li>
+<p><a href="https://medium.com/codeartisan/how-to-run-nuxt-js-on-digitalocean-159fc558d2ab">Setting up Nuxt on EC2/DigitalOcean</a></p>
+</li>
+<li>
+<p><a href="https://nuxtjs.org/docs/directory-structure/store/">Vuex with Nuxt</a></p>
+</li>
+<li>
+<p><a href="https://nuxtjs.org/docs/features/meta-tags-seo/">Meta with Nuxt</a></p>
+</li>
+<li>
+<p><a href="https://stackoverflow.com/a/67038626">Adding Bootstrap to Nuxt App</a></p>
+</li>
+<li>
+<p>Note: <code>fibers</code> has been excluded from the package.json and this application due to build issues with Windows 10.</p>
+</li>
+<li>
+<p>Using this during build time can decrease build times by 50%. This should be considered when deploying this application in PROD environments.</p>
+</li>
+<li>
+<p><a href="https://www.npmjs.com/package/@nuxtjs/fontawesome">Adding FontAwesome to Nuxt</a></p>
+</li>
+<li>
+<p><a href="https://www.serverlab.ca/tutorials/linux/web-servers-linux/how-to-configure-multiple-domains-with-nginx-on-ubuntu/">Multiple Domains with Nginx</a></p>
+</li>
+<li>
+<p>Had to modify Nginx configs to enable both Domain and IPs access to the node application.</p>
+</li>
+</ul>
+</div>
+</body>
+
+</html>
