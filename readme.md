@@ -37,7 +37,7 @@ This application was built using HTML5, CSS, Vue.js and Nuxt.js. It is rendered 
 
 This application is structured in the following format
 
-- app
+- [app](app)
 
   - [assets](app/assets) : All static assets are stored here.
 
