@@ -1,4 +1,5 @@
 <template>
+  <!-- This is the login component -->
   <div class="container mt-3 align-form">
     <h1>Login</h1>
     <form class="align-items-center">
@@ -30,6 +31,7 @@
         <button type="button" class="col-3 btn btn-primary">Login</button>
       </div>
       <div class="row justify-content-center mt-3">
+        <!-- Register button that is only enabled if both email and password fields are empty -->
         <button
           type="button"
           class="col-3 btn btn-danger"
@@ -47,14 +49,14 @@
 export default {
   data() {
     return {
-      email: '',
-      password: '',
-    }
+      email: "", // Data property for the email entered
+      password: "", // Data property for the password entered
+    };
   },
   methods: {
     openPage() {
-      this.$router.push({ path: 'register' })
+      this.$router.push({ path: "register" }); // Switch view to Register.vue
     },
   },
-}
+};
 </script>
