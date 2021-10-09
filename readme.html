@@ -17,16 +17,10 @@
 <h2 id="table-of-contents">Table of Contents</h2>
 <ul>
 <li>
-<p><a href="#table-of-contents">Table of Contents</a></p>
-</li>
-<li>
 <p><a href="#about">About</a></p>
 </li>
 <li>
 <p><a href="#folder-structure">Folder Structure</a></p>
-</li>
-<li>
-<p><a href="#technologies-used">Technologies Used</a></p>
 </li>
 <li>
 <p><a href="#how-is-it-built-and-rendered">How is it built and rendered</a></p>
@@ -47,10 +41,13 @@
 <p><a href="#resources-used">Resources Used</a></p>
 </li>
 <li>
-<p><a href="#technologies">Technologies</a></p>
+<p><a href="#technologies-used">Technologies Used</a></p>
 </li>
 <li>
 <p><a href="#dev-environment">Dev Environment</a></p>
+</li>
+<li>
+<p><a href="#prod-environment">Prod Environment</a></p>
 </li>
 <li>
 <p><a href="#tutorialsguidance">Tutorials/Guidance</a></p>
@@ -79,11 +76,12 @@
 <p>Publish reviews for a particular restaurant</p>
 </li>
 </ul>
+<p>This application was built using HTML5, CSS, Vue.js and Nuxt.js. It is rendered Server Side using PM2 and Nginx.</p>
 <h2 id="folder-structure">Folder Structure</h2>
 <p>This application is structured in the following format</p>
 <ul>
 <li>
-<p>app</p>
+<p><a href="app">app</a></p>
 </li>
 <li>
 <p><a href="app/assets">assets</a> : All static assets are stored here.</p>
@@ -108,6 +106,9 @@
 </li>
 <li>
 <p><a href="app/components/Navbar.vue">Navbar.vue</a> : The standard navbar which will be present in all pages.</p>
+</li>
+<li>
+<p><a href="app/components/Review.vue">Review.vue</a> : This is a reusable component that will be used to display the user’s reviews for a particular restaurant.</p>
 </li>
 <li>
 <p><a href="app/components/SubmitReview.vue">SubmitReview.vue</a> : A Bootstrap 5 Modal element, customized to enable the user to enter a restaurant’s review. (Used in restaurant.vue)</p>
@@ -152,18 +153,15 @@
 <p><a href="app/static/favicon.png">store/index.js</a>: This is a common store used by the application to keep a track if dark mode is enabled or not. This store is based on <a href="https://vuex.vuejs.org/">Vuex</a> which is being utilized by the <a href="https://nuxtjs.org/">Nuxt.js</a> SSR application.</p>
 </li>
 </ul>
-<h2 id="technologies-used">Technologies Used</h2>
-<p>This application has been developed using HTML5, CSS and Vue.js.</p>
-<p>We have utilized the <a href="https://nuxtjs.org/">Nuxt.js</a> framework to render this application using Server Side Rendering (SSR) which is hosted on an Amazon EC2 instance.</p>
 <h2 id="how-is-it-built-and-rendered">How is it built and rendered</h2>
 <p><a href="https://nuxtjs.org/">Nuxt.js</a> provides us (the developers) an option to compile/build the project either as a static Client Side Rendered (CSR) application or as a Server Side Rendered application (SSR).</p>
-<p>We have chosen to compile and render our application server side as it enables us to compute the Meta tags (required for Add On Task 1) on the fly which would not be possible with CSR since Twitter, Facebook and other Open Graph Format consumers do not execute JavaScript while fetching metadata.</p>
+<p>We have chosen to compile and render our application server side as it enables us to compute the Meta tags (required for Add On Task 1) on the fly which would not be possible with CSR since Twitter, Facebook and other Open Graph Protocol consumers do not execute JavaScript while fetching metadata.</p>
 <ul>
 <li>
 <p>We have used PM2 as our Node process manager to maintain uptime once the Putty/SSH terminal session is disconnected, or if the server has to restart.</p>
 </li>
 <li>
-<p>Nginx as our reverse proxy to allow <a href="https://4ww3.anant-j.com">the domain</a> to connect to the application and then issued a certificate via <a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-let-s-encrypt-with-nginx-server-blocks-on-ubuntu-16-04">certbot</a>.</p>
+<p>Nginx as our reverse proxy to allow <a href="https://4ww3.anant-j.com">the domain</a> to connect to the application and then issued a certificate via <a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-let-s-encrypt-with-nginx-server-blocks-on-ubuntu-16-04">Certbot</a>.</p>
 </li>
 </ul>
 <p>This is how our site is deployed and rendered:</p>
@@ -173,6 +171,9 @@
 </li>
 <li>
 <p>An Elastic IP has been mapped to this instance.</p>
+</li>
+<li>
+<p>Our domain has been pointed to this elastic IP.</p>
 </li>
 <li>
 <p>At the time of deployment, <a href="app/deploy.sh">the build script</a> is run on EC2 instance which does the following:</p>
@@ -275,22 +276,28 @@
 </li>
 </ul>
 <h2 id="resources-used">Resources Used</h2>
-<h3 id="technologies">Technologies</h3>
+<h3 id="technologies-used">Technologies Used</h3>
 <ul>
 <li>
-<p><a href="https://vuejs.org/">https://vuejs.org/</a></p>
+<p>HTML5</p>
 </li>
 <li>
-<p><a href="https://nuxtjs.org/">https://nuxtjs.org/</a></p>
+<p>Cascading Style Sheets (CSS)</p>
 </li>
 <li>
-<p><a href="https://fontawesome.com/">https://fontawesome.com/</a></p>
+<p>Vue.js : <a href="https://vuejs.org/">https://vuejs.org/</a></p>
 </li>
 <li>
-<p><a href="https://www.npmjs.com/package/nuxt-fontawesome">https://www.npmjs.com/package/nuxt-fontawesome</a></p>
+<p>Nuxt.js : <a href="https://nuxtjs.org/">https://nuxtjs.org/</a> with SSR</p>
 </li>
 <li>
-<p><a href="https://getbootstrap.com/docs/5.0/">https://getbootstrap.com/docs/5.0/</a></p>
+<p>FontAwesome: <a href="https://fontawesome.com/">https://fontawesome.com/</a></p>
+</li>
+<li>
+<p>Bootstrap 5.0 : <a href="https://getbootstrap.com/docs/5.0/">https://getbootstrap.com/docs/5.0/</a></p>
+</li>
+<li>
+<p>Nuxt FontAwesome: <a href="https://www.npmjs.com/package/nuxt-fontawesome">https://www.npmjs.com/package/nuxt-fontawesome</a></p>
 </li>
 </ul>
 <h3 id="dev-environment">Dev Environment</h3>
@@ -315,6 +322,18 @@
 </li>
 <li>
 <p>Windows 10, MacOs with Node.js version 16.19.1</p>
+</li>
+</ul>
+<h3 id="prod-environment">Prod Environment</h3>
+<ul>
+<li>
+<p>Amazon EC2 T2 Micro Instance running ubuntu-focal-20.04</p>
+</li>
+<li>
+<p>PM2 Node Process Manager</p>
+</li>
+<li>
+<p>Nginx Reverse Proxy</p>
 </li>
 </ul>
 <h3 id="tutorialsguidance">Tutorials/Guidance</h3>
