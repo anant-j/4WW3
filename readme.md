@@ -6,7 +6,6 @@ Member 2: Kuber Khanna, khannk1, 400121439
 ### Access the application here: https://4ww3.anant-j.com or http://3.23.29.177/
 
 ## Table of Contents
-- [Table of Contents](#table-of-contents)
 - [About](#about)
 - [Folder Structure](#folder-structure)
 - [How is it built and rendered](#how-is-it-built-and-rendered)
