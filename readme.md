@@ -6,6 +6,7 @@ Member 2: Kuber Khanna, khannk1, 400121439
 ### Access the application here: https://4ww3.anant-j.com or http://3.23.29.177/
 
 ## Table of Contents
+- [Table of Contents](#table-of-contents)
 - [About](#about)
 - [Folder Structure](#folder-structure)
 - [How is it built and rendered](#how-is-it-built-and-rendered)
@@ -50,6 +51,7 @@ This application is structured in the following format
     - [List.vue](app/components/List.vue) : This is the list of results that will be displayed when a user searches for a restaurant and views the results of that search.
     - [Map.vue](app/components/Map.vue) : A reusable component that will render the map on the screen based on the results of the search or restaurant selected. (As part of the requirements of A1, this component just displays a static image as a live dynamic map would require the use of JavaScript).
     - [Navbar.vue](app/components/Navbar.vue) : The standard navbar which will be present in all pages.
+    - [Review.vue](app/components/Review.vue) : This is a reusable component that will be used to display the user's reviews for a particular restaurant.
     - [SubmitReview.vue](app/components/SubmitReview.vue) : A Bootstrap 5 Modal element, customized to enable the user to enter a restaurant's review. (Used in restaurant.vue)
 
   - [layouts](app/layouts):

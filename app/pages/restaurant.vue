@@ -4,7 +4,7 @@
   <div>
     <div id="restaurant-top-bar" class="row">
       <img
-        class="col-md-6 food-img"
+        class="col-md-6 food-img mb-3"
         height="500"
         width="100"
         src="https://www.hamiltonhealthsciences.ca/wp-content/uploads/2018/12/mcmaster_university_medical_centre.jpg"
@@ -81,52 +81,70 @@
           </div>
           <!-- Restaurant reviews-->
           <hr />
-          <h4>Perfect place for dinner</h4>
-          <p>⭐⭐⭐⭐</p>
-          <p>
-            Amazing restaurant. Had the Philly Veggie Wrap. Be careful as the
-            sauce drips and can get stuck in beard.
-          </p>
-          <hr />
-          <h4>Owner is friedly</h4>
-          <p>⭐⭐⭐⭐⭐</p>
-          <p>
-            He is always serving customers with a smile on his face. He is like
-            a family member.
-          </p>
-          <hr />
-          <h4>Always out of mushrooms</h4>
-          <p>⭐</p>
-          <p>
-            I have never found mushrooms at this restaurant. I don't understand
+          <!-- Reusing the review component as defined in components/Review.vue -->
+          <section id="reviews">
+            <Review
+              title="Perfect place for dinner"
+              :rating="4"
+              review="Amazing restaurant. Had the Philly Veggie Wrap. Be careful as the sauce drips and can get stuck in beard."
+              username="Alice Franklin"
+              imageurl="https://randomuser.me/api/portraits/women/55.jpg"
+            />
+            <Review
+              title="Owner is friedly"
+              :rating="5"
+              review="He is always serving customers with a smile on his face. He is like a family member."
+              username="Logan Craig"
+              imageurl="https://randomuser.me/api/portraits/men/12.jpg"
+            />
+            <Review
+              title="Always out of mushrooms"
+              :rating="2"
+              review="I have never found mushrooms at this restaurant. I don't understand
             how they can operate such a big business but always be out of
-            mushrooms. They need to fix this.
-          </p>
-          <hr />
-          <h4>Expensive</h4>
-          <p>⭐⭐</p>
-          <p>Low quantity.<br />Not good for wallet.</p>
-          <hr />
-          <h4>Rude staff</h4>
-          <p>⭐</p>
-          <p>They need to learn customer service.</p>
-          <hr />
-          <h4>Better than Lazeez</h4>
-          <p>⭐⭐⭐⭐</p>
-          <p>Would buy again.</p>
-          <hr />
-          <h4>Better than Lazeez</h4>
-          <p>⭐⭐⭐⭐</p>
-          <p>Would buy again.</p>
-          <hr />
-          <h4>Better than Lazeez</h4>
-          <p>⭐⭐⭐⭐</p>
-          <p>Would buy again.</p>
-          <hr />
-          <h4>Better than Lazeez</h4>
-          <p>⭐⭐⭐⭐</p>
-          <p>Would buy again.</p>
-          <hr />
+            mushrooms. They need to fix this."
+              username="Andy Mckinney"
+              imageurl="https://randomuser.me/api/portraits/men/67.jpg"
+            />
+            <Review
+              title="Expensive"
+              :rating="2"
+              review="Low quantity. Not good for wallet."
+              username="Mason Lowe"
+              imageurl="https://randomuser.me/api/portraits/men/73.jpg"
+            />
+            <Review
+              title="Rude Staff"
+              :rating="1"
+              review="They need to learn customer service."
+              username="Lynn Crawford"
+              imageurl="https://randomuser.me/api/portraits/women/4.jpg"
+            />
+            <Review
+              title="Better than Lazeez"
+              :rating="4"
+              review="Would buy again."
+              username="Justin Carter"
+              imageurl="https://randomuser.me/api/portraits/men/77.jpg"
+            />
+            <Review
+              title="Delicious"
+              :rating="4"
+              review="This is a popular restaurant for University and College students. The flavours are just what they most desire, Mediterranean and spicy!
+                    I enjoy this food. We visit at least once every month. Sometimes more often.
+                    The price is reasonable and the portions are quite large.
+                    Don’t expect a 5 star restaurant salad here though. It’s all about good taste and reasonable cost."
+              username="Nathaniel Bailey"
+              imageurl="https://randomuser.me/api/portraits/men/42.jpg"
+            />
+            <Review
+              title="Noisy"
+              :rating="1"
+              review="The food is okay. Typical student food. I have been at least four times and every time you have to listen to the non stop loud chopping of the meat on the metal flat top instead of using a wooden chopping block. It’s loud and super annoying. Won’t ever return because of that. The place is solely supported by students."
+              username="Reginald Barnes"
+              imageurl="https://randomuser.me/api/portraits/men/65.jpg"
+            />
+          </section>
         </div>
       </div>
     </div>
@@ -134,11 +152,13 @@
 </template>
 
 <script>
+import Review from '@/components/Review.vue'
 import SubmitReview from '@/components/SubmitReview.vue'
 export default {
   components: {
     // Registering components
     SubmitReview,
+    Review,
   },
   head: {
     // Meta tag descriptions for Facebook's Open Graph Protocol and Twitter Cards
