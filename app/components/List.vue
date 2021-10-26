@@ -17,89 +17,13 @@
         'results-list-light': !$store.state.nightMode,
       }"
     >
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Lazeez
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Osmows
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Ginos
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Basilique
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Lazeez
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Osmows
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Ginos
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Basilique
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Lazeez
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Osmows
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Ginos
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Basilique
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Lazeez
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Osmows
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Ginos
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Basilique
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Lazeez
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Osmows
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Ginos
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Basilique
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Lazeez
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Osmows
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Ginos
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Basilique
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Lazeez
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Osmows
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Ginos
-      </li>
-      <li class="list-group-item list-group-item-action" @click="openPage()">
-        Basilique
+      <li
+        v-for="item in Object.keys($store.state.restaurants)"
+        :key="item"
+        class="list-group-item list-group-item-action"
+        @click="openPage(item)"
+      >
+        {{ $store.state.restaurants[item].name }}
       </li>
     </ul>
   </div>
@@ -108,8 +32,8 @@
 <script>
 export default {
   methods: {
-    openPage() {
-      this.$router.push({ path: 'restaurant' })
+    openPage(restaurantId) {
+      this.$router.push({ path: 'restaurant', query: { id: restaurantId } })
     },
   },
 }
