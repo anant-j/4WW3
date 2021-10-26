@@ -52,8 +52,26 @@
           </select>
         </div>
       </div>
+      <div class="row justify-content-center">
+        <p class="col-md-6 text-center mb-0">OR</p>
+      </div>
+      <div class="row justify-content-center">
+        <button
+          type="button"
+          class="col-3 btn btn-warning"
+          :disabled="!(selectedRating == 0 && searchText == '')"
+          @click="getLocation()"
+        >
+          Search By Your Location
+        </button>
+      </div>
       <div class="row justify-content-center mt-3">
-        <button type="button" class="col-3 btn btn-primary" @click="search()">
+        <button
+          type="button"
+          class="col-3 btn btn-primary"
+          :disabled="selectedRating == 0 && searchText == ''"
+          @click="search()"
+        >
           Search
         </button>
       </div>
@@ -70,18 +88,42 @@ export default {
     }
   },
   methods: {
+    getLocation() {
+      navigator.geolocation.getCurrentPosition(
+        this.getLocationSuccess,
+        this.getLocationError
+      )
+    },
+    getLocationSuccess(pos) {
+      const payload = {
+        latitude: pos.coords.latitude,
+        longitude: pos.coords.longitude,
+      }
+      this.$store.commit('setUserLocation', payload)
+      this.$router.push({
+        path: 'search',
+        query: { by: 'location' },
+      })
+    },
+    getLocationError() {
+      this.$store.commit('userLocationFailed')
+      this.$router.push({
+        path: 'search',
+        query: { by: 'location' },
+      })
+    },
     search() {
       // This method adds page redirection with query fields to search for the restaurant.
       // Currently, this is dumb redirection logic and will not impact the results page in any manner.
       if (this.selectedRating) {
         this.$router.push({
           path: 'search',
-          query: { rating: this.selectedRating },
+          query: { by: 'rating', value: this.selectedRating },
         })
       } else {
         this.$router.push({
           path: 'search',
-          query: { keyword: this.searchText || 'random' },
+          query: { by: 'keyword', value: this.searchText },
         })
       }
     },
