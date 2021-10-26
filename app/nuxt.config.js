@@ -26,15 +26,15 @@ export default {
   script: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [{ src: '~/assets/bootstrap/main.js', mode: 'client' }],
+  plugins: [{ src: '~/assets/bootstrap/main.js', mode: 'client' }, { src: "~/plugins/google-maps", ssr: true }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
+    '@nuxtjs/dotenv'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -54,11 +54,13 @@ export default {
           icons: ['far']
         }
       ]
-    }
+    },
   ]],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    transpile: [/^vue2-google-maps($|\/)/]
+  },
 
   server: {
     host: '0.0.0.0',
