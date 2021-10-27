@@ -44,111 +44,40 @@ export const state = () => ({
       image: 'https://dynamicmedia.zuza.com/zz/m/original_/7/2/7266f0c7-32b2-4514-af18-1b9dd948b072/Osmow%20s%2004_Super_Portrait.jpg',
       lat: 43.2584973,
       lng: -79.9454202,
-      id: '1011',
+      id: 1011,
     },
-    2013: {
-      name: 'Owsmows',
-      about:
-        "Osmow's is a fast casual Mediterranean restaurant capturing a truly modern taste while giving customers the luxury of customizing their preferences.",
-      address: '',
-      phone: '',
-      website: '',
-      hours: '',
-      menu: '',
-      price: '',
-      rating: '',
-      reviews: '',
-      image: '',
-
-      id: '2013',
-    },
-    31: {
-      name: 'Pizza Hut',
-      about:
-        "Osmow's is a fast casual Mediterranean restaurant capturing a truly modern taste while giving customers the luxury of customizing their preferences.",
-      address: '',
-      phone: '',
-      website: '',
-      hours: '',
-      menu: '',
-      price: '',
-      rating: '',
-      reviews: '',
-      image: '',
-      lat: '',
-      lng: '',
-      id: '31',
-    },
-    43345: {
-      name: 'Basilique',
-      about:
-        "Osmow's is a fast casual Mediterranean restaurant capturing a truly modern taste while giving customers the luxury of customizing their preferences.",
-      address: '',
-      phone: '',
-      website: '',
-      hours: '',
-      menu: '',
-      price: '',
-      rating: '',
-      reviews: '',
-      image: '',
-      lat: '',
-      lng: '',
-      id: '43345',
-    },
-    567574: {
-      name: 'Dominos',
-      about:
-        "Osmow's is a fast casual Mediterranean restaurant capturing a truly modern taste while giving customers the luxury of customizing their preferences.",
-      address: '',
-      phone: '',
-      website: '',
-      hours: '',
-      menu: '',
-      price: '',
-      rating: '',
-      reviews: '',
-      image: '',
-      lat: '',
-      lng: '',
-      id: '567574',
-    },
-    54534543: {
-      name: 'KFC',
-      about:
-        "Osmow's is a fast casual Mediterranean restaurant capturing a truly modern taste while giving customers the luxury of customizing their preferences.",
-      address: '',
-      phone: '',
-      website: '',
-      hours: '',
-      menu: '',
-      price: '',
-      rating: '',
-      reviews: '',
-      image: '',
-      lat: '',
-      lng: '',
-      id: '54534543',
-    },
-    3: {
-      name: 'Ginos',
-      about:
-        "Osmow's is a fast casual Mediterranean restaurant capturing a truly modern taste while giving customers the luxury of customizing their preferences.",
-      address: '',
-      phone: '',
-      website: '',
-      hours: '',
-      menu: '',
-      price: '',
-      rating: '',
-      reviews: '',
-      image: '',
-      lat: '',
-      lng: '',
-      id: '54534543',
-    },
-  },
-  restaurantsInFocus: [1011],
+    1012: {
+      name: 'The Ritz-Carlton',
+      about: "Hotel",
+      address: 'Hamilton, Ontario',
+      phone: '416-867-5309',
+      website: 'https://www.ritzcarlton.com/',
+      hours: {
+        monday: '11:00 AM - 10:00 PM',
+        tuesday: '11:00 AM - 10:00 PM',
+        wednesday: '11:00 AM - 10:00 PM',
+        thursday: '11:00 AM - 10:00 PM',
+        friday: '11:00 AM - 10:00 PM',
+        saturday: '11:00 AM - 10:00 PM',
+        sunday: '11:00 AM - 10:00 PM',
+      },
+      rating: 5,
+      reviews: [
+        {
+          title: 'Perfect place for dinner',
+          rating: 4,
+          review:"Amazing",
+          username: 'Alice Franklin',
+          imageurl: 'https://randomuser.me/api/portraits/women/56.jpg',
+        }
+      ],
+      image:"",
+      lat:"",
+      lng:"",
+      id: 1012
+  }
+},
+  restaurantsInFocus: [],
 })
 
 export const mutations = {
@@ -163,4 +92,7 @@ export const mutations = {
   userLocationFailed(state) {
     state.userLocation.status = 2
   },
+  setActiveRestaurant(state, id) {
+    state.restaurantsInFocus = [id]
+  }
 }

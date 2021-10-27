@@ -1,16 +1,9 @@
 <template>
   <!-- The view below represents the individual object page for the restaurant -->
   <!-- This component has been borrowed from the Bootstrap component example library and then modified to satisfy our requirements (https://getbootstrap.com/docs/4.0/examples/blog/) -->
-  <div>
+  <div v-if="restaurantId!=-1">
     <div id="restaurant-top-bar" class="row">
-      <img
-        class="col-md-6 food-img mb-3"
-        height="500"
-        width="100"
-        src="https://www.hamiltonhealthsciences.ca/wp-content/uploads/2018/12/mcmaster_university_medical_centre.jpg"
-        alt="Location Map"
-        loading="lazy"
-      />
+      <Map class="col mb-1" />
       <!-- Restaurant's image -->
       <img
         v-if="restaurantDetails.image"
@@ -136,16 +129,21 @@
       </div>
     </div>
   </div>
+  <div v-else>
+    Please wait while we load the restaurant...
+  </div>
 </template>
 
 <script>
 import Review from '@/components/Review.vue'
 import SubmitReview from '@/components/SubmitReview.vue'
+import Map from '@/components/Map.vue'
 export default {
   components: {
     // Registering components
     SubmitReview,
     Review,
+    Map,
   },
   data() {
     return {
@@ -199,8 +197,14 @@ export default {
   },
   mounted() {
     const id = this.$route.query.id
-    this.restaurantId = id
-    this.restaurantDetails = this.$store.state.restaurants[id]
+    const details = this.$store.state.restaurants[id]
+    if (details) {
+      this.restaurantId = id
+      this.restaurantDetails = details
+      this.$store.commit('setActiveRestaurant', id)
+    } else {
+      this.$router.push({ path: '/' })
+    }
   },
 }
 </script>

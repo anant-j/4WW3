@@ -28,7 +28,8 @@ export default {
           id: data.id,
           position: { lat: data.lat, lng: data.lng },
         }
-        final.push(tempData)
+        if(tempData.position.lat && tempData.position.lng){
+        final.push(tempData)}
       }
       return final
     },
