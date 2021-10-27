@@ -159,7 +159,7 @@ export default {
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
           name: 'og:title',
-          content: 'Osmows',
+          content: this.restaurantDetails.name,
         },
         {
           name: 'og:type',
@@ -168,11 +168,11 @@ export default {
         {
           name: 'og:image',
           content:
-            'https://mrosmow.com/wp-content/uploads/2019/01/Osmows-Straight-Logo.png',
+            this.restaurantDetails.image,
         },
         {
           name: 'og:url',
-          content: 'https://mrosmow.com/',
+          content: this.restaurantDetails.website,
         },
         {
           name: 'twitter:card',
@@ -180,22 +180,21 @@ export default {
         },
         {
           name: 'twitter:title',
-          content: 'Osmows',
+          content: this.restaurantDetails.name,
         },
         {
           name: 'twitter:description',
-          content:
-            "Osmow's is a fast casual Mediterranean restaurant capturing a truly modern taste while giving customers the luxury of customizing their preferences.",
+          content:this.restaurantDetails.about
         },
         {
           name: 'twitter:image',
           content:
-            'https://mrosmow.com/wp-content/uploads/2019/01/Osmows-Straight-Logo.png',
+            this.restaurantDetails.image,
         },
       ],
     }
   },
-  mounted() {
+  created() {
     const id = this.$route.query.id
     const details = this.$store.state.restaurants[id]
     if (details) {
