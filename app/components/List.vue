@@ -1,7 +1,7 @@
 <template>
   <!-- The div below represents the list that is displayed in the search results page after a search has been made -->
   <!-- We use Vue's class binding to assign the respective classes based on the night mode status -->
-  <div>
+  <div v-if="activePinsOnMap.length">
     <h2
       :class="{
         'text-light': $store.state.nightMode,
@@ -18,19 +18,46 @@
       }"
     >
       <li
-        v-for="item in Object.keys($store.state.restaurants)"
-        :key="item"
+        v-for="item in activePinsOnMap"
+        :key="item.id"
         class="list-group-item list-group-item-action"
-        @click="openPage(item)"
+        @click="openPage(item.id)"
       >
-        {{ $store.state.restaurants[item].name }}
+        {{ item.name }}
       </li>
     </ul>
+  </div>
+  <div v-else>
+    <h2
+      :class="{
+        'text-light': $store.state.nightMode,
+        'text-dark': !$store.state.nightMode,
+      }"
+    >
+      No results found
+    </h2>
   </div>
 </template>
 
 <script>
 export default {
+  computed: {
+    activePinsOnMap() {
+      const final = []
+      for (const iterator of this.$store.state.restaurantsInFocus) {
+        const data = this.$store.state.restaurants[iterator]
+        const tempData = {
+          name: data.name,
+          id: data.id,
+          position: { lat: data.lat, lng: data.lng },
+        }
+        if (tempData.position.lat && tempData.position.lng) {
+          final.push(tempData)
+        }
+      }
+      return final
+    },
+  },
   methods: {
     openPage(restaurantId) {
       this.$router.push({ path: 'restaurant', query: { id: restaurantId } })

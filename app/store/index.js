@@ -5,6 +5,16 @@ export const state = () => ({
     lng: -79.9192335,
     status: 0,
   },
+  mapBounds: {
+    northEast: {
+      lat: null,
+      lng: null,
+    },
+    southWest: {
+      lat: null,
+      lng: null,
+    },
+  },
   restaurants: {
     1011: {
       name: 'Osmows',
@@ -41,14 +51,15 @@ export const state = () => ({
           imageurl: 'https://randomuser.me/api/portraits/men/12.jpg',
         },
       ],
-      image: 'https://dynamicmedia.zuza.com/zz/m/original_/7/2/7266f0c7-32b2-4514-af18-1b9dd948b072/Osmow%20s%2004_Super_Portrait.jpg',
+      image:
+        'https://dynamicmedia.zuza.com/zz/m/original_/7/2/7266f0c7-32b2-4514-af18-1b9dd948b072/Osmow%20s%2004_Super_Portrait.jpg',
       lat: 43.2584973,
       lng: -79.9454202,
       id: 1011,
     },
     1012: {
       name: 'The Ritz-Carlton',
-      about: "Hotel",
+      about: 'Hotel',
       address: 'Hamilton, Ontario',
       phone: '416-867-5309',
       website: 'https://www.ritzcarlton.com/',
@@ -66,18 +77,18 @@ export const state = () => ({
         {
           title: 'Perfect place for dinner',
           rating: 4,
-          review:"Amazing",
+          review: 'Amazing',
           username: 'Alice Franklin',
           imageurl: 'https://randomuser.me/api/portraits/women/56.jpg',
-        }
+        },
       ],
-      image:"",
-      lat:"",
-      lng:"",
-      id: 1012
-  }
-},
-  restaurantsInFocus: [],
+      image: '',
+      lat: '',
+      lng: '',
+      id: 1012,
+    },
+  },
+  restaurantsInFocus: new Set().add(1011),
 })
 
 export const mutations = {
@@ -92,7 +103,25 @@ export const mutations = {
   userLocationFailed(state) {
     state.userLocation.status = 2
   },
+  addActiveRestaurant(state, id) {
+    state.restaurantsInFocus.add(id)
+  },
+  clearActiveRestaurants(state) {
+    state.restaurantsInFocus = new Set()
+  },
   setActiveRestaurant(state, id) {
-    state.restaurantsInFocus = [id]
-  }
+    state.restaurantsInFocus = new Set().add(id)
+  },
+  updateMapBounds(state, payload) {
+    state.mapBounds = {
+      northEast: {
+        lat: payload.northEast.lat,
+        lng: payload.northEast.lng,
+      },
+      southWest: {
+        lat: payload.southWest.lat,
+        lng: payload.southWest.lng,
+      },
+    }
+  },
 }
