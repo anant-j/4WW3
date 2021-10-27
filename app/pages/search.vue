@@ -19,21 +19,52 @@ export default {
     List,
     Map,
   },
+  data() {
+    return {
+      // Initializing data
+      type: null,
+    }
+  },
   watch: {
-    '$store.state.mapBounds' () {
-      const restaurants = this.$store.state.restaurants;
-      this.$store.commit('clearActiveRestaurants');
-      for (const restaurant of Object.keys(restaurants)) {
-        if(this.isWithinBounds(restaurants[restaurant].lat, restaurants[restaurant].lng, this.$store.state.mapBounds)) {
-          this.$store.commit('addActiveRestaurant', restaurant);
+    '$store.state.mapBounds'() {
+      if (this.type === 'location') {
+        const restaurants = this.$store.state.restaurants
+        this.$store.commit('clearActiveRestaurants')
+        for (const restaurant of Object.keys(restaurants)) {
+          if (
+            this.isWithinBounds(
+              restaurants[restaurant].lat,
+              restaurants[restaurant].lng,
+              this.$store.state.mapBounds
+            )
+          ) {
+            this.$store.commit('addActiveRestaurant', restaurant)
+          }
         }
-      }  
+      }
     },
+  },
+  created() {
+    const searchBy = this.$route.query.by
+    if (searchBy === 'location') {
+      this.type = 'location'
+    } else if (searchBy === 'rating') {
+      this.type = 'rating'
+    } else if (searchBy === 'keyword') {
+      this.type = 'keyword'
+    } else {
+      this.$router.push({ path: '/' })
+    }
   },
   methods: {
     // Methods
-    isWithinBounds(lat, lng, bounds){
-      if(lat < bounds.northEast.lat && lat > bounds.southWest.lat && lng < bounds.northEast.lng && lng > bounds.southWest.lng){
+    isWithinBounds(lat, lng, bounds) {
+      if (
+        lat < bounds.northEast.lat &&
+        lat > bounds.southWest.lat &&
+        lng < bounds.northEast.lng &&
+        lng > bounds.southWest.lng
+      ) {
         return true
       }
       return false

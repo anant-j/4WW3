@@ -1,14 +1,17 @@
 <template>
-  <!-- Can also use @idle -->
+  <!-- Can also use @idle or @bounds_changed -->
   <GmapMap
     ref="mapRef"
     :center="{ lat: coords.lat, lng: coords.lng }"
-    :zoom="13"
+    :zoom="10"
     :options="{
       fullscreenControl: false,
       mapTypeControl: false,
       streetViewControl: false,
+      maxZoom: 14,
+      minZoom: 4
     }"
+ 
     @bounds_changed="updateBounds()"
   >
     <GmapMarker :position="coords" :clickable="true" @click="panCenter()" />
@@ -58,6 +61,7 @@ export default {
   methods: {
     panCenter() {
       this.$refs.mapRef.panTo({ lat: this.coords.lat, lng: this.coords.lng })
+      this.map.setZoom(10);
     },
     getLocation() {
       navigator.geolocation.getCurrentPosition(
