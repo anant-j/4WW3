@@ -65,7 +65,7 @@
           "
           @click="searchByLocation()"
         >
-          <span v-if="this.$store.state.userLocation.status == 2"
+          <span v-if="$store.state.userLocation.status == 2"
             >An error occured. Please check your browser's permissions.</span
           ><span v-else>Search By Location</span>
         </button>
