@@ -8,19 +8,31 @@
           <label for="firstname">First Name</label>
           <input
             id="firstname"
+            v-model="firstname"
             type="text"
             class="form-control"
             placeholder="First Name"
+            :class="{
+              'is-invalid': !validate().firstname && blur,
+              'is-valid': validate().firstname && blur,
+            }"
           />
+          <div class="invalid-feedback">Please enter a first name.</div>
         </div>
         <div class="col-md-3">
           <label for="lastname">Last Name</label>
           <input
             id="lastname"
+            v-model="lastname"
             type="text"
             class="form-control"
             placeholder="Last Name"
+            :class="{
+              'is-invalid': !validate().lastname && blur,
+              'is-valid': validate().lastname && blur,
+            }"
           />
+          <div class="invalid-feedback">Please enter a last name.</div>
         </div>
       </div>
       <div class="row justify-content-center">
@@ -33,8 +45,14 @@
             type="email"
             class="form-control"
             placeholder="Enter Email"
+            :class="{
+              'is-invalid': !validate().email && blur,
+              'is-valid': validate().email && blur,
+            }"
           />
+        <div class="invalid-feedback">Please enter a valid email.</div>
         </div>
+
       </div>
       <div class="row justify-content-center">
         <div class="col-md-6">
@@ -46,7 +64,16 @@
             type="password"
             class="form-control"
             placeholder="Enter Password"
+            :class="{
+              'is-invalid': !validate().password && blur,
+              'is-valid': validate().password && blur,
+            }"
           />
+        <div class="invalid-feedback">
+          Please enter a password that is at least 5 characters long, and
+          contains a number, a symbol and a letter.
+        </div>
+
         </div>
       </div>
       <div class="row justify-content-center">
@@ -55,11 +82,18 @@
           <!-- This is the HTML5 date field for selecting user's Date of Birth -->
           <input
             id="dob"
+            v-model="dob"
             type="date"
             class="form-control"
             :max="getMaxDate()"
+            :class="{
+              'is-invalid': !validate().dob && blur,
+              'is-valid': validate().dob && blur,
+            }"
           />
+        <div class="invalid-feedback">Please enter a valid DOB</div>
         </div>
+
       </div>
       <div class="row justify-content-center">
         <div class="col-sm-6 col-md-3">
@@ -75,21 +109,13 @@
         <div class="col-sm-3 col-md-3">
           <div class="form-check">
             <!-- This is the checkbox field for remembering user's location -->
-            <input
-              id="rememberLocation"
-              class="form-check-input"
-              type="checkbox"
-              value
-              checked
-            />
-            <label class="form-check-label" for="rememberLocation"
-              >Remember My Location</label
-            >
+            <input id="rememberLocation" class="form-check-input" type="checkbox" value checked />
+            <label class="form-check-label" for="rememberLocation">Remember My Location</label>
           </div>
         </div>
       </div>
       <div class="row justify-content-center mt-3">
-        <button type="button" class="col-3 btn btn-primary">Submit</button>
+        <button type="button" class="col-3 btn btn-primary" @click="submit">Submit</button>
       </div>
       <div class="row justify-content-center mt-3">
         <!-- Login button that is only enabled if both email and password fields are empty -->
@@ -98,9 +124,7 @@
           class="col-3 btn btn-outline-info"
           :disabled="email != '' || password != ''"
           @click="openPage()"
-        >
-          Login Page
-        </button>
+        >Login Page</button>
       </div>
     </form>
   </div>
@@ -112,7 +136,11 @@ export default {
     return {
       email: "", // Data property for the email entered
       password: "", // Data property for the password entered
-    };
+      firstname: "",
+      lastname: "",
+      dob: "",
+      blur: false,
+    }
   },
   methods: {
     getMaxDate() {
@@ -123,6 +151,30 @@ export default {
     },
     openPage() {
       this.$router.push({ path: "login" }); // Switch view to Login.vue
+    },
+        submit() {
+      this.blur = true;
+      if (this.validate().result) {
+        alert("Done");
+      } else {
+        alert("Not Done");
+      }
+    },
+    validate() {
+      const firstnameValidation = this.firstname.length;
+      const lastnameValidation = this.lastname.length
+      const emailValidation = this.email.length;
+      const passwordValidation = this.password.length >= 5;
+      const dobValidation = ""
+      // const nameValidation = this.
+      return {
+        firstname: firstnameValidation,
+        lastname: lastnameValidation,
+        email: emailValidation,
+        password: passwordValidation,
+        dob: dobValidation,
+        result: firstnameValidation && lastnameValidation && emailValidation && passwordValidation && dobValidation,
+      };
     },
   },
 };
