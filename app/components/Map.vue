@@ -9,9 +9,8 @@
       mapTypeControl: false,
       streetViewControl: false,
       maxZoom: 14,
-      minZoom: 4
+      minZoom: 4,
     }"
- 
     @bounds_changed="updateBounds()"
   >
     <GmapMarker :position="coords" :clickable="true" @click="panCenter()" />
@@ -20,6 +19,9 @@
       :key="index"
       :position="m.position"
       :clickable="true"
+      :icon="getIconColour(m.id)"
+      @mouseover="highlight(m.id)"
+      @mouseout="deHighlight()"
     />
   </GmapMap>
 </template>
@@ -59,9 +61,21 @@ export default {
     })
   },
   methods: {
+    getIconColour(id) {
+      if (this.$store.state.highlighted === id) {
+        return 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+      }
+      return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+    },
+    highlight(id) {
+      this.$store.commit('highlight', id)
+    },
+    deHighlight() {
+      this.$store.commit('deHighlight')
+    },
     panCenter() {
       this.$refs.mapRef.panTo({ lat: this.coords.lat, lng: this.coords.lng })
-      this.map.setZoom(10);
+      this.map.setZoom(10)
     },
     getLocation() {
       navigator.geolocation.getCurrentPosition(

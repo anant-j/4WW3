@@ -21,7 +21,10 @@
         v-for="item in activePinsOnMap"
         :key="item.id"
         class="list-group-item list-group-item-action"
+        :class="{ highlighted: item.id == $store.state.highlighted }"
         @click="openPage(item.id)"
+        @mouseenter="highlight(item.id)"
+        @mouseleave="deHighlight()"
       >
         {{ item.name }}
       </li>
@@ -61,6 +64,12 @@ export default {
   methods: {
     openPage(restaurantId) {
       this.$router.push({ path: 'restaurant', query: { id: restaurantId } })
+    },
+    highlight(id) {
+      this.$store.commit('highlight', id)
+    },
+    deHighlight() {
+      this.$store.commit('deHighlight')
     },
   },
 }

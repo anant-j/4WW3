@@ -89,6 +89,7 @@ export const state = () => ({
     },
   },
   restaurantsInFocus: new Set().add(1011),
+  highlighted: null,
 })
 
 export const mutations = {
@@ -123,5 +124,11 @@ export const mutations = {
         lng: payload.southWest.lng,
       },
     }
+  },
+  highlight(state, id) {
+    state.highlighted = id
+  },
+  deHighlight(state) {
+    state.highlighted = null
   },
 }
