@@ -59,11 +59,12 @@
         <button
           type="button"
           class="col-3 btn btn-warning"
-          :disabled="!(selectedRating == 0 && searchText == '')"
-          @click="getLocation()"
-        >
-          Search By Your Location
-        </button>
+          :disabled="
+            !(selectedRating == 0 && searchText == '') ||
+            $store.state.userLocation.status == 2
+          "
+          @click="searchByLocation()"
+        ><span v-if="this.$store.state.userLocation.status == 1">Please Wait</span><span v-else-if="this.$store.state.userLocation.status == 2">An error occured. Please check the browser permissions.</span><span v-else>Search By Location</span></button>
       </div>
       <div class="row justify-content-center mt-3">
         <button
@@ -71,62 +72,41 @@
           class="col-3 btn btn-primary"
           :disabled="selectedRating == 0 && searchText == ''"
           @click="search()"
-        >
-          Search
-        </button>
+        >Search</button>
       </div>
     </form>
   </div>
 </template>
 
 <script>
+import geolocation from "~/mixins/geolocation.js";
 export default {
+  mixins: [geolocation],
   data() {
     return {
-      searchText: '', // Data property for the search text entered
+      searchText: "", // Data property for the search text entered
       selectedRating: 0, // Data property for the rating selected
-    }
+    };
   },
   methods: {
-    getLocation() {
-      navigator.geolocation.getCurrentPosition(
-        this.getLocationSuccess,
-        this.getLocationError
-      )
-    },
-    getLocationSuccess(pos) {
-      const payload = {
-        latitude: pos.coords.latitude,
-        longitude: pos.coords.longitude,
-      }
-      this.$store.commit('setUserLocation', payload)
-      this.$router.push({
-        path: 'search',
-        query: { by: 'location' },
-      })
-    },
-    getLocationError() {
-      this.$store.commit('userLocationFailed')
-      this.$router.push({
-        path: 'search',
-        query: { by: 'location' },
-      })
+    searchByLocation() {
+      this.getLocation(true);
     },
     search() {
       // This method adds page redirection with query fields to search for the restaurant.
       // Currently, this is dumb redirection logic and will not impact the results page in any manner.
       if (this.selectedRating) {
         this.$router.push({
-          path: 'search',
-          query: { by: 'rating', value: this.selectedRating },
-        })
+          path: "search",
+          query: { by: "rating", value: this.selectedRating },
+        });
       } else {
         this.$router.push({
-          path: 'search',
-          query: { by: 'keyword', value: this.searchText },
-        })
+          path: "search",
+          query: { by: "keyword", value: this.searchText },
+        });
       }
     },
   },
-}
+};
 </script>

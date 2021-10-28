@@ -26,7 +26,9 @@
   </GmapMap>
 </template>
 <script>
+import geolocation from "~/mixins/geolocation.js";
 export default {
+    mixins: [geolocation],
   data() {
     return {
       map: null,
@@ -76,22 +78,6 @@ export default {
     panCenter() {
       this.$refs.mapRef.panTo({ lat: this.coords.lat, lng: this.coords.lng })
       this.map.setZoom(10)
-    },
-    getLocation() {
-      navigator.geolocation.getCurrentPosition(
-        this.getLocationSuccess,
-        this.getLocationError
-      )
-    },
-    getLocationSuccess(pos) {
-      const payload = {
-        latitude: pos.coords.latitude,
-        longitude: pos.coords.longitude,
-      }
-      this.$store.commit('setUserLocation', payload)
-    },
-    getLocationError() {
-      this.$store.commit('userLocationFailed')
     },
     updateBounds() {
       const bounds = this.map.getBounds()
