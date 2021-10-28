@@ -64,7 +64,11 @@
             $store.state.userLocation.status == 2
           "
           @click="searchByLocation()"
-        ><span v-if="this.$store.state.userLocation.status == 1">Please Wait</span><span v-else-if="this.$store.state.userLocation.status == 2">An error occured. Please check the browser permissions.</span><span v-else>Search By Location</span></button>
+        >
+          <span v-if="this.$store.state.userLocation.status == 2"
+            >An error occured. Please check your browser's permissions.</span
+          ><span v-else>Search By Location</span>
+        </button>
       </div>
       <div class="row justify-content-center mt-3">
         <button
@@ -72,7 +76,9 @@
           class="col-3 btn btn-primary"
           :disabled="selectedRating == 0 && searchText == ''"
           @click="search()"
-        >Search</button>
+        >
+          Search
+        </button>
       </div>
     </form>
   </div>
