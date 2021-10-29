@@ -1,38 +1,44 @@
 export default {
-    methods: {
-        getLocation(redirect = false) {
-            if (!redirect) {
-                navigator.geolocation.getCurrentPosition(
-                    this.getLocationSuccess,
-                    this.getLocationError
-                );
-            } else {
-                navigator.geolocation.getCurrentPosition(
-                    this.getLocationSuccessRedirect,
-                    this.getLocationError
-                );
-            }
-        },
-        getLocationSuccess(pos) {
-            const payload = {
-                latitude: pos.coords.latitude,
-                longitude: pos.coords.longitude,
-            };
-            this.$store.commit("setUserLocation", payload);
-        },
-        getLocationError() {
-            this.$store.commit("userLocationFailed");
-        },
-        getLocationSuccessRedirect(pos) {
-            const payload = {
-                latitude: pos.coords.latitude,
-                longitude: pos.coords.longitude,
-            };
-            this.$store.commit("setUserLocation", payload);
-            this.$router.push({
-                path: "search",
-                query: { by: "location" },
-            });
-        },
+  methods: {
+    async getLocation() {
+      try {
+        const pos = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject, options)
+        })
+        return {
+          success: true,
+          latitude: pos.coords.latitude,
+          longitude: pos.coords.longitude,
+        }
+      } catch (error) {
+        return {
+          success: false,
+        }
+      }
     },
-};
+    async updateUserLocation(redirect = false) {
+      const location = await this.getLocation()
+      if (location.success) {
+        const payload = {
+            latitude: location.latitude,
+          longitude: location.longitude,
+        }
+        this.$store.commit('setUserLocation', payload)
+        if (redirect) {
+          this.$router.push({
+            path: 'search',
+            query: { by: 'location' },
+          })
+        }
+      } else {
+        this.$store.commit('userLocationFailed')
+      }
+    },
+  },
+}
+
+const options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0,
+}

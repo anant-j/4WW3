@@ -56,7 +56,7 @@ export default {
   },
   mounted() {
     if (this.$store.state.userLocation.status === 0) {
-      this.getLocation()
+      this.updateUserLocation()
     }
     this.$refs.mapRef.$mapPromise.then((map) => {
       this.map = map
