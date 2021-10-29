@@ -32,7 +32,7 @@
             <NuxtLink class="nav-link" to="/Add">Add Restaurant</NuxtLink>
           </li>
           <li class="nav-item">
-            <NuxtLink class="nav-link" to="/Login">Login</NuxtLink>
+            <NuxtLink class="nav-link" to="/Login">Login/Register</NuxtLink>
           </li>
           <li class="nav-item">
             <NuxtLink class="nav-link" to="/About">About</NuxtLink>
