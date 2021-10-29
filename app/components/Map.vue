@@ -2,7 +2,7 @@
   <!-- Can also use @idle or @bounds_changed -->
   <GmapMap
     ref="mapRef"
-    :center="{ lat: coords.lat, lng: coords.lng }"
+    :center="coords"
     :zoom="10"
     :options="{
       fullscreenControl: false,
@@ -26,9 +26,9 @@
   </GmapMap>
 </template>
 <script>
-import geolocation from "~/mixins/geolocation.js";
+import geolocation from '~/mixins/geolocation.js'
 export default {
-    mixins: [geolocation],
+  mixins: [geolocation],
   data() {
     return {
       map: null,
@@ -36,18 +36,18 @@ export default {
   },
   computed: {
     coords() {
-      return this.$store.state.userLocation
+      return {lat: this.$store.state.userLocation.latitude, lng: this.$store.state.userLocation.longitude}
     },
     activePinsOnMap() {
       const final = []
       for (const iterator of this.$store.state.restaurantsInFocus) {
         const data = this.$store.state.restaurants[iterator]
-        const tempData = {
-          name: data.name,
-          id: data.id,
-          position: { lat: data.lat, lng: data.lng },
-        }
-        if (tempData.position.lat && tempData.position.lng) {
+        if (data.latitude && data.longitude) {
+          const tempData = {
+            name: data.name,
+            id: data.id,
+            position: { lat: data.latitude, lng: data.longitude },
+          }
           final.push(tempData)
         }
       }
@@ -76,7 +76,7 @@ export default {
       this.$store.commit('deHighlight')
     },
     panCenter() {
-      this.$refs.mapRef.panTo({ lat: this.coords.lat, lng: this.coords.lng })
+      this.$refs.mapRef.panTo(this.coords)
       this.map.setZoom(10)
     },
     updateBounds() {
@@ -84,8 +84,8 @@ export default {
       const ne = bounds.getNorthEast()
       const sw = bounds.getSouthWest()
       this.$store.commit('updateMapBounds', {
-        northEast: { lat: ne.lat(), lng: ne.lng() },
-        southWest: { lat: sw.lat(), lng: sw.lng() },
+        northEast: { latitude: ne.lat(), longitude: ne.lng() },
+        southWest: { latitude: sw.lat(), longitude: sw.lng() },
       })
     },
   },

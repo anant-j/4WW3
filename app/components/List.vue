@@ -49,12 +49,11 @@ export default {
       const final = []
       for (const iterator of this.$store.state.restaurantsInFocus) {
         const data = this.$store.state.restaurants[iterator]
-        const tempData = {
-          name: data.name,
-          id: data.id,
-          position: { lat: data.lat, lng: data.lng },
-        }
-        if (tempData.position.lat && tempData.position.lng) {
+        if (data.latitude && data.longitude) {
+          const tempData = {
+            name: data.name,
+            id: data.id,
+          }
           final.push(tempData)
         }
       }

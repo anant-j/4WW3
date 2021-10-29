@@ -33,8 +33,8 @@ export default {
         for (const restaurant of Object.keys(restaurants)) {
           if (
             this.isWithinBounds(
-              restaurants[restaurant].lat,
-              restaurants[restaurant].lng,
+              restaurants[restaurant].latitude,
+              restaurants[restaurant].longitude,
               this.$store.state.mapBounds
             )
           ) {
@@ -58,12 +58,12 @@ export default {
   },
   methods: {
     // Methods
-    isWithinBounds(lat, lng, bounds) {
+    isWithinBounds(latitude, longitude, bounds) {
       if (
-        lat < bounds.northEast.lat &&
-        lat > bounds.southWest.lat &&
-        lng < bounds.northEast.lng &&
-        lng > bounds.southWest.lng
+        latitude < bounds.northEast.latitude &&
+        latitude > bounds.southWest.latitude &&
+        longitude < bounds.northEast.longitude &&
+        longitude > bounds.southWest.longitude
       ) {
         return true
       }
