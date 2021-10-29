@@ -41,9 +41,7 @@
         </div>
       </div>
       <div class="row justify-content-center mt-3">
-        <button type="button" class="col-3 btn btn-primary" @click="submit()">
-          Login
-        </button>
+        <button type="button" class="col-3 btn btn-primary" @click="submit()">Login</button>
       </div>
       <div class="row justify-content-center mt-3">
         <!-- Register button that is only enabled if both email and password fields are empty -->
@@ -52,16 +50,16 @@
           class="col-3 btn btn-danger"
           :disabled="email != '' || password != ''"
           @click="openPage()"
-        >
-          Register
-        </button>
+        >Register</button>
       </div>
     </form>
   </div>
 </template>
 
 <script>
+import validations from "~/mixins/validations.js";
 export default {
+  mixins: [validations],
   data() {
     return {
       email: "", // Data property for the email entered
@@ -82,8 +80,8 @@ export default {
       }
     },
     validate() {
-      const emailValidation = this.email.length;
-      const passwordValidation = this.password.length >= 5;
+      const emailValidation = this.validateEmail(this.email);
+      const passwordValidation = this.validatePassword(this.password);
       return {
         email: emailValidation,
         password: passwordValidation,
