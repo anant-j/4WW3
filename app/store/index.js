@@ -1,18 +1,18 @@
 export const state = () => ({
   nightMode: true,
   userLocation: {
-    lat: 43.2607355,
-    lng: -79.9192335,
+    latitude: 43.2607355,
+    longitude: -79.9192335,
     status: 0,
   },
   mapBounds: {
     northEast: {
-      lat: null,
-      lng: null,
+      latitude: null,
+      longitude: null,
     },
     southWest: {
-      lat: null,
-      lng: null,
+      latitude: null,
+      longitude: null,
     },
   },
   restaurants: {
@@ -53,8 +53,8 @@ export const state = () => ({
       ],
       image:
         'https://dynamicmedia.zuza.com/zz/m/original_/7/2/7266f0c7-32b2-4514-af18-1b9dd948b072/Osmow%20s%2004_Super_Portrait.jpg',
-      lat: 43.2584973,
-      lng: -79.9454202,
+      latitude: 43.2584973,
+      longitude: -79.9454202,
       id: 1011,
     },
     1012: {
@@ -83,8 +83,8 @@ export const state = () => ({
         },
       ],
       image: '',
-      lat: '',
-      lng: '',
+      latitude: '',
+      longitude: '',
       id: 1012,
     },
   },
@@ -97,8 +97,8 @@ export const mutations = {
     state.nightMode = !state.nightMode
   },
   setUserLocation(state, payload) {
-    state.userLocation.lat = payload.latitude
-    state.userLocation.lng = payload.longitude
+    state.userLocation.latitude = payload.latitude
+    state.userLocation.longitude = payload.longitude
     state.userLocation.status = 1
   },
   userLocationFailed(state) {
@@ -116,12 +116,12 @@ export const mutations = {
   updateMapBounds(state, payload) {
     state.mapBounds = {
       northEast: {
-        lat: payload.northEast.lat,
-        lng: payload.northEast.lng,
+        latitude: payload.northEast.latitude,
+        longitude: payload.northEast.longitude,
       },
       southWest: {
-        lat: payload.southWest.lat,
-        lng: payload.southWest.lng,
+        latitude: payload.southWest.latitude,
+        longitude: payload.southWest.longitude,
       },
     }
   },

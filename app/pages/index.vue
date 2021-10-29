@@ -96,7 +96,7 @@ export default {
   },
   methods: {
     searchByLocation() {
-      this.getLocation(true);
+      this.updateUserLocation(true);
     },
     search() {
       // This method adds page redirection with query fields to search for the restaurant.

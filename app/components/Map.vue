@@ -2,13 +2,13 @@
   <!-- Can also use @idle or @bounds_changed -->
   <GmapMap
     ref="mapRef"
-    :center="{ lat: coords.lat, lng: coords.lng }"
+    :center="coords"
     :zoom="10"
     :options="{
       fullscreenControl: false,
       mapTypeControl: false,
       streetViewControl: false,
-      maxZoom: 14,
+      maxZoom: 18,
       minZoom: 4,
     }"
     @bounds_changed="updateBounds()"
@@ -26,9 +26,10 @@
   </GmapMap>
 </template>
 <script>
-import geolocation from "~/mixins/geolocation.js";
+import geolocation from '~/mixins/geolocation.js'
+import mapControl from '~/mixins/mapControl.js'
 export default {
-    mixins: [geolocation],
+  mixins: [geolocation, mapControl],
   data() {
     return {
       map: null,
@@ -36,27 +37,15 @@ export default {
   },
   computed: {
     coords() {
-      return this.$store.state.userLocation
-    },
-    activePinsOnMap() {
-      const final = []
-      for (const iterator of this.$store.state.restaurantsInFocus) {
-        const data = this.$store.state.restaurants[iterator]
-        const tempData = {
-          name: data.name,
-          id: data.id,
-          position: { lat: data.lat, lng: data.lng },
-        }
-        if (tempData.position.lat && tempData.position.lng) {
-          final.push(tempData)
-        }
+      return {
+        lat: this.$store.state.userLocation.latitude,
+        lng: this.$store.state.userLocation.longitude,
       }
-      return final
     },
   },
   mounted() {
     if (this.$store.state.userLocation.status === 0) {
-      this.getLocation()
+      this.updateUserLocation()
     }
     this.$refs.mapRef.$mapPromise.then((map) => {
       this.map = map
@@ -69,23 +58,24 @@ export default {
       }
       return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
     },
-    highlight(id) {
-      this.$store.commit('highlight', id)
-    },
-    deHighlight() {
-      this.$store.commit('deHighlight')
-    },
     panCenter() {
-      this.$refs.mapRef.panTo({ lat: this.coords.lat, lng: this.coords.lng })
-      this.map.setZoom(10)
+      this.$refs.mapRef.panTo(this.coords)
+    },
+    recenterBounds() {
+      const bounds = new window.google.maps.LatLngBounds()
+      for (const pin of this.activePinsOnMap) {
+        bounds.extend(new window.google.maps.LatLng(pin.position.lat, pin.position.lng))
+      }
+      bounds.extend(new window.google.maps.LatLng(this.coords.lat, this.coords.lng))
+      this.map.fitBounds(bounds)
     },
     updateBounds() {
       const bounds = this.map.getBounds()
       const ne = bounds.getNorthEast()
       const sw = bounds.getSouthWest()
       this.$store.commit('updateMapBounds', {
-        northEast: { lat: ne.lat(), lng: ne.lng() },
-        southWest: { lat: sw.lat(), lng: sw.lng() },
+        northEast: { latitude: ne.lat(), longitude: ne.lng() },
+        southWest: { latitude: sw.lat(), longitude: sw.lng() },
       })
     },
   },
