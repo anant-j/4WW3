@@ -50,9 +50,8 @@
               'is-valid': validate().email && blur,
             }"
           />
-        <div class="invalid-feedback">Please enter a valid email.</div>
+          <div class="invalid-feedback">Please enter a valid email.</div>
         </div>
-
       </div>
       <div class="row justify-content-center">
         <div class="col-md-6">
@@ -69,11 +68,10 @@
               'is-valid': validate().password && blur,
             }"
           />
-        <div class="invalid-feedback">
-          Please enter a password that is at least 5 characters long, and
-          contains a number, a symbol and a letter.
-        </div>
-
+          <div class="invalid-feedback">
+            Please enter a password that is at least 5 characters long, and
+            contains a number, a symbol and a letter.
+          </div>
         </div>
       </div>
       <div class="row justify-content-center">
@@ -91,9 +89,8 @@
               'is-valid': validate().dob && blur,
             }"
           />
-        <div class="invalid-feedback">Please enter a valid DOB</div>
+          <div class="invalid-feedback">Please enter a valid DOB</div>
         </div>
-
       </div>
       <div class="row justify-content-center">
         <div class="col-sm-6 col-md-3">
@@ -109,13 +106,23 @@
         <div class="col-sm-3 col-md-3">
           <div class="form-check">
             <!-- This is the checkbox field for remembering user's location -->
-            <input id="rememberLocation" class="form-check-input" type="checkbox" value checked />
-            <label class="form-check-label" for="rememberLocation">Remember My Location</label>
+            <input
+              id="rememberLocation"
+              class="form-check-input"
+              type="checkbox"
+              value
+              checked
+            />
+            <label class="form-check-label" for="rememberLocation"
+              >Remember My Location</label
+            >
           </div>
         </div>
       </div>
       <div class="row justify-content-center mt-3">
-        <button type="button" class="col-3 btn btn-primary" @click="submit">Submit</button>
+        <button type="button" class="col-3 btn btn-primary" @click="submit">
+          Submit
+        </button>
       </div>
       <div class="row justify-content-center mt-3">
         <!-- Login button that is only enabled if both email and password fields are empty -->
@@ -124,7 +131,9 @@
           class="col-3 btn btn-outline-info"
           :disabled="email != '' || password != ''"
           @click="openPage()"
-        >Login Page</button>
+        >
+          Login Page
+        </button>
       </div>
     </form>
   </div>
@@ -134,38 +143,38 @@
 export default {
   data() {
     return {
-      email: "", // Data property for the email entered
-      password: "", // Data property for the password entered
-      firstname: "",
-      lastname: "",
-      dob: "",
+      email: '', // Data property for the email entered
+      password: '', // Data property for the password entered
+      firstname: '',
+      lastname: '',
+      dob: '',
       blur: false,
     }
   },
   methods: {
     getMaxDate() {
       // This function is used to limit the DOB to a maximum value of current date/today's date.
-      const date = new Date();
+      const date = new Date()
       // date.setFullYear(date.getFullYear() - 18);
-      return date.toISOString().split("T")[0];
+      return date.toISOString().split('T')[0]
     },
     openPage() {
-      this.$router.push({ path: "login" }); // Switch view to Login.vue
+      this.$router.push({ path: 'login' }) // Switch view to Login.vue
     },
-        submit() {
-      this.blur = true;
+    submit() {
+      this.blur = true
       if (this.validate().result) {
-        alert("Done");
+        alert('Done')
       } else {
-        alert("Not Done");
+        alert('Not Done')
       }
     },
     validate() {
-      const firstnameValidation = this.firstname.length;
+      const firstnameValidation = this.firstname.length
       const lastnameValidation = this.lastname.length
-      const emailValidation = this.email.length;
-      const passwordValidation = this.password.length >= 5;
-      const dobValidation = ""
+      const emailValidation = this.email.length
+      const passwordValidation = this.password.length >= 5
+      const dobValidation = ''
       // const nameValidation = this.
       return {
         firstname: firstnameValidation,
@@ -173,9 +182,14 @@ export default {
         email: emailValidation,
         password: passwordValidation,
         dob: dobValidation,
-        result: firstnameValidation && lastnameValidation && emailValidation && passwordValidation && dobValidation,
-      };
+        result:
+          firstnameValidation &&
+          lastnameValidation &&
+          emailValidation &&
+          passwordValidation &&
+          dobValidation,
+      }
     },
   },
-};
+}
 </script>
