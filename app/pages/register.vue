@@ -187,29 +187,39 @@
           </div>
         </div>
         <div class="row justify-content-center mt-3">
-          <!-- Login button that is only enabled if both email and password fields are empty -->
+          <div class="col-md-3 mb-3">
           <button
             type="button"
-            class="col-3 btn btn-outline-info"
+            class="w-100 btn btn-outline-info"
             @click="searchQueryEnabled = !searchQueryEnabled"
           >
             <span v-if="searchQueryEnabled">Edit Manually</span>
             <span v-else>Use Autofill/Search</span>
           </button>
+          </div>
+          <div class="col-md-3 mb-3">
+             <button
+            type="button"
+            class="w-100 btn btn-outline-warning"
+            :disabled="searchQuery.length!=0 && searchQueryEnabled"
+          >Use Current Location</button>
+          </div>
         </div>
-        <div class="row justify-content-center mt-3">
+        <div class="row justify-content-center text-center">
+          <div class="col-md-3 mb-3">
           <button
             type="button"
-            class="col-3 btn btn-outline-danger"
+            class="w-100 btn btn-outline-danger"
             @click="page = 1"
           >
             <span>Go Back</span>
           </button>
-        </div>
-        <div class="row justify-content-center mt-3">
-          <button type="button" class="col-3 btn btn-primary" @click="submit">
+          </div>
+          <div class="col-md-3">
+          <button type="button" class="w-100 btn btn-primary" @click="submit">
             Submit
           </button>
+          </div>
         </div>
       </div>
     </form>
@@ -240,6 +250,13 @@ export default {
     searchQuery(val) {
       if (val.length >= 3) {
         this.populateSearchData(val)
+      }
+      else{
+        this.street = ''
+        this.city = ''
+        this.state = ''
+        this.postalCode = ''
+        this.country = ''
       }
     },
   },
@@ -288,7 +305,7 @@ export default {
       return date.toISOString().split('T')[0]
     },
     openPage() {
-      this.$router.push({ path: 'login' }) // Switch view to Login.vue
+      this.$router.push({ path: 'Login' }) // Switch view to Login.vue
     },
     submit() {
       this.blur = true
