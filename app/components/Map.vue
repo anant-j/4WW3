@@ -8,7 +8,7 @@
       fullscreenControl: false,
       mapTypeControl: false,
       streetViewControl: false,
-      maxZoom: 14,
+      maxZoom: 18,
       minZoom: 4,
     }"
     @bounds_changed="updateBounds()"
@@ -27,8 +27,9 @@
 </template>
 <script>
 import geolocation from '~/mixins/geolocation.js'
+import mapControl from '~/mixins/mapControl.js'
 export default {
-  mixins: [geolocation],
+  mixins: [geolocation, mapControl],
   data() {
     return {
       map: null,
@@ -36,22 +37,10 @@ export default {
   },
   computed: {
     coords() {
-      return {lat: this.$store.state.userLocation.latitude, lng: this.$store.state.userLocation.longitude}
-    },
-    activePinsOnMap() {
-      const final = []
-      for (const iterator of this.$store.state.restaurantsInFocus) {
-        const data = this.$store.state.restaurants[iterator]
-        if (data.latitude && data.longitude) {
-          const tempData = {
-            name: data.name,
-            id: data.id,
-            position: { lat: data.latitude, lng: data.longitude },
-          }
-          final.push(tempData)
-        }
+      return {
+        lat: this.$store.state.userLocation.latitude,
+        lng: this.$store.state.userLocation.longitude,
       }
-      return final
     },
   },
   mounted() {
@@ -69,15 +58,16 @@ export default {
       }
       return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
     },
-    highlight(id) {
-      this.$store.commit('highlight', id)
-    },
-    deHighlight() {
-      this.$store.commit('deHighlight')
-    },
     panCenter() {
       this.$refs.mapRef.panTo(this.coords)
-      this.map.setZoom(10)
+    },
+    recenterBounds() {
+      const bounds = new window.google.maps.LatLngBounds()
+      for (const pin of this.activePinsOnMap) {
+        bounds.extend(new window.google.maps.LatLng(pin.position.lat, pin.position.lng))
+      }
+      bounds.extend(new window.google.maps.LatLng(this.coords.lat, this.coords.lng))
+      this.map.fitBounds(bounds)
     },
     updateBounds() {
       const bounds = this.map.getBounds()

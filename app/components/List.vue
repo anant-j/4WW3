@@ -43,33 +43,13 @@
 </template>
 
 <script>
+import mapControl from '~/mixins/mapControl.js'
 export default {
-  computed: {
-    activePinsOnMap() {
-      const final = []
-      for (const iterator of this.$store.state.restaurantsInFocus) {
-        const data = this.$store.state.restaurants[iterator]
-        if (data.latitude && data.longitude) {
-          const tempData = {
-            name: data.name,
-            id: data.id,
-          }
-          final.push(tempData)
-        }
-      }
-      return final
-    },
-  },
+  mixins: [mapControl],
   methods: {
     openPage(restaurantId) {
       this.$router.push({ path: 'restaurant', query: { id: restaurantId } })
-    },
-    highlight(id) {
-      this.$store.commit('highlight', id)
-    },
-    deHighlight() {
-      this.$store.commit('deHighlight')
-    },
+    }
   },
 }
 </script>

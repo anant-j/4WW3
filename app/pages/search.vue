@@ -3,10 +3,21 @@
   <div class="row container-fluid mt-3">
     <div class="col mb-1 searchMap">
       <!-- Display the map component with results -->
-      <Map class="col mb-1 h-100" />
+      <Map ref="liveMap" class="col mb-1 h-100" />
     </div>
     <!-- Display the list component with results -->
-    <List class="col-md-3" />
+    <div class="col-md-3">
+      <div class="text-center">
+        <button
+          class="btn btn-primary"
+          @click="$refs.liveMap.recenterBounds()"
+        >
+          Center Map
+        </button>
+      </div>
+      <br />
+      <List />
+    </div>
   </div>
 </template>
 
@@ -23,6 +34,7 @@ export default {
     return {
       // Initializing data
       type: null,
+      mapMoved: false,
     }
   },
   watch: {
@@ -42,6 +54,10 @@ export default {
           }
         }
       }
+      if (!this.mapMoved) {
+        this.$refs.liveMap.recenterBounds()
+      }
+      this.mapMoved = true
     },
   },
   created() {
