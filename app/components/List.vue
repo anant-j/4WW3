@@ -48,7 +48,7 @@ export default {
   mixins: [mapControl],
   methods: {
     openPage(restaurantId) {
-      this.$router.push({ path: 'restaurant', query: { id: restaurantId } })
+      this.$router.push({ path: 'Restaurant', query: { id: restaurantId } })
     }
   },
 }

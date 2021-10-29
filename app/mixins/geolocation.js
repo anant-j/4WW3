@@ -26,7 +26,7 @@ export default {
         this.$store.commit('setUserLocation', payload)
         if (redirect) {
           this.$router.push({
-            path: 'search',
+            path: 'Search',
             query: { by: 'location' },
           })
         }

@@ -103,12 +103,12 @@ export default {
       // Currently, this is dumb redirection logic and will not impact the results page in any manner.
       if (this.selectedRating) {
         this.$router.push({
-          path: "search",
+          path: "Search",
           query: { by: "rating", value: this.selectedRating },
         });
       } else {
         this.$router.push({
-          path: "search",
+          path: "Search",
           query: { by: "keyword", value: this.searchText },
         });
       }

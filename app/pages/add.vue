@@ -133,7 +133,7 @@ export default {
   },
   methods: {
     openPage() {
-      this.$router.push({ path: "register" }); // Switch view to Register.vue
+      this.$router.push({ path: "Register" }); // Switch view to Register.vue
     },
     submit() {
       this.blur = true;
