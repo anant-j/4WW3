@@ -306,7 +306,7 @@ export default {
     submit() {
       if (this.page === 1) {
         this.blur = true
-        if (!this.validate().result1) {
+        if (this.validate().result1) {
           this.page = 2
           this.blur = false
         }
@@ -343,8 +343,8 @@ export default {
           passwordValidation &&
           dobValidation,
         searchResult: this.queryResults.has(this.searchQuery),
-        latitude: isFinite(this.latitude) && Math.abs(this.latitude) <= 90,
-        longitude: isFinite(this.longitude) && Math.abs(this.longitude) <= 180,
+        latitude: this.latitude.length>0 && isFinite(this.latitude) && Math.abs(this.latitude) <= 90,
+        longitude: this.longitude.length>0 && isFinite(this.longitude) && Math.abs(this.longitude) <= 180,
       }
     },
   },
