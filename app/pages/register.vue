@@ -113,112 +113,103 @@
       <div v-show="page == 2">
         <div v-if="searchQueryEnabled" class="row justify-content-center">
           <div class="col-md-6">
-            <label for="loationSearch">Search Address</label>
-            <!-- This is the HTML5 email field -->
+            <label>Search Address: </label>
             <input
-              id="loationSearch"
               v-model="searchQuery"
-              type="text"
               class="form-control"
-              placeholder="Start typing to auto fill address"
+              autocomplete="none"
+              list="queryList"
+              name="myBrowser"
+              :class="{
+                'is-invalid': !validate().searchResult && blur,
+                'is-valid': validate().searchResult && blur,
+              }"
             />
+            <datalist id="queryList">
+              <option
+                v-for="item in queryResults"
+                :key="item"
+                :value="item"
+              ></option>
+            </datalist>
+            <div class="invalid-feedback">
+              Please select a valid option from the list.
+            </div>
           </div>
         </div>
-        <div class="row justify-content-center">
-          <div class="col-md-6">
-            <label for="street">Street</label>
-            <!-- This is the HTML5 email field -->
-            <input
-              id="street"
-              v-model="street"
-              type="text"
-              class="form-control"
-              placeholder="Street"
-              :disabled="searchQueryEnabled"
-            />
-          </div>
-        </div>
-        <div class="row justify-content-center">
+        <div v-else class="row justify-content-center">
           <div class="col-md-3">
-            <label for="city">City</label>
+            <label for="latitude">Latitude</label>
             <input
-              id="city"
-              v-model="city"
-              type="text"
+              id="latitude"
+              v-model="latitude"
+              type="number"
               class="form-control"
-              placeholder="City"
-              :disabled="searchQueryEnabled"
+              :class="{
+                'is-invalid': !validate().latitude && blur,
+                'is-valid': validate().latitude && blur,
+              }"
+              placeholder="Enter Latitude"
             />
+            <div class="invalid-feedback">Please enter a valid latitude.</div>
           </div>
           <div class="col-md-3">
-            <label for="state">State</label>
+            <label for="longitude">Longitude</label>
             <input
-              id="state"
-              v-model="state"
-              type="text"
+              id="longitude"
+              v-model="longitude"
+              type="number"
               class="form-control"
-              placeholder="State"
-              :disabled="searchQueryEnabled"
+              :class="{
+                'is-invalid': !validate().longitude && blur,
+                'is-valid': validate().longitude && blur,
+              }"
+              placeholder="Enter Longitude"
             />
-          </div>
-        </div>
-        <div class="row justify-content-center">
-          <div class="col-md-3">
-            <label for="postalcode">Postal Code</label>
-            <input
-              id="postalcode"
-              v-model="postalCode"
-              type="text"
-              class="form-control"
-              placeholder="Postal Code"
-              :disabled="searchQueryEnabled"
-            />
-          </div>
-          <div class="col-md-3">
-            <label for="country">Country</label>
-            <input
-              id="country"
-              v-model="country"
-              type="text"
-              class="form-control"
-              placeholder="Country"
-              :disabled="searchQueryEnabled"
-            />
+            <div class="invalid-feedback">Please enter a valid longitude.</div>
           </div>
         </div>
         <div class="row justify-content-center mt-3">
           <div class="col-md-3 mb-3">
-          <button
-            type="button"
-            class="w-100 btn btn-outline-info"
-            @click="searchQueryEnabled = !searchQueryEnabled"
-          >
-            <span v-if="searchQueryEnabled">Edit Manually</span>
-            <span v-else>Use Autofill/Search</span>
-          </button>
+            <button
+              type="button"
+              class="w-100 btn btn-outline-info"
+              @click="
+                searchQueryEnabled = !searchQueryEnabled
+                blur = false
+              "
+            >
+              <span v-if="searchQueryEnabled">I can't find my address</span>
+              <span v-else>Use Autofill/Search</span>
+            </button>
           </div>
           <div class="col-md-3 mb-3">
-             <button
-            type="button"
-            class="w-100 btn btn-outline-warning"
-            :disabled="searchQuery.length!=0 && searchQueryEnabled"
-          >Use Current Location</button>
+            <button
+              type="button"
+              class="w-100 btn btn-outline-warning"
+              @click="useCurrentLocation()"
+            >
+              Use My Current Location
+            </button>
           </div>
         </div>
         <div class="row justify-content-center text-center">
           <div class="col-md-3 mb-3">
-          <button
-            type="button"
-            class="w-100 btn btn-outline-danger"
-            @click="page = 1"
-          >
-            <span>Go Back</span>
-          </button>
+            <button
+              type="button"
+              class="w-100 btn btn-outline-danger"
+              @click="
+                page = 1
+                blur = false
+              "
+            >
+              <span>Go Back</span>
+            </button>
           </div>
           <div class="col-md-3">
-          <button type="button" class="w-100 btn btn-primary" @click="submit">
-            Submit
-          </button>
+            <button type="button" class="w-100 btn btn-primary" @click="submit">
+              Submit
+            </button>
           </div>
         </div>
       </div>
@@ -227,7 +218,9 @@
 </template>
 
 <script>
+import geolocation from '~/mixins/geolocation.js'
 export default {
+  mixins: [geolocation],
   data() {
     return {
       page: 1,
@@ -238,65 +231,68 @@ export default {
       dob: '',
       searchQuery: '',
       searchQueryEnabled: true,
-      street: '',
-      city: '',
-      state: '',
-      postalCode: '',
-      country: '',
+      latitude: '',
+      longitude: '',
+      queryResults: new Set(),
       blur: false,
     }
   },
   watch: {
     searchQuery(val) {
       if (val.length >= 3) {
-        this.populateSearchData(val)
-      }
-      else{
-        this.street = ''
-        this.city = ''
-        this.state = ''
-        this.postalCode = ''
-        this.country = ''
+        if (!this.queryResults.has(val)) {
+          this.populateSearchData(val)
+        }
+      } else {
+        this.queryResults = new Set()
       }
     },
   },
   methods: {
+    async useCurrentLocation() {
+      this.blur = true
+      this.searchQueryEnabled = false
+      const location = await this.getLocation()
+      if (location.success) {
+        this.latitude = location.latitude
+        this.longitude = location.longitude
+      } else {
+        alert("Couldn't get location")
+      }
+    },
     async populateSearchData(val) {
       const data = await fetch(
-        `https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=${process.env.VUE_APP_HERE_API_KEY}&maxresults=1&query=${val}`
+        `https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=${process.env.VUE_APP_HERE_API_KEY}&maxresults=5&query=${val}`
       )
       const result = await data.json()
+      this.queryResults = new Set()
       if (result.suggestions && result.suggestions.length > 0) {
-        if (
-          result.suggestions[0].address.houseNumber &&
-          result.suggestions[0].address.street
-        ) {
-          this.street =
-            result.suggestions[0].address.houseNumber +
-            ' ' +
-            result.suggestions[0].address.street
-        } else {
-          this.street = ''
+        for (const suggestion of result.suggestions) {
+          let suggestionLabel = ''
+          if (suggestion.address.houseNumber && suggestion.address.street) {
+            suggestionLabel +=
+              suggestion.address.houseNumber +
+              ' ' +
+              suggestion.address.street +
+              ', '
+          }
+          if (suggestion.address.city) {
+            suggestionLabel += suggestion.address.city + ', '
+          }
+          if (suggestion.address.state) {
+            suggestionLabel += suggestion.address.state + ', '
+          }
+          if (suggestion.address.postalCode) {
+            suggestionLabel += suggestion.address.postalCode + ', '
+          }
+          if (suggestion.address.country) {
+            suggestionLabel += suggestion.address.country
+          }
+          this.queryResults.add(suggestionLabel)
         }
-        this.city = result.suggestions[0].address.city
-          ? result.suggestions[0].address.city
-          : ''
-        this.state = result.suggestions[0].address.state
-          ? result.suggestions[0].address.state
-          : ''
-        this.postalCode = result.suggestions[0].address.postalCode
-          ? result.suggestions[0].address.postalCode
-          : ''
-        this.country = result.suggestions[0].address.country
-          ? result.suggestions[0].address.country
-          : ''
-      } else {
-        this.street = ''
-        this.city = ''
-        this.state = ''
-        this.postalCode = ''
-        this.country = ''
       }
+      // else {
+      // }
     },
     getMaxDate() {
       // This function is used to limit the DOB to a maximum value of current date/today's date.
@@ -308,14 +304,23 @@ export default {
       this.$router.push({ path: 'Login' }) // Switch view to Login.vue
     },
     submit() {
-      this.blur = true
-      if (this.validate().result) {
-        alert('Done')
-      } else {
-        alert('Not Done')
-      }
       if (this.page === 1) {
-        this.page = 2
+        this.blur = true
+        if (!this.validate().result1) {
+          this.page = 2
+          this.blur = false
+        }
+        return
+      }
+      if (this.page === 2) {
+        this.blur = true
+        if (this.validate().searchResult) {
+          alert('Done')
+          return
+        }
+        if (this.validate().latitude && this.validate().longitude) {
+          alert('Done')
+        }
       }
     },
     validate() {
@@ -331,12 +336,15 @@ export default {
         email: emailValidation,
         password: passwordValidation,
         dob: dobValidation,
-        result:
+        result1:
           firstnameValidation &&
           lastnameValidation &&
           emailValidation &&
           passwordValidation &&
           dobValidation,
+        searchResult: this.queryResults.has(this.searchQuery),
+        latitude: isFinite(this.latitude) && Math.abs(this.latitude) <= 90,
+        longitude: isFinite(this.longitude) && Math.abs(this.longitude) <= 180,
       }
     },
   },
