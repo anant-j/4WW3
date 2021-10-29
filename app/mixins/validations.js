@@ -20,6 +20,20 @@ export default {
             }
             return true;
         },
+        // TODO
+        validateName(name) {
+
+        },
+        validateDescription(description) {
+
+        },
+        validateLatitudeLongitude(coordinate) {
+
+        },
+        validateWebsite(website) {
+
+        }
+
     },
 };
 
