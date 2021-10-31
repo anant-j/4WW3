@@ -212,3 +212,16 @@ h3 {
 .addForm textarea:invalid {
   border: 2px solid red;
 }
+
+.infoWindow {
+  color: black;
+}
+
+#addObjectLocationInput {
+  margin-left: 0px;
+  padding-left: 0px;
+}
+
+#restaurantMap {
+  min-height: 25vh;
+}

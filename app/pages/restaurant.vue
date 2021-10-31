@@ -1,9 +1,9 @@
 <template>
   <!-- The view below represents the individual object page for the restaurant -->
   <!-- This component has been borrowed from the Bootstrap component example library and then modified to satisfy our requirements (https://getbootstrap.com/docs/4.0/examples/blog/) -->
-  <div v-if="restaurantId!=-1">
+  <div v-if="restaurantId != -1">
     <div id="restaurant-top-bar" class="row">
-      <Map class="col-md-6 mb-1" style="min-height:25vh" />
+      <Map id="restaurantMap" class="col-md-6 mb-1" />
       <!-- Restaurant's image -->
       <img
         v-if="restaurantDetails.image"
@@ -129,9 +129,7 @@
       </div>
     </div>
   </div>
-  <div v-else>
-    Please wait while we load the restaurant...
-  </div>
+  <div v-else>Please wait while we load the restaurant...</div>
 </template>
 
 <script>
@@ -167,8 +165,7 @@ export default {
         },
         {
           name: 'og:image',
-          content:
-            this.restaurantDetails.image,
+          content: this.restaurantDetails.image,
         },
         {
           name: 'og:url',
@@ -184,12 +181,11 @@ export default {
         },
         {
           name: 'twitter:description',
-          content:this.restaurantDetails.about
+          content: this.restaurantDetails.about,
         },
         {
           name: 'twitter:image',
-          content:
-            this.restaurantDetails.image,
+          content: this.restaurantDetails.image,
         },
       ],
     }

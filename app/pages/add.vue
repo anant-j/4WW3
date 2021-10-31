@@ -39,7 +39,7 @@
       <div class="row justify-content-center">
         <!-- The div below takes the latitude of the restaurant -->
         <div class="col-md-6 row">
-          <div class="col" style="margin-left: 0px; padding-left: 0px">
+          <div id="addObjectLocationInput" class="col">
             <label for="latitude">Latitude</label>
             <input
               id="latitude"

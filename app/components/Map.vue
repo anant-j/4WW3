@@ -34,7 +34,7 @@
       :opened="infoWindow.open"
       @closeclick="closeInfoWindow()"
     >
-      <div style="color: black">
+      <div class="infoWindow">
         <h4>{{ infoWindowData.name }}</h4>
         <p>{{ infoWindowData.about }}</p>
         <button class="btn btn-primary btn-sm" @click="openPage(infoWindow.id)">
