@@ -3,7 +3,7 @@
   <GmapMap
     ref="mapRef"
     :center="coords"
-    :zoom="10"
+    :zoom="13"
     :options="{
       fullscreenControl: false,
       mapTypeControl: false,
@@ -88,7 +88,6 @@ export default {
     }
     this.$refs.mapRef.$mapPromise.then((map) => {
       this.map = map
-      this.recenterBounds()
     })
   },
   methods: {
