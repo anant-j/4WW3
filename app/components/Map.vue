@@ -59,7 +59,8 @@ export default {
       return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
     },
     panCenter() {
-      this.$refs.mapRef.panTo(this.coords)
+      this.map.panTo(this.coords)
+      this.map.setZoom(15)
     },
     recenterBounds() {
       const bounds = new window.google.maps.LatLngBounds()
