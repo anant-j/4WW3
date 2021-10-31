@@ -84,7 +84,7 @@
               v-model="dob"
               type="date"
               class="form-control"
-              :max="getMaxDate()"
+              :max="getMaxDate"
               :class="{
                 'is-invalid': !validate.dob && blur,
                 'is-valid': validate.dob && blur,
@@ -266,6 +266,12 @@ export default {
         longitude: longitudeValidation,
       }
     },
+    getMaxDate() {
+      // This function is used to limit the DOB to a maximum value of current date/today's date.
+      const date = new Date()
+      // date.setFullYear(date.getFullYear() - 18);
+      return date.toISOString().split('T')[0]
+    },
   },
   watch: {
     searchQuery(val) {
@@ -321,14 +327,6 @@ export default {
           this.queryResults.add(suggestionLabel)
         }
       }
-      // else {
-      // }
-    },
-    getMaxDate() {
-      // This function is used to limit the DOB to a maximum value of current date/today's date.
-      const date = new Date()
-      // date.setFullYear(date.getFullYear() - 18);
-      return date.toISOString().split('T')[0]
     },
     openPage() {
       this.$router.push({ path: 'Login' }) // Switch view to Login.vue
