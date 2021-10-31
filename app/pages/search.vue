@@ -12,7 +12,13 @@
           class="btn btn-primary"
           @click="$refs.liveMap.recenterBounds()"
         >
-          Center Map
+          Focus Map
+        </button>
+        <button
+          class="btn btn-info"
+          @click="$refs.liveMap.panCenter()"
+        >
+          Where am I?
         </button>
       </div>
       <br />
