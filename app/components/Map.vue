@@ -49,6 +49,7 @@ export default {
     }
     this.$refs.mapRef.$mapPromise.then((map) => {
       this.map = map
+      this.recenterBounds()
     })
   },
   methods: {
@@ -64,9 +65,13 @@ export default {
     recenterBounds() {
       const bounds = new window.google.maps.LatLngBounds()
       for (const pin of this.activePinsOnMap) {
-        bounds.extend(new window.google.maps.LatLng(pin.position.lat, pin.position.lng))
+        bounds.extend(
+          new window.google.maps.LatLng(pin.position.lat, pin.position.lng)
+        )
       }
-      bounds.extend(new window.google.maps.LatLng(this.coords.lat, this.coords.lng))
+      bounds.extend(
+        new window.google.maps.LatLng(this.coords.lat, this.coords.lng)
+      )
       this.map.fitBounds(bounds)
     },
     updateBounds() {
