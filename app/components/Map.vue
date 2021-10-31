@@ -88,6 +88,7 @@ export default {
     }
     this.$refs.mapRef.$mapPromise.then((map) => {
       this.map = map
+      this.recenterBounds()
     })
   },
   methods: {
