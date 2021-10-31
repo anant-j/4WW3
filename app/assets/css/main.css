@@ -139,7 +139,9 @@ h3 {
 }
 
 .highlighted {
-  border-color: #17a2b8;
+  border: 5px solid #17a2b8;
+  text-decoration: underline;
+  font-weight: bold;
 }
 
 /*--------------------------------------------------------*/
