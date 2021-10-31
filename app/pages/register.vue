@@ -144,6 +144,7 @@
               id="latitude"
               v-model="latitude"
               type="number"
+              step="any"
               class="form-control"
               :class="{
                 'is-invalid': !validate.latitude && blur,
@@ -159,6 +160,7 @@
               id="longitude"
               v-model="longitude"
               type="number"
+              step="any"
               class="form-control"
               :class="{
                 'is-invalid': !validate.longitude && blur,
