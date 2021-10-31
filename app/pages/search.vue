@@ -40,7 +40,6 @@ export default {
     return {
       // Initializing data
       type: null,
-      mapMoved: false,
     }
   },
   watch: {
@@ -60,10 +59,6 @@ export default {
           }
         }
       }
-      if (!this.mapMoved) {
-        this.$refs.liveMap.recenterBounds()
-      }
-      this.mapMoved = true
     },
   },
   created() {

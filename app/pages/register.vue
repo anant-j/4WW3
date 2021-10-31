@@ -328,7 +328,7 @@ export default {
       const lastnameValidation = this.lastname.length
       const emailValidation = this.email.length
       const passwordValidation = this.password.length >= 5
-      const dobValidation = ''
+      const dobValidation = true
       // const nameValidation = this.
       return {
         firstname: firstnameValidation,

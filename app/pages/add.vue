@@ -27,13 +27,13 @@
           <label for="description">Restaurant Description</label>
           <textarea
             id="description"
-            v-model="descriptiom"
+            v-model="description"
             type="text"
             class="form-control"
             placeholder="Enter Description"
             :class="{
-              'is-invalid': !validate().descriptiom && blur,
-              'is-valid': validate().descriptiom && blur,
+              'is-invalid': !validate().description && blur,
+              'is-valid': validate().description && blur,
             }"
           />
           <div class="invalid-feedback">Please enter a description.</div>
