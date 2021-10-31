@@ -207,3 +207,8 @@ h3 {
 .searchMap {
   height: 80vh;
 }
+
+.addForm input:invalid,
+.addForm textarea:invalid {
+  border: 2px solid red;
+}

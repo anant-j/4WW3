@@ -2,7 +2,7 @@
   <!-- This is the page that is displayed when a user wants to add a restaurant -->
   <div class="container mt-3 align-form">
     <h1>Add a Restaurant</h1>
-    <form class="align-items-center">
+    <form class="align-items-center addForm" @submit.prevent="onSubmit">
       <!-- The div below takes the name of the restaurant -->
       <div class="row justify-content-center">
         <div class="col-md-6">
@@ -13,12 +13,10 @@
             type="text"
             class="form-control"
             placeholder="Enter Name"
-            :class="{
-              'is-invalid': !validate().name && blur,
-              'is-valid': validate().name && blur,
-            }"
+            required
+            oninvalid="this.setCustomValidity('Please enter a valid name')"
+            oninput="this.setCustomValidity('')"
           />
-          <div class="invalid-feedback">Please enter a valid name.</div>
         </div>
       </div>
       <!-- The div below takes the description/about info of the restaurant -->
@@ -31,46 +29,59 @@
             type="text"
             class="form-control"
             placeholder="Enter Description"
-            :class="{
-              'is-invalid': !validate().description && blur,
-              'is-valid': validate().description && blur,
-            }"
+            required
+            maxlength="250"
+            oninvalid="this.setCustomValidity('Please enter a description')"
+            oninput="this.setCustomValidity('')"
           />
-          <div class="invalid-feedback">Please enter a description.</div>
         </div>
       </div>
       <div class="row justify-content-center">
         <!-- The div below takes the latitude of the restaurant -->
-        <div class="col-md-3">
-          <label for="latitude">Latitude</label>
-          <input
-            id="latitude"
-            v-model="latitude"
-            type="text"
-            class="form-control"
-            placeholder="Enter Latitude"
-             :class="{
-              'is-invalid': !validate().latitiude && blur,
-              'is-valid': validate().latitiude && blur,
-            }"
-          />
-          <div class="invalid-feedback">Please enter a valid lattitude.</div>
-        </div>
-        <!-- The div below takes the longitude of the restaurant -->
-        <div class="col-md-3">
-          <label for="longitude">Longitude</label>
-          <input
-            id="longitude"
-            v-model="longitude"
-            type="text"
-            class="form-control"
-            placeholder="Enter Longitude"
-             :class="{
-              'is-invalid': !validate().longitude && blur,
-              'is-valid': validate().longitude && blur,
-            }"
-          />
-          <div class="invalid-feedback">Please enter a valid longitude.</div>
+        <div class="col-md-6 row">
+          <div class="col" style="margin-left: 0px; padding-left: 0px">
+            <label for="latitude">Latitude</label>
+            <input
+              id="latitude"
+              v-model="latitude"
+              type="number"
+              class="form-control"
+              placeholder="Enter Latitude"
+              required
+              max="90"
+              min="-90"
+              step="any"
+              oninvalid="this.setCustomValidity('Please enter a valid latitude.')"
+              oninput="this.setCustomValidity('')"
+            />
+          </div>
+          <!-- The div below takes the longitude of the restaurant -->
+          <div class="col">
+            <label for="longitude">Longitude</label>
+            <input
+              id="longitude"
+              v-model="longitude"
+              type="number"
+              class="form-control"
+              placeholder="Enter Longitude"
+              required
+              max="180"
+              min="-180"
+              step="any"
+              oninvalid="this.setCustomValidity('Please enter a valid longitude.')"
+              oninput="this.setCustomValidity('')"
+            />
+          </div>
+          <div class="col-1">
+            <br />
+            <button
+              class="btn btn-primary"
+              type="button"
+              @click="useCurrentLocation()"
+            >
+              <font-awesome-icon :icon="['fas', 'location-arrow']" />
+            </button>
+          </div>
         </div>
       </div>
       <!-- The div below takes the website for the restaurant -->
@@ -80,15 +91,12 @@
           <input
             id="website"
             v-model="website"
-            type="text"
+            type="url"
             class="form-control"
             placeholder="Enter Website"
-              :class="{
-              'is-invalid': !validate().website && blur,
-              'is-valid': validate().website && blur,
-            }"
+            oninvalid="this.setCustomValidity('Please enter a valid website.')"
+            oninput="this.setCustomValidity('')"
           />
-          <div class="invalid-feedback">Please enter a valid website.</div>
         </div>
       </div>
       <!-- The div below allows the user to upload an image of the restaurant -->
@@ -111,53 +119,45 @@
         </div>
       </div>
       <div class="row justify-content-center mt-3">
-        <button type="button" class="col-3 btn btn-primary" @click="submit()">Submit</button>
+        <button type="submit" class="col-3 btn btn-primary">Submit</button>
       </div>
     </form>
   </div>
 </template>
 
 <script>
-import validations from "~/mixins/validations.js";
+import validations from '~/mixins/validations.js'
+import geolocation from '~/mixins/geolocation.js'
 export default {
-  mixins: [validations],
+  mixins: [validations, geolocation],
   data() {
     return {
-      name: "",
-      description: "",
-      latitude: "",
-      longitude: "",
-      website: "",
+      name: '',
+      description: '',
+      latitude: '',
+      longitude: '',
+      website: '',
       blur: false,
-    };
+    }
   },
   methods: {
     openPage() {
-      this.$router.push({ path: "Register" }); // Switch view to Register.vue
+      this.$router.push({ path: 'Register' }) // Switch view to Register.vue
     },
-    submit() {
-      this.blur = true;
-      if (this.validate().result) {
-        alert("Done");
+    onSubmit() {
+      alert('Done')
+    },
+    async useCurrentLocation() {
+      this.blur = true
+      this.searchQueryEnabled = false
+      const location = await this.getLocation()
+      if (location.success) {
+        this.latitude = location.latitude
+        this.longitude = location.longitude
       } else {
-        alert("Not Done");
+        alert("Couldn't get location")
       }
     },
-    validate() {
-      const nameValidation = this.validateName(this.name);
-      const descriptionValidation = this.validateDescription(this.description);
-      const latitudeValidation = this.validateLatitudeLongitude(this.latitude);
-      const longitudeValidation = this.validateLatitudeLongitude(this.longitude);
-      const websiteValidation = this.validateWebsite(this.website);
-      return {
-        name: nameValidation,
-        description: descriptionValidation,
-        latitiude: latitudeValidation,
-        longitude: longitudeValidation,
-        website: websiteValidation,
-        result: nameValidation && descriptionValidation && latitudeValidation && longitudeValidation && websiteValidation,
-      };
-    },
   },
-};
+}
 </script>
