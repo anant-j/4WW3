@@ -119,7 +119,7 @@ export const state = () => ({
       },
       rating: '4',
       reviews: [],
-      image: '',
+      image: 'https://s3-media0.fl.yelpcdn.com/bphoto/DkVWVakp7cCgRm8OsC5IDw/l.jpg',
       latitude: 43.2572222,
       longitude: -79.8691331,
       id: 1103,
