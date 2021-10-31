@@ -12,7 +12,7 @@ export default {
       const final = []
       for (const iterator of this.$store.state.restaurantsInFocus) {
         const data = this.$store.state.restaurants[iterator]
-        if (data.latitude && data.longitude) {
+        if (data && data.latitude && data.longitude) {
           const tempData = {
             name: data.name,
             id: data.id,
