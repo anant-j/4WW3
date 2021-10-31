@@ -219,8 +219,9 @@
 
 <script>
 import geolocation from '~/mixins/geolocation.js'
+import validation from '~/mixins/validations.js'
 export default {
-  mixins: [geolocation],
+  mixins: [geolocation, validation],
   data() {
     return {
       page: 1,
@@ -306,7 +307,7 @@ export default {
     submit() {
       if (this.page === 1) {
         this.blur = true
-        if (this.validate().result1) {
+        if (this.validate().resultPage1) {
           this.page = 2
           this.blur = false
         }
@@ -326,9 +327,12 @@ export default {
     validate() {
       const firstnameValidation = this.firstname.length
       const lastnameValidation = this.lastname.length
-      const emailValidation = this.email.length
-      const passwordValidation = this.password.length >= 5
-      const dobValidation = true
+      const emailValidation = this.validateEmail(this.email);
+      const passwordValidation = this.validatePassword(this.password);
+      const dobValidation = this.validateDateOfBirth(this.dob);
+      const searchResultValidation = this.queryResults.has(this.searchQuery)
+      const latitudeValidation = this.validateLatitude(this.latitude)
+      const longitudeValidation = this.validateLongitude(this.longitude)
       // const nameValidation = this.
       return {
         firstname: firstnameValidation,
@@ -336,15 +340,15 @@ export default {
         email: emailValidation,
         password: passwordValidation,
         dob: dobValidation,
-        result1:
+        resultPage1:
           firstnameValidation &&
           lastnameValidation &&
           emailValidation &&
           passwordValidation &&
           dobValidation,
-        searchResult: this.queryResults.has(this.searchQuery),
-        latitude: this.latitude.length>0 && isFinite(this.latitude) && Math.abs(this.latitude) <= 90,
-        longitude: this.longitude.length>0 && isFinite(this.longitude) && Math.abs(this.longitude) <= 180,
+        searchResult: searchResultValidation,
+        latitude: latitudeValidation,
+        longitude: longitudeValidation,
       }
     },
   },
