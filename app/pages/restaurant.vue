@@ -3,7 +3,7 @@
   <!-- This component has been borrowed from the Bootstrap component example library and then modified to satisfy our requirements (https://getbootstrap.com/docs/4.0/examples/blog/) -->
   <div v-if="restaurantId!=-1">
     <div id="restaurant-top-bar" class="row">
-      <Map class="col mb-1" />
+      <Map class="col-md-6 mb-1" style="min-height:25vh" />/>
       <!-- Restaurant's image -->
       <img
         v-if="restaurantDetails.image"
