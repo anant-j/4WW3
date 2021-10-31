@@ -13,8 +13,8 @@
             class="form-control"
             placeholder="Enter Email"
             :class="{
-              'is-invalid': !validate().email && blur,
-              'is-valid': validate().email && blur,
+              'is-invalid': !validate.email && blur,
+              'is-valid': validate.email && blur,
             }"
           />
           <div class="invalid-feedback">Please enter a valid email.</div>
@@ -29,8 +29,8 @@
             type="password"
             class="form-control"
             :class="{
-              'is-invalid': !validate().password && blur,
-              'is-valid': validate().password && blur,
+              'is-invalid': !validate.password && blur,
+              'is-valid': validate.password && blur,
             }"
             placeholder="Enter Password"
           />
@@ -41,7 +41,9 @@
         </div>
       </div>
       <div class="row justify-content-center mt-3">
-        <button type="button" class="col-3 btn btn-primary" @click="submit()">Login</button>
+        <button type="button" class="col-3 btn btn-primary" @click="submit()">
+          Login
+        </button>
       </div>
       <div class="row justify-content-center mt-3">
         <!-- Register button that is only enabled if both email and password fields are empty -->
@@ -50,44 +52,48 @@
           class="col-3 btn btn-danger"
           :disabled="email != '' || password != ''"
           @click="openPage()"
-        >Register</button>
+        >
+          Register
+        </button>
       </div>
     </form>
   </div>
 </template>
 
 <script>
-import validations from "~/mixins/validations.js";
+import validations from '~/mixins/validations.js'
 export default {
   mixins: [validations],
   data() {
     return {
-      email: "", // Data property for the email entered
-      password: "", // Data property for the password entered
+      email: '', // Data property for the email entered
+      password: '', // Data property for the password entered
       blur: false,
-    };
+    }
   },
-  methods: {
-    openPage() {
-      this.$router.push({ path: "Register" }); // Switch view to Register.vue
-    },
-    submit() {
-      this.blur = true;
-      if (this.validate().result) {
-        alert("Done");
-      } else {
-        alert("Not Done");
-      }
-    },
+  computed: {
     validate() {
-      const emailValidation = this.validateEmail(this.email);
-      const passwordValidation = this.validatePassword(this.password);
+      const emailValidation = this.validateEmail(this.email)
+      const passwordValidation = this.validatePassword(this.password)
       return {
         email: emailValidation,
         password: passwordValidation,
         result: emailValidation && passwordValidation,
-      };
+      }
     },
   },
-};
+  methods: {
+    openPage() {
+      this.$router.push({ path: 'Register' }) // Switch view to Register.vue
+    },
+    submit() {
+      this.blur = true
+      if (this.validate.result) {
+        alert('Done')
+      } else {
+        alert('Not Done')
+      }
+    },
+  },
+}
 </script>

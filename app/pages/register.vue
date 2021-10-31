@@ -14,8 +14,8 @@
               class="form-control"
               placeholder="First Name"
               :class="{
-                'is-invalid': !validate().firstname && blur,
-                'is-valid': validate().firstname && blur,
+                'is-invalid': !validate.firstname && blur,
+                'is-valid': validate.firstname && blur,
               }"
             />
             <div class="invalid-feedback">Please enter a first name.</div>
@@ -29,8 +29,8 @@
               class="form-control"
               placeholder="Last Name"
               :class="{
-                'is-invalid': !validate().lastname && blur,
-                'is-valid': validate().lastname && blur,
+                'is-invalid': !validate.lastname && blur,
+                'is-valid': validate.lastname && blur,
               }"
             />
             <div class="invalid-feedback">Please enter a last name.</div>
@@ -47,8 +47,8 @@
               class="form-control"
               placeholder="Enter Email"
               :class="{
-                'is-invalid': !validate().email && blur,
-                'is-valid': validate().email && blur,
+                'is-invalid': !validate.email && blur,
+                'is-valid': validate.email && blur,
               }"
             />
             <div class="invalid-feedback">Please enter a valid email.</div>
@@ -65,8 +65,8 @@
               class="form-control"
               placeholder="Enter Password"
               :class="{
-                'is-invalid': !validate().password && blur,
-                'is-valid': validate().password && blur,
+                'is-invalid': !validate.password && blur,
+                'is-valid': validate.password && blur,
               }"
             />
             <div class="invalid-feedback">
@@ -86,8 +86,8 @@
               class="form-control"
               :max="getMaxDate()"
               :class="{
-                'is-invalid': !validate().dob && blur,
-                'is-valid': validate().dob && blur,
+                'is-invalid': !validate.dob && blur,
+                'is-valid': validate.dob && blur,
               }"
             />
             <div class="invalid-feedback">Please enter a valid DOB</div>
@@ -121,8 +121,8 @@
               list="queryList"
               name="myBrowser"
               :class="{
-                'is-invalid': !validate().searchResult && blur,
-                'is-valid': validate().searchResult && blur,
+                'is-invalid': !validate.searchResult && blur,
+                'is-valid': validate.searchResult && blur,
               }"
             />
             <datalist id="queryList">
@@ -146,8 +146,8 @@
               type="number"
               class="form-control"
               :class="{
-                'is-invalid': !validate().latitude && blur,
-                'is-valid': validate().latitude && blur,
+                'is-invalid': !validate.latitude && blur,
+                'is-valid': validate.latitude && blur,
               }"
               placeholder="Enter Latitude"
             />
@@ -161,8 +161,8 @@
               type="number"
               class="form-control"
               :class="{
-                'is-invalid': !validate().longitude && blur,
-                'is-valid': validate().longitude && blur,
+                'is-invalid': !validate.longitude && blur,
+                'is-valid': validate.longitude && blur,
               }"
               placeholder="Enter Longitude"
             />
@@ -238,6 +238,35 @@ export default {
       blur: false,
     }
   },
+  computed: {
+    validate() {
+      const firstnameValidation = this.firstname.length
+      const lastnameValidation = this.lastname.length
+      const emailValidation = this.validateEmail(this.email)
+      const passwordValidation = this.validatePassword(this.password)
+      const dobValidation = this.validateDateOfBirth(this.dob)
+      const searchResultValidation = this.queryResults.has(this.searchQuery)
+      const latitudeValidation = this.validateLatitude(this.latitude)
+      const longitudeValidation = this.validateLongitude(this.longitude)
+      // const nameValidation = this.
+      return {
+        firstname: firstnameValidation,
+        lastname: lastnameValidation,
+        email: emailValidation,
+        password: passwordValidation,
+        dob: dobValidation,
+        resultPage1:
+          firstnameValidation &&
+          lastnameValidation &&
+          emailValidation &&
+          passwordValidation &&
+          dobValidation,
+        searchResult: searchResultValidation,
+        latitude: latitudeValidation,
+        longitude: longitudeValidation,
+      }
+    },
+  },
   watch: {
     searchQuery(val) {
       if (val.length >= 3) {
@@ -307,7 +336,7 @@ export default {
     submit() {
       if (this.page === 1) {
         this.blur = true
-        if (this.validate().resultPage1) {
+        if (this.validate.resultPage1) {
           this.page = 2
           this.blur = false
         }
@@ -315,40 +344,13 @@ export default {
       }
       if (this.page === 2) {
         this.blur = true
-        if (this.validate().searchResult) {
+        if (this.validate.searchResult) {
           alert('Done')
           return
         }
-        if (this.validate().latitude && this.validate().longitude) {
+        if (this.validate.latitude && this.validate.longitude) {
           alert('Done')
         }
-      }
-    },
-    validate() {
-      const firstnameValidation = this.firstname.length
-      const lastnameValidation = this.lastname.length
-      const emailValidation = this.validateEmail(this.email);
-      const passwordValidation = this.validatePassword(this.password);
-      const dobValidation = this.validateDateOfBirth(this.dob);
-      const searchResultValidation = this.queryResults.has(this.searchQuery)
-      const latitudeValidation = this.validateLatitude(this.latitude)
-      const longitudeValidation = this.validateLongitude(this.longitude)
-      // const nameValidation = this.
-      return {
-        firstname: firstnameValidation,
-        lastname: lastnameValidation,
-        email: emailValidation,
-        password: passwordValidation,
-        dob: dobValidation,
-        resultPage1:
-          firstnameValidation &&
-          lastnameValidation &&
-          emailValidation &&
-          passwordValidation &&
-          dobValidation,
-        searchResult: searchResultValidation,
-        latitude: latitudeValidation,
-        longitude: longitudeValidation,
       }
     },
   },
