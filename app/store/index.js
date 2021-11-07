@@ -150,7 +150,7 @@ export const state = () => ({
       id: 1104,
     },
   },
-  restaurantsInFocus: new Set().add(1011),
+  restaurantsInFocus: new Set().add(1011).add(1012).add(1102).add(1103).add(1104),
   highlighted: null,
 })
 
