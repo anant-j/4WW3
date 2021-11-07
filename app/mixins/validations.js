@@ -22,13 +22,11 @@ export default {
     },
     validateLatitude(latitude) {
       return (
-        latitude.length > 0 && isFinite(latitude) && Math.abs(latitude) <= 90
+        Math.abs(latitude) <= 90
       )
     },
     validateLongitude(longitude) {
       return (
-        longitude.length > 0 &&
-        isFinite(longitude) &&
         Math.abs(longitude) <= 180
       )
     },
@@ -65,5 +63,5 @@ function hasNumber(string) {
 }
 
 function hasLetter(string) {
-  return /[a-z]/.test(string)
+  return /[A-Za-z]/.test(string)
 }

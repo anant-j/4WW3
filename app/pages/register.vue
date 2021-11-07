@@ -288,7 +288,7 @@ export default {
   },
   methods: {
     async useCurrentLocation() {
-      this.blur = true
+      this.blur = false
       this.searchQueryEnabled = false
       const location = await this.getLocation()
       if (location.success) {
@@ -344,12 +344,11 @@ export default {
       }
       if (this.page === 2) {
         this.blur = true
-        if (this.validate.searchResult) {
-          alert('Done')
-          return
-        }
-        if (this.validate.latitude && this.validate.longitude) {
-          alert('Done')
+        if (
+          this.validate.searchResult ||
+          (this.validate.latitude && this.validate.longitude)
+        ) {
+          alert('Form Submitted')
         }
       }
     },

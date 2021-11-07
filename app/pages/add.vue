@@ -145,7 +145,7 @@ export default {
       this.$router.push({ path: 'Register' }) // Switch view to Register.vue
     },
     onSubmit() {
-      alert('Done')
+      alert('Form Submitted')
     },
     async useCurrentLocation() {
       this.blur = true

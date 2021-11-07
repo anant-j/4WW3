@@ -89,9 +89,9 @@ export default {
     submit() {
       this.blur = true
       if (this.validate.result) {
-        alert('Done')
+        alert('Form Submitted')
       } else {
-        alert('Not Done')
+        // alert('Not Done')
       }
     },
   },
