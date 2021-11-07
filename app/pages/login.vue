@@ -27,6 +27,7 @@
             id="password"
             v-model="password"
             type="password"
+            autoComplete="current-password"
             class="form-control"
             :class="{
               'is-invalid': !validate.password && blur,

@@ -62,6 +62,7 @@
               id="password"
               v-model="password"
               type="password"
+              autoComplete="new-password"
               class="form-control"
               placeholder="Enter Password"
               :class="{
