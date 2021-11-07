@@ -7,7 +7,6 @@ Member 2: Kuber Khanna, khannk1, 400121439
 
 ## Table of Contents
 
-- [Table of Contents](#table-of-contents)
 - [Part 2:](#part-2)
   - [Updates:](#updates)
   - [Notable Features:](#notable-features)
