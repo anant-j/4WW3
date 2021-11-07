@@ -22,12 +22,12 @@ export default {
     },
     validateLatitude(latitude) {
       return (
-        Math.abs(latitude) <= 90
+        latitude && Math.abs(latitude) <= 90
       )
     },
     validateLongitude(longitude) {
       return (
-        Math.abs(longitude) <= 180
+        longitude && Math.abs(longitude) <= 180
       )
     },
     validateDateOfBirth(date) {
