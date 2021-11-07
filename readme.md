@@ -6,10 +6,13 @@ Member 2: Kuber Khanna, khannk1, 400121439
 ### Access the application here: https://4ww3.anant-j.com or http://3.23.29.177/
 
 ## Table of Contents
+
+- [Table of Contents](#table-of-contents)
 - [Part 2:](#part-2)
   - [Updates:](#updates)
   - [Notable Features:](#notable-features)
   - [Additional Notes:](#additional-notes)
+  - [Credentials](#credentials)
 - [About](#about)
 - [Folder Structure](#folder-structure)
 - [How is it built and rendered](#how-is-it-built-and-rendered)
@@ -23,8 +26,10 @@ Member 2: Kuber Khanna, khannk1, 400121439
   - [Prod Environment](#prod-environment)
   - [Tutorials/Guidance](#tutorialsguidance)
 
-## Part 2: 
+## Part 2:
+
 ### Updates:
+
 - Added more restaurants in the [vuex store](app/store/index.js).
 - Used [VueGoogleMaps](https://www.npmjs.com/package/vue2-google-maps) component library to add Google Maps with custom markers on search page and individual restaurant page.
 - Added Client Side JavaScript Form Validation on [User Login Page](app/pages/login.vue) and [User Registration Page](app/pages/register.vue)
@@ -39,7 +44,7 @@ Member 2: Kuber Khanna, khannk1, 400121439
 - Clicking on a restaurant on the map will open up a small information panel, clicking on the button will lead to the restaurant page.
 - On the individual object page, the map automatically adjusts focus based on current location and selected restaurant.
 - SSL certificate has been added to the AWS deployment.
-  
+
 ### Additional Notes:
 
 - JavaScript files have been kept with their relevant vue files to reduce clutter and confusion. This is the official method indicated on Nuxt's documentation and prior permission was obtained from the professor for the same.
@@ -47,7 +52,13 @@ Member 2: Kuber Khanna, khannk1, 400121439
   - Please obtain relevant API keys (Google Maps and Here.com) and place them in a .env file within the app directory.
   - Browse served files on localhost instead of the default 127.0.0.1 URL.
 - Form validation for adding a review has not been added, as it will be done server side during Part 3.
-  
+
+### Credentials
+- To run locally, please fill in the following credentials in .env file placed in root directory before [building](#building-for-production)
+```
+VUE_APP_GOOGLE_MAPS_API_KEY="KEY HERE(https://developers.google.com/maps/documentation/javascript/get-api-key)"
+VUE_APP_HERE_API_KEY="KEY HERE(https://www.here.com/)"
+```
 ## About
 
 This web application has been developed for CS4WW3 Fall 2021 at McMaster University. \
