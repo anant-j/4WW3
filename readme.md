@@ -51,6 +51,7 @@ Member 2: Kuber Khanna, khannk1, 400121439
   - Please obtain relevant API keys (Google Maps and Here.com) and place them in a .env file within the app directory.
   - Browse served files on localhost instead of the default 127.0.0.1 URL.
 - Form validation for adding a review has not been added, as it will be done server side during Part 3.
+- Regex expressions for email validation in JavaScript has been borrowed from : https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
 
 ### Credentials
 - To run locally, please fill in the following credentials in .env file placed in root directory before [building](#building-for-production)
