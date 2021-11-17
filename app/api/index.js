@@ -1,11 +1,13 @@
 import { json } from 'body-parser'
 const app = require('express')()
+const helmet = require("helmet");
 
 const mysql = require('mysql2/promise')
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 app.use(json())
+app.use(helmet())
 app.post('/login', async (req, res) => {
   const connection = await mysql.createConnection({
     host: process.env.VUE_APP_SQL_HOST,
