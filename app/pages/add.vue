@@ -130,6 +130,7 @@ import validations from '~/mixins/validations.js'
 import geolocation from '~/mixins/geolocation.js'
 export default {
   mixins: [validations, geolocation],
+  middleware: 'auth',
   data() {
     return {
       name: '',
