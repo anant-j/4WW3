@@ -87,10 +87,17 @@ export default {
     openPage() {
       this.$router.push({ path: 'Register' }) // Switch view to Register.vue
     },
-    submit() {
+    async submit() {
       this.blur = true
       if (this.validate.result) {
-        alert('Form Submitted')
+        const response = await this.$api.login(this.email, this.password);
+        const result = await response.json();
+        if(result.success){
+          alert('Login Successful');
+        }
+        else{
+          alert('Login Failed');
+        }
       } else {
         // alert('Not Done')
       }
