@@ -5,16 +5,31 @@ export default (context, inject) => {
 
 const api = {
   login(email, password) {
-    const data = fetch('/api/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            email,
-            password
-        })
+    return postAPI('/api/login', {
+      email,
+      password,
     })
-    return data
   },
+  register(firstName, lastName, email, password, dob, location) {
+    return postAPI('/api/register', {
+      firstName,
+      lastName,
+      email,
+      password,
+      dob,
+      location,
+    })
+  }
+}
+
+
+function postAPI(url, body) {
+  const data = fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  })
+  return data
 }

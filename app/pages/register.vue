@@ -128,9 +128,9 @@
             />
             <datalist id="queryList">
               <option
-                v-for="item in queryResults"
-                :key="item"
-                :value="item"
+                v-for="key in Object.keys(queryResults)"
+                :key="key"
+                :value="key"
               ></option>
             </datalist>
             <div class="invalid-feedback">
@@ -237,7 +237,7 @@ export default {
       searchQueryEnabled: true,
       latitude: '',
       longitude: '',
-      queryResults: new Set(),
+      queryResults: {},
       blur: false,
     }
   },
@@ -248,7 +248,7 @@ export default {
       const emailValidation = this.validateEmail(this.email)
       const passwordValidation = this.validatePassword(this.password)
       const dobValidation = this.validateDateOfBirth(this.dob)
-      const searchResultValidation = this.queryResults.has(this.searchQuery)
+      const searchResultValidation = this.queryResults[this.searchQuery]
       const latitudeValidation = this.validateLatitude(this.latitude)
       const longitudeValidation = this.validateLongitude(this.longitude)
       // const nameValidation = this.
@@ -279,11 +279,11 @@ export default {
   watch: {
     searchQuery(val) {
       if (val.length >= 3) {
-        if (!this.queryResults.has(val)) {
+        if (!this.queryResults[val]) {
           this.populateSearchData(val)
         }
       } else {
-        this.queryResults = new Set()
+        this.queryResults = {}
       }
     },
   },
@@ -304,7 +304,7 @@ export default {
         `https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=${process.env.VUE_APP_HERE_API_KEY}&maxresults=5&query=${val}`
       )
       const result = await data.json()
-      this.queryResults = new Set()
+      this.queryResults = {}
       if (result.suggestions && result.suggestions.length > 0) {
         for (const suggestion of result.suggestions) {
           let suggestionLabel = ''
@@ -327,7 +327,7 @@ export default {
           if (suggestion.address.country) {
             suggestionLabel += suggestion.address.country
           }
-          this.queryResults.add(suggestionLabel)
+          this.queryResults[suggestionLabel.toString()] = suggestion.locationId
         }
       }
     },
@@ -345,10 +345,12 @@ export default {
       }
       if (this.page === 2) {
         this.blur = true
-        if (
-          this.validate.searchResult ||
-          (this.validate.latitude && this.validate.longitude)
-        ) {
+        if (this.validate.searchResult) {
+          // console.log(this.queryResults[this.searchQuery]);
+          alert('Form Submitted')
+          return
+        }
+        if (this.validate.latitude && this.validate.longitude) {
           alert('Form Submitted')
         }
       }

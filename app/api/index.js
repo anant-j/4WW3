@@ -6,16 +6,17 @@ const mysql = require('mysql2/promise')
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+const connectionSetup ={
+  host: process.env.VUE_APP_SQL_HOST,
+  port: process.env.VUE_APP_SQL_PORT,
+  user: process.env.VUE_APP_SQL_USER,
+  password: process.env.VUE_APP_SQL_PASSWORD,
+  database: process.env.VUE_APP_SQL_DATABASE,
+}
 app.use(json())
 app.use(helmet())
 app.post('/login', async (req, res) => {
-  const connection = await mysql.createConnection({
-    host: process.env.VUE_APP_SQL_HOST,
-    port: process.env.VUE_APP_SQL_PORT,
-    user: process.env.VUE_APP_SQL_USER,
-    password: process.env.VUE_APP_SQL_PASSWORD,
-    database: process.env.VUE_APP_SQL_DATABASE,
-  })
+  const connection = await mysql.createConnection(connectionSetup)
   const hashedPassword = await hashPassword(req.body.password);
   const [rows] = await connection.execute(
     'SELECT * FROM TEST WHERE EMAIL = ?',
@@ -30,6 +31,12 @@ app.post('/login', async (req, res) => {
       success: false,
     })
   }
+})
+
+app.post('/register', async (req, res) => {
+  const connection = await mysql.createConnection(connectionSetup)
+  const hashedPassword = await hashPassword(req.body.password);
+  // TODO
 })
 
 export default app
