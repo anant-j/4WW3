@@ -4,6 +4,9 @@ export default {
       if (type === 'success') {
         this.$toast.success(message)
       }
+      if(type === 'error') {
+        this.$toast.error(message)
+      }
     },
   },
 }

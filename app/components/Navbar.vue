@@ -28,11 +28,8 @@
           <li class="nav-item">
             <NuxtLink class="nav-link" to="/">Home</NuxtLink>
           </li>
-          <li class="nav-item">
+          <li v-if="$store.state.user.loggedIn" class="nav-item">
             <NuxtLink class="nav-link" to="/Add">Add Restaurant</NuxtLink>
-          </li>
-          <li class="nav-item">
-            <NuxtLink class="nav-link" to="/Login">Login/Register</NuxtLink>
           </li>
           <li class="nav-item">
             <NuxtLink class="nav-link" to="/About">About</NuxtLink>
@@ -40,6 +37,26 @@
         </ul>
         <div class="d-flex">
           <!-- The button below is used to turn the night/dark mode on or off using Vuex mutations-->
+          <!-- <li v-if="!$store.state.user.loggedIn" class="nav-item">
+            <NuxtLink class="nav-link" to="/Login">Login/Register</NuxtLink>
+          </li> -->
+          <button
+            v-if="!$store.state.user.loggedIn"
+            class="btn btn-outline-info"
+            aria-label="login"
+            @click="$router.push('/Login')"
+          >
+            <span>Login</span>
+          </button>
+          <button
+            v-else
+            class="btn btn-outline-danger"
+            aria-label="logout"
+            @click="$store.commit('logout')"
+          >
+            <span>Logout</span>
+          </button>
+          <span>&nbsp; &nbsp;&nbsp;</span>
           <button
             class="btn btn-outline-success"
             aria-label="dark-mode"

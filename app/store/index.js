@@ -150,11 +150,19 @@ export const state = () => ({
       id: 1104,
     },
   },
-  restaurantsInFocus: new Set().add(1011).add(1012).add(1102).add(1103).add(1104),
+  restaurantsInFocus: new Set()
+    .add(1011)
+    .add(1012)
+    .add(1102)
+    .add(1103)
+    .add(1104),
   highlighted: null,
-  user:{
+  user: {
     loggedIn: false,
-  }
+    email: null,
+    username: null,
+    jwt: null,
+  },
 })
 
 export const mutations = {
@@ -196,4 +204,16 @@ export const mutations = {
   deHighlight(state) {
     state.highlighted = null
   },
+  login(state, payload) {
+    state.user.loggedIn = true
+    // state.user.email = payload.email
+    // state.user.username = payload.username
+    // state.user.jwt = payload.jwt
+  },
+  logout(state) {
+    state.user.loggedIn = false
+    state.user.email = null
+    state.user.username = null
+    state.user.jwt = null
+  }
 }
