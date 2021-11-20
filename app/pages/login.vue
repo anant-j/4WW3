@@ -63,13 +63,15 @@
 
 <script>
 import validations from '~/mixins/validations.js'
+import notification from '~/mixins/notification.js'
 export default {
-  mixins: [validations],
+  mixins: [validations,notification],
   data() {
     return {
       email: '', // Data property for the email entered
       password: '', // Data property for the password entered
       blur: false,
+      toast: null,
     }
   },
   computed: {
@@ -93,7 +95,7 @@ export default {
         const response = await this.$api.login(this.email, this.password);
         const result = await response.json();
         if(result.success){
-          alert('Login Successful');
+          this.showToast("Logged In");
         }
         else{
           alert('Login Failed');

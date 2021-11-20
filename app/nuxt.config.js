@@ -65,6 +65,7 @@ export default {
         ],
       },
     ],
+    "vue-toastification/nuxt",
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
