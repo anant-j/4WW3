@@ -99,6 +99,23 @@
           />
         </div>
       </div>
+
+       <div class="row justify-content-center">
+        <div class="col-md-6">
+          <label for="website">Restaurant's Phone Number</label>
+          <input
+            id="phone"
+            v-model="phone"
+            type="tel"
+            class="form-control"
+            placeholder="Enter Phone Number"
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+            required
+            oninvalid="this.setCustomValidity('Please enter a valid phone number.')"
+            oninput="this.setCustomValidity('')"
+          />
+        </div>
+      </div>
       <!-- The div below allows the user to upload an image of the restaurant -->
       <div class="row justify-content-center mt-3">
         <div class="col-md-6">
@@ -138,6 +155,7 @@ export default {
       latitude: '',
       longitude: '',
       website: '',
+      phone: '',
       blur: false,
     }
   },
@@ -152,6 +170,7 @@ export default {
         this.latitude,
         this.longitude,
         this.website,
+        this.phone,
         this.$store.state.user.jwt
       )
       const result = await response.json()

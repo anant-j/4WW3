@@ -26,15 +26,16 @@ const api = {
       token      
     })
   },
-  addRestaurant(name, description, latitude, longitude, website, image, token) {
+  addRestaurant(name, description, latitude, longitude, website = null, phone = null ,token = null, image = null) {
     return postAPI('/api/addRestaurant', {
       name,
       description,
       latitude,
       longitude,
-      image,
       website,
-      token
+      phone,
+      token,
+      image,
     })
   }
 }

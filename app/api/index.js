@@ -144,9 +144,8 @@ app.post('/register', async (req, res) => {
 app.post('/addRestaurant', async (req, res) => {
   const name = req.body.name;
   // const address = req.body.address;
-  // const phone = req.body.phone;
-  const address = 123;
-  const phone = 123;
+  const address = "Hamilton, Ontario";
+  const phone = req.body.phone;
   const website = req.body.website;
   const latitude = req.body.latitude;
   const longitude = req.body.longitude;
@@ -172,6 +171,7 @@ app.post('/addRestaurant', async (req, res) => {
     }
   }
   catch (error) {
+    console.log(error);
     res.send({
       success: false,
       errorCode: 'unknown',
