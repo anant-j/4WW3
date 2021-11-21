@@ -46,6 +46,11 @@ export default {
           JWT: token,
         }
         this.$store.commit('login', payload)
+        if (this.$route.query.callback) {
+          this.$router.push({
+            path: this.$route.query.callback,
+          })
+        }
       }
     }
   },

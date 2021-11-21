@@ -88,7 +88,14 @@ export default {
   },
   methods: {
     openPage() {
-      this.$router.push({ path: 'Register' }) // Switch view to Register.vue
+      if (this.$route.query.callback) {
+        this.$router.push({
+          path: 'Register',
+          query: { callback: this.$route.query.callback },
+        })
+      } else {
+        this.$router.push({ path: 'Register' }) // Switch view to Register.vue
+      }
     },
     async submit() {
       this.blur = true
@@ -99,7 +106,11 @@ export default {
         if (result.success) {
           this.showToast('Logged In')
           this.$store.commit('login', result)
-          this.$router.push('/')
+          if (this.$route.query.callback) {
+            this.$router.push(this.$route.query.callback)
+          } else {
+            this.$router.push({ path: '/' })
+          }
         } else if (!result.success) {
           if (result.errorCode === 'email') {
             this.showToast('Email not found. Please register first', 'error')

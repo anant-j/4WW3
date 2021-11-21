@@ -332,7 +332,14 @@ export default {
       }
     },
     openPage() {
-      this.$router.push({ path: 'Login' }) // Switch view to Login.vue
+      if (this.$route.query.callback) {
+        this.$router.push({
+          path: 'Login',
+          query: { callback: this.$route.query.callback },
+        })
+      } else {
+        this.$router.push({ path: 'Login' })
+      }
     },
     async submit() {
       if (this.page === 1) {
@@ -363,7 +370,11 @@ export default {
           if (result.success) {
             this.showToast('Successfully registered')
             this.$store.commit('login', result)
-            this.$router.push('/')
+            if (this.$route.query.callback) {
+              this.$router.push(this.$route.query.callback)
+            } else {
+              this.$router.push({ path: '/' })
+            }
           } else if (!result.success) {
             if (result.errorCode === 'email') {
               this.showToast(
