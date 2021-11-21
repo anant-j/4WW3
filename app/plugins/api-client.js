@@ -25,6 +25,17 @@ const api = {
     return postAPI('/api/verifyJWT', {
       token      
     })
+  },
+  addRestaurant(name, description, latitude, longitude, website, image, token) {
+    return postAPI('/api/addRestaurant', {
+      name,
+      description,
+      latitude,
+      longitude,
+      image,
+      website,
+      token
+    })
   }
 }
 

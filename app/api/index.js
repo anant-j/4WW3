@@ -45,15 +45,15 @@ app.get('/ping', (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
   const connection = await mysql.createConnection(connectionSetup)
   try {
-    const email = req.body.email;
     if (!email) {
       return res.status(400).send({
         error: 'Email is required'
       })
     }
-    const password = req.body.password;
     if (!password) {
       return res.status(400).send({
         error: 'Password is required'
@@ -98,14 +98,14 @@ app.post('/login', async (req, res) => {
 })
 
 app.post('/register', async (req, res) => {
-  const connection = await mysql.createConnection(connectionSetup)
-  const hashedPassword = await hashPassword(req.body.password);
   const email = req.body.email;
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const dob = req.body.dob;
   const latitude = req.body.latitude;
   const longitude = req.body.longitude;
+  const connection = await mysql.createConnection(connectionSetup)
+  const hashedPassword = await hashPassword(req.body.password);
   try {
     const [rows] = await connection.query(
       'INSERT INTO Users (Email, Password, FirstName, LastName, DOB, Latitude, Longitude) VALUES (?,?,?,?,?,?,?)',
@@ -138,6 +138,44 @@ app.post('/register', async (req, res) => {
         errorCode: 'unknown',
       })
     }
+  }
+})
+
+app.post('/addRestaurant', async (req, res) => {
+  const name = req.body.name;
+  // const address = req.body.address;
+  // const phone = req.body.phone;
+  const address = 123;
+  const phone = 123;
+  const website = req.body.website;
+  const latitude = req.body.latitude;
+  const longitude = req.body.longitude;
+  const description = req.body.description;
+  // const image = req.body.image;
+  const connection = await mysql.createConnection(connectionSetup)
+  try {
+    const [rows] = await connection.query(
+      'INSERT INTO Restaurants (Name, About, Phone, Address, Website, Image, Latitude, Longitude) VALUES (?,?,?,?,?,?,?,?)',
+      [name, description, phone, address, website, "abc", latitude, longitude]
+    )
+    if (rows.affectedRows === 1) {
+      res.send({
+        success: true,
+        id: rows.insertId,
+      })
+    }
+    else {
+      res.send({
+        success: false,
+        errorCode: 'unknown',
+      })
+    }
+  }
+  catch (error) {
+    res.send({
+      success: false,
+      errorCode: 'unknown',
+    })
   }
 })
 

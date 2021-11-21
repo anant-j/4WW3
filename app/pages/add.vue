@@ -2,7 +2,7 @@
   <!-- This is the page that is displayed when a user wants to add a restaurant -->
   <div class="container mt-3 align-form">
     <h1>Add a Restaurant</h1>
-    <form class="align-items-center addForm" @submit.prevent="onSubmit">
+    <form class="align-items-center addForm" @submit.prevent="submit">
       <!-- The div below takes the name of the restaurant -->
       <div class="row justify-content-center">
         <div class="col-md-6">
@@ -145,8 +145,17 @@ export default {
     openPage() {
       this.$router.push({ path: 'Register' }) // Switch view to Register.vue
     },
-    onSubmit() {
-      alert('Form Submitted')
+    async submit() {
+      const response = await this.$api.addRestaurant(
+        this.name,
+        this.description,
+        this.latitude,
+        this.longitude,
+        this.website,
+        this.$store.state.user.jwt
+      )
+      const result = await response.json()
+      console.log(result)
     },
     async useCurrentLocation() {
       this.blur = true
