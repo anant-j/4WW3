@@ -25,15 +25,6 @@ export const state = () => ({
       address: 'Hamilton, Ontario',
       phone: '4167275021',
       website: 'https://mrosmow.com/',
-      hours: {
-        monday: '11:00 AM - 10:00 PM',
-        tuesday: '11:00 AM - 10:00 PM',
-        wednesday: '11:00 AM - 10:00 PM',
-        thursday: '11:00 AM - 10:00 PM',
-        friday: '11:00 AM - 10:00 PM',
-        saturday: '11:00 AM - 10:00 PM',
-        sunday: '11:00 AM - 10:00 PM',
-      },
       rating: '',
       reviews: [
         {
@@ -66,12 +57,6 @@ export const state = () => ({
       address: 'Hamilton, Ontario',
       phone: '(905) 628-7800',
       website: 'https://quatrefoilrestaurant.com',
-      hours: {
-        wednesday: '11:00 AM - 10:00 PM',
-        thursday: '11:00 AM - 10:00 PM',
-        friday: '11:00 AM - 10:00 PM',
-        saturday: '11:00 AM - 10:00 PM',
-      },
       rating: '5',
       reviews: [],
       image:
@@ -87,15 +72,6 @@ export const state = () => ({
       address: '2 King St E, Dundas, ON L9H 1B8',
       phone: '(905) 627-8488',
       website: 'https://thirstycactus.ca/',
-      hours: {
-        monday: '11:30 AM - 11:00 PM',
-        tuesday: '11:30 AM - 11:00 PM',
-        wednesday: '11:30 AM - 11:00 PM',
-        thursday: '11:30 AM - 11:00 PM',
-        friday: '11:30 AM - 11:00 PM',
-        saturday: '11:30 AM - 11:00 PM',
-        sunday: '11:30 AM - 11:00 PM',
-      },
       rating: '4',
       reviews: [],
       image:
@@ -110,15 +86,6 @@ export const state = () => ({
       address: '49 King William St, Hamilton, ON L8R 1A2',
       phone: '(289) 389-1212',
       website: 'https://hambrgr.ca/',
-      hours: {
-        monday: '11:00 AM - 10:00 PM',
-        tuesday: '11:00 AM - 10:00 PM',
-        wednesday: '11:00 AM - 10:00 PM',
-        thursday: '11:00 AM - 10:00 PM',
-        friday: '11:00 AM - 10:00 PM',
-        saturday: '11:00 AM - 10:00 PM',
-        sunday: '11:00 AM - 10:00 PM',
-      },
       rating: '4',
       reviews: [],
       image:
@@ -134,15 +101,6 @@ export const state = () => ({
       address: '336 Yonge St, Toronto, ON M5B 1R8',
       phone: '(416) 599-5788',
       website: 'http://www.warehousegroup.ca/yonge-street-warehouse/',
-      hours: {
-        monday: '11:00 AM - 10:00 PM',
-        tuesday: '11:00 AM - 10:00 PM',
-        wednesday: '11:00 AM - 10:00 PM',
-        thursday: '11:00 AM - 10:00 PM',
-        friday: '11:00 AM - 10:00 PM',
-        saturday: '11:00 AM - 10:00 PM',
-        sunday: '11:00 AM - 10:00 PM',
-      },
       rating: '5',
       reviews: [],
       image:

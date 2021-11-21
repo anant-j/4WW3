@@ -44,39 +44,6 @@
                 <p class="mb-0">{{ restaurantDetails.address }}</p>
               </section>
               <br />
-              <!-- Restaurant's operating hours  -->
-              <section v-if="restaurantDetails.hours" id="hours">
-                <h4 class="fst-italic">Hours</h4>
-                <p v-if="restaurantDetails.hours.monday" class="mb-0">
-                  Monday - {{ restaurantDetails.hours.monday }}
-                </p>
-                <p v-else class="mb-0">Monday - Closed</p>
-                <p v-if="restaurantDetails.hours.tuesday" class="mb-0">
-                  Tuesday - {{ restaurantDetails.hours.tuesday }}
-                </p>
-                <p v-else class="mb-0">Tuesday - Closed</p>
-                <p v-if="restaurantDetails.hours.wednesday" class="mb-0">
-                  Wednesday - {{ restaurantDetails.hours.wednesday }}
-                </p>
-                <p v-else class="mb-0">Wednesday - Closed</p>
-                <p v-if="restaurantDetails.hours.thursday" class="mb-0">
-                  Thursday - {{ restaurantDetails.hours.thursday }}
-                </p>
-                <p v-else class="mb-0">Thursday - Closed</p>
-                <p v-if="restaurantDetails.hours.friday" class="mb-0">
-                  Friday - {{ restaurantDetails.hours.friday }}
-                </p>
-                <p v-else class="mb-0">Friday - Closed</p>
-                <p v-if="restaurantDetails.hours.saturday" class="mb-0">
-                  Saturday - {{ restaurantDetails.hours.saturday }}
-                </p>
-                <p v-else class="mb-0">Saturday - Closed</p>
-                <p v-if="restaurantDetails.hours.sunday" class="mb-0">
-                  Sunday - {{ restaurantDetails.hours.sunday }}
-                </p>
-                <p v-else class="mb-0">Sunday - Closed</p>
-              </section>
-              <br />
               <!-- Restaurant's website  -->
               <section v-if="restaurantDetails.website" id="website">
                 <h4 class="fst-italic">Website</h4>
