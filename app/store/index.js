@@ -1,3 +1,5 @@
+import { storeToken, clearStore } from "../mixins/localStore"
+
 export const state = () => ({
   nightMode: true,
   userLocation: {
@@ -162,6 +164,8 @@ export const state = () => ({
     email: null,
     firstname: null,
     lastname: null,
+    latitude: null,
+    longitude: null,
     jwt: null,
   },
 })
@@ -207,16 +211,24 @@ export const mutations = {
   },
   login(state, payload) {
     state.user.loggedIn = true
-    state.user.email = payload.email
-    state.user.firstname = payload.firstname
-    state.user.lastname = payload.lastname
-    // state.user.jwt = payload.jwt
+    state.user.email = payload.user.email
+    state.user.firstname = payload.user.firstName
+    state.user.lastname = payload.user.lastName
+    state.user.dob = payload.user.dob
+    state.user.latitude = payload.user.latitude
+    state.user.longitude = payload.user.longitude
+    state.user.jwt = payload.JWT
+    storeToken(payload.JWT, payload.user.email)
   },
   logout(state) {
     state.user.loggedIn = false
     state.user.email = null
-    state.user.firstname =null
+    state.user.firstname = null
     state.user.lastname = null
-    // state.user.jwt = null
+    state.user.dob = null
+    state.user.latitude = null
+    state.user.longitude = null
+    state.user.jwt = null
+    clearStore();
   }
 }

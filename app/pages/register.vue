@@ -346,7 +346,6 @@ export default {
       if (this.page === 2) {
         this.blur = true
         if (this.validate.searchResult) {
-          // console.log(this.queryResults[this.searchQuery]);
           alert('Form Submitted')
           return
         }
@@ -367,9 +366,15 @@ export default {
             this.$router.push('/')
           } else if (!result.success) {
             if (result.errorCode === 'email') {
-              this.showToast('Email already exists. Kindly login instead', 'error')
+              this.showToast(
+                'Email already exists. Kindly login instead',
+                'error'
+              )
             } else {
-              this.showToast('Something went wrong. Please try again later.', 'error')
+              this.showToast(
+                'Something went wrong. Please try again later.',
+                'error'
+              )
             }
           }
         }

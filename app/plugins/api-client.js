@@ -20,6 +20,11 @@ const api = {
       latitude,
       longitude
     })
+  },
+  verifyToken(token) {
+    return postAPI('/api/verifyJWT', {
+      token      
+    })
   }
 }
 
