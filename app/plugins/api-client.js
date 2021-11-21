@@ -10,14 +10,15 @@ const api = {
       password,
     })
   },
-  register(firstName, lastName, email, password, dob, location) {
+  register(email, password, firstName, lastName, dob, latitude, longitude) {
     return postAPI('/api/register', {
       firstName,
       lastName,
       email,
       password,
       dob,
-      location,
+      latitude,
+      longitude
     })
   }
 }

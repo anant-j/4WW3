@@ -53,13 +53,7 @@
         </button>
       </div>
       <div class="row justify-content-center mt-3">
-        <!-- Register button that is only enabled if both email and password fields are empty -->
-        <button
-          type="button"
-          class="col-3 btn btn-danger"
-          :disabled="email != '' || password != ''"
-          @click="openPage()"
-        >
+        <button type="button" class="col-3 btn btn-danger" @click="openPage()">
           Register
         </button>
       </div>

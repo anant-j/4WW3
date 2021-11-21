@@ -37,9 +37,10 @@
         </ul>
         <div class="d-flex">
           <!-- The button below is used to turn the night/dark mode on or off using Vuex mutations-->
-          <!-- <li v-if="!$store.state.user.loggedIn" class="nav-item">
-            <NuxtLink class="nav-link" to="/Login">Login/Register</NuxtLink>
-          </li> -->
+          <li v-if="$store.state.user.loggedIn" class="nav-item">
+            <a class="nav-link" style="color: white"><span v-if="$store.state.user.firstname">{{$store.state.user.firstname}}</span>
+            <span v-if="$store.state.user.lastname">{{$store.state.user.lastname}}</span></a>
+          </li>
           <button
             v-if="!$store.state.user.loggedIn"
             class="btn btn-outline-info"

@@ -160,7 +160,8 @@ export const state = () => ({
   user: {
     loggedIn: false,
     email: null,
-    username: null,
+    firstname: null,
+    lastname: null,
     jwt: null,
   },
 })
@@ -206,14 +207,16 @@ export const mutations = {
   },
   login(state, payload) {
     state.user.loggedIn = true
-    // state.user.email = payload.email
-    // state.user.username = payload.username
+    state.user.email = payload.email
+    state.user.firstname = payload.firstname
+    state.user.lastname = payload.lastname
     // state.user.jwt = payload.jwt
   },
   logout(state) {
     state.user.loggedIn = false
     state.user.email = null
-    state.user.username = null
-    state.user.jwt = null
+    state.user.firstname =null
+    state.user.lastname = null
+    // state.user.jwt = null
   }
 }

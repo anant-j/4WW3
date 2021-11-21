@@ -104,7 +104,6 @@
           <button
             type="button"
             class="col-3 btn btn-outline-info"
-            :disabled="email != '' || password != ''"
             @click="openPage()"
           >
             Go to Login Page
@@ -223,8 +222,9 @@
 <script>
 import geolocation from '~/mixins/geolocation.js'
 import validation from '~/mixins/validations.js'
+import notification from '~/mixins/notification.js'
 export default {
-  mixins: [geolocation, validation],
+  mixins: [geolocation, validation, notification],
   data() {
     return {
       page: 1,
@@ -334,7 +334,7 @@ export default {
     openPage() {
       this.$router.push({ path: 'Login' }) // Switch view to Login.vue
     },
-    submit() {
+    async submit() {
       if (this.page === 1) {
         this.blur = true
         if (this.validate.resultPage1) {
@@ -351,7 +351,27 @@ export default {
           return
         }
         if (this.validate.latitude && this.validate.longitude) {
-          alert('Form Submitted')
+          const response = await this.$api.register(
+            this.email,
+            this.password,
+            this.firstname,
+            this.lastname,
+            this.dob,
+            this.latitude,
+            this.longitude
+          )
+          const result = await response.json()
+          if (result.success) {
+            this.showToast('Successfully registered')
+            this.$store.commit('login', result)
+            this.$router.push('/')
+          } else if (!result.success) {
+            if (result.errorCode === 'email') {
+              this.showToast('Email already exists. Kindly login instead', 'error')
+            } else {
+              this.showToast('Something went wrong. Please try again later.', 'error')
+            }
+          }
         }
       }
     },
