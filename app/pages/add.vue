@@ -100,7 +100,7 @@
         </div>
       </div>
 
-       <div class="row justify-content-center">
+      <div class="row justify-content-center">
         <div class="col-md-6">
           <label for="website">Restaurant's Phone Number</label>
           <input
@@ -118,7 +118,7 @@
       </div>
       <!-- The div below allows the user to upload an image of the restaurant -->
       <div class="row justify-content-center mt-3">
-        <div class="col-md-6">
+        <div class="col-md-3">
           <label for="image">Upload an Image :</label>&nbsp;
           <input
             id="image"
@@ -127,16 +127,25 @@
             accept="image/png, image/jpeg"
           />
         </div>
-      </div>
-      <!-- The div below allows the user to upload a video of the restaurant -->
-      <div class="row justify-content-center">
-        <div class="col-md-6">
-          <label for="video">Upload a Video &nbsp;&nbsp;&nbsp;:</label>&nbsp;
-          <input id="video" type="file" name="video" accept="video/*" />
+        <div class="col-md-3">
+          <label for="image">Or :</label>&nbsp;
+          <input
+            id="image"
+            type="url"
+            class="form-control"
+            placeholder="Enter Image URL"
+            name="image"
+          />
         </div>
       </div>
       <div class="row justify-content-center mt-3">
-        <button type="submit" class="col-3 btn btn-primary">Submit</button>
+        <button
+          type="submit"
+          class="col-3 btn btn-primary"
+          :disabled="apiCallInProgress"
+        >
+          Submit
+        </button>
       </div>
     </form>
   </div>
@@ -145,8 +154,9 @@
 <script>
 import validations from '~/mixins/validations.js'
 import geolocation from '~/mixins/geolocation.js'
+import notification from '~/mixins/notification.js'
 export default {
-  mixins: [validations, geolocation],
+  mixins: [validations, geolocation, notification],
   middleware: 'auth',
   data() {
     return {
@@ -157,6 +167,7 @@ export default {
       website: '',
       phone: '',
       blur: false,
+      apiCallInProgress: false,
     }
   },
   methods: {
@@ -164,6 +175,7 @@ export default {
       this.$router.push({ path: 'Register' }) // Switch view to Register.vue
     },
     async submit() {
+      this.apiCallInProgress = true
       const response = await this.$api.addRestaurant(
         this.name,
         this.description,
@@ -174,7 +186,13 @@ export default {
         this.$store.state.user.jwt
       )
       const result = await response.json()
-      console.log(result)
+      if (result.success) {
+        this.showToast('Restaurant added successfully')
+        this.$router.push({ path: 'Restaurant', query: { id: result.id } })
+      } else {
+        this.showToast('An error occured. Please try again later.', 'error')
+      }
+      this.apiCallInProgress = false
     },
     async useCurrentLocation() {
       this.blur = true

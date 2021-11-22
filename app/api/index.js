@@ -143,8 +143,6 @@ app.post('/register', async (req, res) => {
 
 app.post('/addRestaurant', async (req, res) => {
   const name = req.body.name;
-  // const address = req.body.address;
-  const address = "Hamilton, Ontario";
   const phone = req.body.phone;
   const website = req.body.website;
   const latitude = req.body.latitude;
@@ -154,8 +152,8 @@ app.post('/addRestaurant', async (req, res) => {
   const connection = await mysql.createConnection(connectionSetup)
   try {
     const [rows] = await connection.query(
-      'INSERT INTO Restaurants (Name, About, Phone, Address, Website, Image, Latitude, Longitude) VALUES (?,?,?,?,?,?,?,?)',
-      [name, description, phone, address, website, "abc", latitude, longitude]
+      'INSERT INTO Restaurants (Name, About, Phone, Website, Image, Latitude, Longitude) VALUES (?,?,?,?,?,?,?)',
+      [name, description, phone, website, "abc", latitude, longitude]
     )
     if (rows.affectedRows === 1) {
       res.send({
@@ -171,7 +169,6 @@ app.post('/addRestaurant', async (req, res) => {
     }
   }
   catch (error) {
-    console.log(error);
     res.send({
       success: false,
       errorCode: 'unknown',

@@ -45,10 +45,10 @@
         <button
           type="button"
           class="col-3 btn btn-primary"
-          :disabled="loggingIn"
+          :disabled="apiCallInProgress"
           @click="submit()"
         >
-          <span v-if="!loggingIn">Login</span>
+          <span v-if="!apiCallInProgress">Login</span>
           <span v-else>Please wait...</span>
         </button>
       </div>
@@ -72,7 +72,7 @@ export default {
       password: '', // Data property for the password entered
       blur: false,
       toast: null,
-      loggingIn: false,
+      apiCallInProgress: false,
     }
   },
   computed: {
@@ -99,7 +99,7 @@ export default {
     },
     async submit() {
       this.blur = true
-      this.loggingIn = true
+      this.apiCallInProgress = true
       if (this.validate.result) {
         const response = await this.$api.login(this.email, this.password)
         const result = await response.json()
@@ -126,7 +126,7 @@ export default {
       } else {
         this.showToast('Please fix listed errors and try again.', 'error')
       }
-      this.loggingIn = false
+      this.apiCallInProgress = false
     },
   },
 }

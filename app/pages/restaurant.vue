@@ -39,11 +39,11 @@
               </section>
               <br />
               <!-- Restaurant's location info -->
-              <section v-if="restaurantDetails.address" id="location">
+              <!-- <section v-if="restaurantDetails.address" id="location">
                 <h4 class="fst-italic">Location</h4>
                 <p class="mb-0">{{ restaurantDetails.address }}</p>
               </section>
-              <br />
+              <br /> -->
               <!-- Restaurant's website  -->
               <section v-if="restaurantDetails.website" id="website">
                 <h4 class="fst-italic">Website</h4>
