@@ -117,6 +117,7 @@ export const state = () => ({
     .add(1103)
     .add(1104),
   highlighted: null,
+  centerMapBool: false,
   user: {
     loggedIn: false,
     email: null,
@@ -190,6 +191,17 @@ export const mutations = {
     clearStore();
   },
   addRestaurant(state, payload) {
-    state.restaurants[payload.ID] = payload
+    state.restaurants[payload.ID] = {}
+    state.restaurants[payload.ID].name = payload.Name
+    state.restaurants[payload.ID].about = payload.About
+    state.restaurants[payload.ID].phone = payload.Phone
+    state.restaurants[payload.ID].website = payload.Website
+    state.restaurants[payload.ID].image = payload.Image
+    state.restaurants[payload.ID].latitude = parseFloat(payload.Latitude)
+    state.restaurants[payload.ID].longitude = parseFloat(payload.Longitude)
+    state.restaurants[payload.ID].id = payload.ID
+  },
+  centerMap(state, payload = true) {
+    state.centerMapBool = payload;
   }
 }

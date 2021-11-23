@@ -2,15 +2,16 @@
   <!-- The view below represents the individual object page for the restaurant -->
   <!-- This component has been borrowed from the Bootstrap component example library and then modified to satisfy our requirements (https://getbootstrap.com/docs/4.0/examples/blog/) -->
   <div v-if="restaurantId != -1">
+    {{this.$store.state.centerMapBool}}
     <div id="restaurant-top-bar" class="row">
       <Map id="restaurantMap" class="col-md-6 mb-1" />
       <!-- Restaurant's image -->
       <img
-        v-if="restaurantDetails.Image"
+        v-if="restaurantDetails.image"
         class="col-md-6 food-img"
         height="500"
         width="100"
-        :src="restaurantDetails.Image"
+        :src="restaurantDetails.image"
         alt="Restaurant Image"
         loading="lazy"
       />
@@ -18,7 +19,7 @@
     <div class="container mt-5">
       <!-- Restaurant's title -->
       <h3 class="pb-4 mb-4 border-bottom text-center">
-        {{ restaurantDetails.Name }}
+        {{ restaurantDetails.name }}
       </h3>
       <div class="row g-5">
         <div class="col-md-4">
@@ -31,10 +32,10 @@
               }"
             >
               <!-- Restaurant's about info -->
-              <section v-if="restaurantDetails.About" id="about">
+              <section v-if="restaurantDetails.about" id="about">
                 <h4 class="fst-italic">About</h4>
                 <p class="mb-0">
-                  {{ restaurantDetails.About }}
+                  {{ restaurantDetails.about }}
                 </p>
               </section>
               <br />
@@ -45,22 +46,22 @@
               </section>
               <br /> -->
               <!-- Restaurant's website  -->
-              <section v-if="restaurantDetails.Website" id="website">
+              <section v-if="restaurantDetails.website" id="website">
                 <h4 class="fst-italic">Website</h4>
                 <a
-                  :href="restaurantDetails.Website"
+                  :href="restaurantDetails.website"
                   class="plain-link"
                   target="_"
-                  >{{ restaurantDetails.Website }}</a
+                  >{{ restaurantDetails.website }}</a
                 >
               </section>
-              <section v-if="restaurantDetails.Phone" id="phone">
+              <section v-if="restaurantDetails.phone" id="phone">
                 <h4 class="fst-italic">Phone</h4>
                 <a
-                  :href="`tel:` + restaurantDetails.Phone"
+                  :href="`tel:` + restaurantDetails.phone"
                   class="plain-link"
                   target="_"
-                  >{{ restaurantDetails.Phone }}</a
+                  >{{ restaurantDetails.phone }}</a
                 >
               </section>
             </div>
@@ -157,17 +158,18 @@ export default {
       ],
     }
   },
-  created() {
+  async created() {
     const id = this.$route.query.id
     const fetchFromCache = this.getRestaurantFromStore(id)
     if (!fetchFromCache) {
-      const fetchFromDatabase = this.fetchRestaurant(id)
+      const fetchFromDatabase = await this.fetchRestaurant(id)
       if (fetchFromDatabase) {
         this.getRestaurantFromStore(id)
       } else {
         this.$router.push({ path: '/' })
       }
     }
+    this.$store.commit('centerMap');
   },
   methods: {
     // This method is called when the page is loaded
@@ -184,7 +186,6 @@ export default {
     },
     getRestaurantFromStore(id) {
       const details = this.$store.state.restaurants[id]
-      console.log(details)
       if (details) {
         this.restaurantId = id
         this.restaurantDetails = details
