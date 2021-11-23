@@ -2,7 +2,6 @@
   <!-- The view below represents the individual object page for the restaurant -->
   <!-- This component has been borrowed from the Bootstrap component example library and then modified to satisfy our requirements (https://getbootstrap.com/docs/4.0/examples/blog/) -->
   <div v-if="restaurantId != -1">
-    {{this.$store.state.centerMapBool}}
     <div id="restaurant-top-bar" class="row">
       <Map id="restaurantMap" class="col-md-6 mb-1" />
       <!-- Restaurant's image -->
