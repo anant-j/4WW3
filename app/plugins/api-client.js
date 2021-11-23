@@ -23,10 +23,10 @@ const api = {
   },
   verifyToken(token) {
     return postAPI('/api/verifyJWT', {
-      token      
+      token
     })
   },
-  addRestaurant(name, description, latitude, longitude, website = null, phone = null ,token = null, image = null) {
+  addRestaurant(name, description, latitude, longitude, website = null, phone = null, token = null, image = null) {
     return postAPI('/api/addRestaurant', {
       name,
       description,
@@ -37,6 +37,9 @@ const api = {
       token,
       image,
     })
+  },
+  getRestaurant(id, token) {
+    return getAPI('/api/getRestaurant', { id })
   }
 }
 
@@ -48,6 +51,27 @@ function postAPI(url, body) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(body),
+  })
+  return data
+}
+
+function getAPI(url, parameters) {
+  let urlString = `http://localhost:8080${url}`;
+  let firstAdded = false;
+  for (const parameter of Object.keys(parameters)) {
+    if (!firstAdded) {
+      urlString += `?${parameter}=${parameters[parameter]}`
+      firstAdded = true;
+    }
+    else {
+      urlString += `&${parameter}=${parameters[parameter]}`
+    }
+  }
+  const data = fetch(urlString, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
   })
   return data
 }

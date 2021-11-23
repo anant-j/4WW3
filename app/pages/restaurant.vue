@@ -6,11 +6,11 @@
       <Map id="restaurantMap" class="col-md-6 mb-1" />
       <!-- Restaurant's image -->
       <img
-        v-if="restaurantDetails.image"
+        v-if="restaurantDetails.Image"
         class="col-md-6 food-img"
         height="500"
         width="100"
-        :src="restaurantDetails.image"
+        :src="restaurantDetails.Image"
         alt="Restaurant Image"
         loading="lazy"
       />
@@ -18,7 +18,7 @@
     <div class="container mt-5">
       <!-- Restaurant's title -->
       <h3 class="pb-4 mb-4 border-bottom text-center">
-        {{ restaurantDetails.name }}
+        {{ restaurantDetails.Name }}
       </h3>
       <div class="row g-5">
         <div class="col-md-4">
@@ -31,10 +31,10 @@
               }"
             >
               <!-- Restaurant's about info -->
-              <section v-if="restaurantDetails.about" id="about">
+              <section v-if="restaurantDetails.About" id="about">
                 <h4 class="fst-italic">About</h4>
                 <p class="mb-0">
-                  {{ restaurantDetails.about }}
+                  {{ restaurantDetails.About }}
                 </p>
               </section>
               <br />
@@ -45,22 +45,22 @@
               </section>
               <br /> -->
               <!-- Restaurant's website  -->
-              <section v-if="restaurantDetails.website" id="website">
+              <section v-if="restaurantDetails.Website" id="website">
                 <h4 class="fst-italic">Website</h4>
                 <a
-                  :href="restaurantDetails.website"
+                  :href="restaurantDetails.Website"
                   class="plain-link"
                   target="_"
-                  >{{ restaurantDetails.website }}</a
+                  >{{ restaurantDetails.Website }}</a
                 >
               </section>
-              <section v-if="restaurantDetails.phone" id="phone">
+              <section v-if="restaurantDetails.Phone" id="phone">
                 <h4 class="fst-italic">Phone</h4>
                 <a
-                  :href="`tel:` + restaurantDetails.phone"
+                  :href="`tel:` + restaurantDetails.Phone"
                   class="plain-link"
                   target="_"
-                  >{{ restaurantDetails.phone }}</a
+                  >{{ restaurantDetails.Phone }}</a
                 >
               </section>
             </div>
@@ -118,13 +118,13 @@ export default {
   },
   head() {
     return {
-      title: this.restaurantDetails.name,
+      title: this.restaurantDetails.Name,
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
           name: 'og:title',
-          content: this.restaurantDetails.name,
+          content: this.restaurantDetails.Name,
         },
         {
           name: 'og:type',
@@ -132,7 +132,7 @@ export default {
         },
         {
           name: 'og:image',
-          content: this.restaurantDetails.image,
+          content: this.restaurantDetails.Image,
         },
         {
           name: 'og:url',
@@ -144,7 +144,7 @@ export default {
         },
         {
           name: 'twitter:title',
-          content: this.restaurantDetails.name,
+          content: this.restaurantDetails.Name,
         },
         {
           name: 'twitter:description',
@@ -152,21 +152,47 @@ export default {
         },
         {
           name: 'twitter:image',
-          content: this.restaurantDetails.image,
+          content: this.restaurantDetails.Image,
         },
       ],
     }
   },
   created() {
     const id = this.$route.query.id
-    const details = this.$store.state.restaurants[id]
-    if (details) {
-      this.restaurantId = id
-      this.restaurantDetails = details
-      this.$store.commit('setActiveRestaurant', id)
-    } else {
-      this.$router.push({ path: '/' })
+    const fetchFromCache = this.getRestaurantFromStore(id)
+    if (!fetchFromCache) {
+      const fetchFromDatabase = this.fetchRestaurant(id)
+      if (fetchFromDatabase) {
+        this.getRestaurantFromStore(id)
+      } else {
+        this.$router.push({ path: '/' })
+      }
     }
+  },
+  methods: {
+    // This method is called when the page is loaded
+    async fetchRestaurant(id) {
+      const response = await this.$api.getRestaurant(id)
+      const result = await response.json()
+      if (result.success) {
+        this.$store.commit('addRestaurant', result.restaurant)
+        return true
+      } else {
+        return false
+      }
+      // Fetching the restaurant details from the API
+    },
+    getRestaurantFromStore(id) {
+      const details = this.$store.state.restaurants[id]
+      console.log(details)
+      if (details) {
+        this.restaurantId = id
+        this.restaurantDetails = details
+        this.$store.commit('setActiveRestaurant', id)
+        return true
+      }
+      return false
+    },
   },
 }
 </script>

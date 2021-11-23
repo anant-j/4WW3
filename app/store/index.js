@@ -188,5 +188,8 @@ export const mutations = {
     state.user.longitude = null
     state.user.jwt = null
     clearStore();
+  },
+  addRestaurant(state, payload) {
+    state.restaurants[payload.ID] = payload
   }
 }

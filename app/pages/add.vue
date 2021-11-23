@@ -102,7 +102,7 @@
 
       <div class="row justify-content-center">
         <div class="col-md-6">
-          <label for="website">Restaurant's Phone Number</label>
+          <label for="website">Restaurant's Phone Number (123-456-7890)</label>
           <input
             id="phone"
             v-model="phone"

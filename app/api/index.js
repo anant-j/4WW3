@@ -176,6 +176,35 @@ app.post('/addRestaurant', async (req, res) => {
   }
 })
 
+app.get('/getRestaurant', async(req, res) => {
+  const id = req.query.id;
+  const connection = await mysql.createConnection(connectionSetup)
+  try {
+    const [rows] = await connection.execute(
+      'SELECT * FROM Restaurants WHERE ID = ?',
+      [id]
+    )
+    if (rows.length) {
+      res.send({
+        success: true,
+        restaurant: rows[0],
+      })
+    }
+    else {
+      res.send({
+        success: false,
+        errorCode: 'notFound',
+      })
+    }
+  }
+  catch (error) {
+    res.send({
+      success: false,
+      errorCode: 'unknown',
+    })
+  }
+})
+
 app.post('/verifyJWT', (req, res) => {
   const decoded = verifyJWTToken(req.body.token);
   // const providedEmail = req.body.email;
