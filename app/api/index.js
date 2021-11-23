@@ -1,6 +1,14 @@
 import { json } from 'body-parser'
 const app = require('express')()
 const helmet = require('helmet')
+const rateLimit = require("express-rate-limit");
+
+
+const apiLimiter = rateLimit({
+  windowMs: 10 * 1000, // 15 minutes
+  max: 3 // limit each IP to 100 requests per windowMs
+});
+
 
 const mysql = require('mysql2/promise')
 const bcrypt = require('bcrypt')
@@ -39,6 +47,7 @@ class User {
 
 app.use(json())
 app.use(helmet())
+app.use(apiLimiter);
 
 app.get('/ping', (req, res) => {
   res.send('UP');
