@@ -18,53 +18,6 @@ export const state = () => ({
     },
   },
   restaurants: {
-    1011: {
-      name: 'Osmows',
-      about:
-        "Osmow's is a fast casual Mediterranean restaurant capturing a truly modern taste while giving customers the luxury of customizing their preferences.",
-      address: 'Hamilton, Ontario',
-      phone: '4167275021',
-      website: 'https://mrosmow.com/',
-      rating: '',
-      reviews: [
-        {
-          title: 'Perfect place for dinner',
-          rating: 4,
-          review:
-            'Amazing restaurant. Had the Philly Veggie Wrap. Be careful as the sauce drips and can get stuck in beard.',
-          username: 'Alice Franklin',
-          imageurl: 'https://randomuser.me/api/portraits/women/55.jpg',
-        },
-        {
-          title: 'Owner is friedly',
-          rating: 5,
-          review:
-            'He is always serving customers with a smile on his face. He is like a family member.',
-          username: 'Logan Craig',
-          imageurl: 'https://randomuser.me/api/portraits/men/12.jpg',
-        },
-      ],
-      image:
-        'https://dynamicmedia.zuza.com/zz/m/original_/7/2/7266f0c7-32b2-4514-af18-1b9dd948b072/Osmow%20s%2004_Super_Portrait.jpg',
-      latitude: 43.258666,
-      longitude: -79.942932,
-      id: 1011,
-    },
-    1012: {
-      name: 'Quatrefoil',
-      about:
-        'Polished, upscale restaurant offering seasonal modern French cuisine, fine wines & a patio.',
-      address: 'Hamilton, Ontario',
-      phone: '(905) 628-7800',
-      website: 'https://quatrefoilrestaurant.com',
-      rating: '5',
-      reviews: [],
-      image:
-        'https://lh5.googleusercontent.com/p/AF1QipOMeEBWrocRfYVNUEv3vkBIwtKWG9CSgMldHWPR=w408-h271-k-no',
-      latitude: 43.2672559,
-      longitude: -79.9656398,
-      id: 1012,
-    },
     1102: {
       name: 'Thirsty Cactus',
       about:

@@ -157,12 +157,12 @@ app.post('/addRestaurant', async (req, res) => {
   const latitude = req.body.latitude;
   const longitude = req.body.longitude;
   const description = req.body.description;
-  // const image = req.body.image;
+  const image = req.body.image;
   const connection = await mysql.createConnection(connectionSetup)
   try {
     const [rows] = await connection.query(
       'INSERT INTO Restaurants (Name, About, Phone, Website, Image, Latitude, Longitude) VALUES (?,?,?,?,?,?,?)',
-      [name, description, phone, website, "abc", latitude, longitude]
+      [name, description, phone, website, image, latitude, longitude]
     )
     if (rows.affectedRows === 1) {
       res.send({

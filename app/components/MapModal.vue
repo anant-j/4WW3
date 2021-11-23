@@ -4,12 +4,12 @@
       type="button"
       class="btn btn-primary"
       data-bs-toggle="modal"
-      data-bs-target="#staticBackdrop"
+      data-bs-target="#staticBackdrop1"
     >
       <font-awesome-icon :icon="['fas', 'eye']" />
     </button>
     <div
-      id="staticBackdrop"
+      id="staticBackdrop1"
       class="modal fade"
       data-bs-backdrop="static"
       data-bs-keyboard="false"
