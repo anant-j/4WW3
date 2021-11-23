@@ -84,13 +84,10 @@
           </div>
           <div v-else class="col-1">
             <br />
-            <button
-              class="btn btn-primary"
-              type="button"
-              @click="useCurrentLocation()"
-            >
-              <font-awesome-icon :icon="['fas', 'eye']" />
-            </button>
+            <MapModal
+              :latitude="parseFloat(latitude)"
+              :longitude="parseFloat(longitude)"
+            />
           </div>
         </div>
       </div>
@@ -180,7 +177,11 @@
 import validations from '~/mixins/validations.js'
 import geolocation from '~/mixins/geolocation.js'
 import notification from '~/mixins/notification.js'
+import MapModal from '~/components/MapModal.vue'
 export default {
+  components: {
+    MapModal,
+  },
   mixins: [validations, geolocation, notification],
   middleware: 'auth',
   data() {
