@@ -149,14 +149,7 @@
           </div>
           <div class="col-1">
             <br />
-            <button
-              class="btn btn-primary"
-              type="button"
-              :disabled="!imageUrl"
-              @click="useCurrentLocation()"
-            >
-              <font-awesome-icon :icon="['fas', 'eye']" />
-            </button>
+            <ImageModal :url="imageUrl"/>
           </div>
         </div>
       </div>
@@ -178,9 +171,11 @@ import validations from '~/mixins/validations.js'
 import geolocation from '~/mixins/geolocation.js'
 import notification from '~/mixins/notification.js'
 import MapModal from '~/components/MapModal.vue'
+import ImageModal from '~/components/ImageModal.vue'
 export default {
   components: {
     MapModal,
+    ImageModal
   },
   mixins: [validations, geolocation, notification],
   middleware: 'auth',
