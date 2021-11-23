@@ -39,7 +39,7 @@
       <div class="row justify-content-center">
         <!-- The div below takes the latitude of the restaurant -->
         <div class="col-md-6 row">
-          <div id="addObjectLocationInput" class="col">
+          <div id="addObjectLocationInput" class="col-5">
             <label for="latitude">Latitude</label>
             <input
               id="latitude"
@@ -56,7 +56,7 @@
             />
           </div>
           <!-- The div below takes the longitude of the restaurant -->
-          <div class="col">
+          <div class="col-5">
             <label for="longitude">Longitude</label>
             <input
               id="longitude"
@@ -72,7 +72,7 @@
               oninput="this.setCustomValidity('')"
             />
           </div>
-          <div class="col-1">
+          <div v-if="!(latitude && longitude)" class="col-1">
             <br />
             <button
               class="btn btn-primary"
@@ -80,6 +80,16 @@
               @click="useCurrentLocation()"
             >
               <font-awesome-icon :icon="['fas', 'location-arrow']" />
+            </button>
+          </div>
+          <div v-else class="col-1">
+            <br />
+            <button
+              class="btn btn-primary"
+              type="button"
+              @click="useCurrentLocation()"
+            >
+              <font-awesome-icon :icon="['fas', 'eye']" />
             </button>
           </div>
         </div>
@@ -118,24 +128,39 @@
       </div>
       <!-- The div below allows the user to upload an image of the restaurant -->
       <div class="row justify-content-center mt-3">
-        <div class="col-md-3">
-          <label for="image">Upload an Image :</label>&nbsp;
-          <input
-            id="image"
-            type="file"
-            name="image"
-            accept="image/png, image/jpeg"
-          />
-        </div>
-        <div class="col-md-3">
-          <label for="image">Or :</label>&nbsp;
-          <input
-            id="image"
-            type="url"
-            class="form-control"
-            placeholder="Enter Image URL"
-            name="image"
-          />
+        <div class="col-md-6 row">
+          <div class="col-5">
+            <label for="image">Upload an Image :</label>&nbsp;
+            <input
+              id="image"
+              type="file"
+              name="image"
+              accept="image/png, image/jpeg"
+              @change="processFile($event)"
+            />
+          </div>
+          <div class="col-5">
+            <label for="image">Or :</label>&nbsp;
+            <input
+              id="image"
+              v-model="imageUrl"
+              type="url"
+              class="form-control"
+              placeholder="Enter Image URL"
+              name="image"
+            />
+          </div>
+          <div class="col-1">
+            <br />
+            <button
+              class="btn btn-primary"
+              type="button"
+              :disabled="!imageUrl"
+              @click="useCurrentLocation()"
+            >
+              <font-awesome-icon :icon="['fas', 'eye']" />
+            </button>
+          </div>
         </div>
       </div>
       <div class="row justify-content-center mt-3">
@@ -166,7 +191,7 @@ export default {
       longitude: '',
       website: '',
       phone: '',
-      blur: false,
+      imageUrl: '',
       apiCallInProgress: false,
     }
   },
@@ -195,7 +220,6 @@ export default {
       this.apiCallInProgress = false
     },
     async useCurrentLocation() {
-      this.blur = true
       this.searchQueryEnabled = false
       const location = await this.getLocation()
       if (location.success) {
@@ -204,6 +228,10 @@ export default {
       } else {
         alert("Couldn't get location")
       }
+    },
+    processFile(event) {
+      const image = event.target.files[0]
+      console.log(image)
     },
   },
 }
