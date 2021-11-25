@@ -6,7 +6,7 @@ const rateLimit = require("express-rate-limit");
 
 const apiLimiter = rateLimit({
     windowMs: 10 * 1000, // 15 minutes
-    max: 3 // limit each IP to 100 requests per windowMs
+    max: 10 // limit each IP to 100 requests per windowMs
 });
 
 
@@ -102,6 +102,8 @@ app.post('/login', async(req, res) => {
             success: false,
             errorCode: 'unknown',
         })
+    } finally {
+        connection.end();
     }
 })
 
@@ -143,6 +145,8 @@ app.post('/register', async(req, res) => {
                 errorCode: 'unknown',
             })
         }
+    } finally {
+        connection.end();
     }
 })
 
@@ -175,6 +179,8 @@ app.post('/addRestaurant', async(req, res) => {
             success: false,
             errorCode: 'unknown',
         })
+    } finally {
+        connection.end();
     }
 })
 
@@ -201,6 +207,8 @@ app.get('/getRestaurant', async(req, res) => {
             success: false,
             errorCode: 'unknown',
         })
+    } finally {
+        connection.end();
     }
 })
 
@@ -209,12 +217,13 @@ app.get('/getRestaurantByName', async(req, res) => {
     const connection = await mysql.createConnection(connectionSetup)
     try {
         const [rows] = await connection.execute(
-            'SELECT * FROM Restaurant WHERE NAME LIKE concat(?, ' % ')', [name]
+            "SELECT * FROM Restaurants WHERE NAME LIKE CONCAT(?, '%')", [name]
         )
+        console.log(rows)
         if (rows.length) {
             res.send({
                 success: true,
-                restaurant: rows[0],
+                restaurant: rows,
             })
         } else {
             res.send({
@@ -223,10 +232,13 @@ app.get('/getRestaurantByName', async(req, res) => {
             })
         }
     } catch (error) {
+        console.log(error)
         res.send({
             success: false,
             errorCode: 'unknown',
         })
+    } finally {
+        connection.end();
     }
 })
 
