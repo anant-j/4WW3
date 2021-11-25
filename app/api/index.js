@@ -103,6 +103,9 @@ app.post('/login', async(req, res) => {
             errorCode: 'unknown',
         })
     }
+    finally {
+        connection.end()
+    }
 })
 
 app.post('/register', async(req, res) => {
@@ -144,6 +147,9 @@ app.post('/register', async(req, res) => {
             })
         }
     }
+    finally {
+      connection.end()
+  }
 })
 
 app.post('/addRestaurant', async(req, res) => {
@@ -176,6 +182,9 @@ app.post('/addRestaurant', async(req, res) => {
             errorCode: 'unknown',
         })
     }
+    finally {
+      connection.end()
+  }
 })
 
 app.get('/getRestaurant', async(req, res) => {
@@ -202,6 +211,9 @@ app.get('/getRestaurant', async(req, res) => {
             errorCode: 'unknown',
         })
     }
+    finally {
+      connection.end()
+  }
 })
 
 app.get('/getRestaurantByName', async(req, res) => {
@@ -227,6 +239,9 @@ app.get('/getRestaurantByName', async(req, res) => {
             success: false,
             errorCode: 'unknown',
         })
+    }
+        finally {
+        connection.end()
     }
 })
 
