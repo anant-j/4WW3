@@ -18,21 +18,6 @@ export const state = () => ({
     },
   },
   restaurants: {
-    1102: {
-      name: 'Thirsty Cactus',
-      about:
-        'No-frills establishment featuring generous plates of Mexican fare, classic comfort grub & cocktails.',
-      address: '2 King St E, Dundas, ON L9H 1B8',
-      phone: '(905) 627-8488',
-      website: 'https://thirstycactus.ca/',
-      rating: '4',
-      reviews: [],
-      image:
-        'https://lh5.googleusercontent.com/p/AF1QipPUS-nbWKcUBUIVuueDEBKETt8wDOJWftreqMH4=w408-h306-k-no',
-      latitude: 43.2659452,
-      longitude: -79.955817,
-      id: 1102,
-    },
     1103: {
       name: 'HAMBRGR',
       about: 'Burgers, burgers, burgers',
