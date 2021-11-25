@@ -17,9 +17,7 @@
     </div>
     <div class="container mt-5">
       <!-- Restaurant's title -->
-      <h3 class="pb-4 mb-4 border-bottom text-center">
-        {{ restaurantDetails.name }}
-      </h3>
+      <h3 class="pb-4 mb-4 border-bottom text-center">{{ restaurantDetails.name }}</h3>
       <div class="row g-5">
         <div class="col-md-4">
           <div class="position-sticky">
@@ -33,9 +31,7 @@
               <!-- Restaurant's about info -->
               <section v-if="restaurantDetails.about" id="about">
                 <h4 class="fst-italic">About</h4>
-                <p class="mb-0">
-                  {{ restaurantDetails.about }}
-                </p>
+                <p class="mb-0">{{ restaurantDetails.about }}</p>
               </section>
               <br />
               <!-- Restaurant's location info -->
@@ -43,7 +39,7 @@
                 <h4 class="fst-italic">Location</h4>
                 <p class="mb-0">{{ restaurantDetails.address }}</p>
               </section>
-              <br /> -->
+              <br />-->
               <!-- Restaurant's website  -->
               <section v-if="restaurantDetails.website" id="website">
                 <h4 class="fst-italic">Website</h4>
@@ -51,8 +47,7 @@
                   :href="restaurantDetails.website"
                   class="plain-link"
                   target="_"
-                  >{{ restaurantDetails.website }}</a
-                >
+                >{{ restaurantDetails.website }}</a>
               </section>
               <section v-if="restaurantDetails.phone" id="phone">
                 <h4 class="fst-italic">Phone</h4>
@@ -60,8 +55,7 @@
                   :href="`tel:` + restaurantDetails.phone"
                   class="plain-link"
                   target="_"
-                  >{{ restaurantDetails.phone }}</a
-                >
+                >{{ restaurantDetails.phone }}</a>
               </section>
             </div>
           </div>
@@ -69,12 +63,8 @@
         <div v-if="restaurantDetails.reviews" class="col-md-8">
           <div class="row">
             <!-- Number of reviews -->
-            <h4 v-if="restaurantDetails.reviews.length == 1" class="col">
-              1 Review
-            </h4>
-            <h4 v-else class="col">
-              {{ restaurantDetails.reviews.length }} Reviews
-            </h4>
+            <h4 v-if="restaurantDetails.reviews.length == 1" class="col">1 Review</h4>
+            <h4 v-else class="col">{{ restaurantDetails.reviews.length }} Reviews</h4>
             <!-- Add your own review Modal component -->
             <SubmitReview class="col" />
           </div>
@@ -191,7 +181,7 @@ export default {
         this.$store.commit('setActiveRestaurant', id)
         return true
       }
-      return false
+        return false
     },
   },
 }
