@@ -104,6 +104,20 @@ export const mutations = {
     state.restaurants[payload.ID].longitude = parseFloat(payload.Longitude)
     state.restaurants[payload.ID].id = payload.ID
   },
+  addReviews(state, payload) {
+    state.restaurants[payload.id].reviews = []
+    const finalReviews = []
+    for (const review of payload.reviews) {
+      finalReviews.push({
+        title: review.Title,
+        rating: review.Rating,
+        review: review.Review,
+        username: review.FirstName + " " + review.LastName,
+        imageurl: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`
+      });
+    }
+    state.restaurants[payload.id].reviews = finalReviews
+  },
   centerMap(state, payload = true) {
     state.centerMapBool = payload;
   }

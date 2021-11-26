@@ -14,11 +14,11 @@
     </button>
     <div
       id="staticBackdrop"
+      ref="myModal"
       class="modal fade"
       data-bs-backdrop="static"
       data-bs-keyboard="false"
       tabindex="-1"
-      ref="myModal"
       aria-labelledby="staticBackdropLabel"
       aria-hidden="true"
     >
@@ -37,11 +37,11 @@
               Add your review
             </h5>
             <button
+              ref="closeButton"
               type="button"
               class="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
-              ref="closeButton"
             ></button>
           </div>
           <div
@@ -125,7 +125,10 @@
 </template>
 
 <script>
+import notification from '~/mixins/notification.js'
+
 export default {
+  mixins: [notification],
   data() {
     return {
       title: '',
@@ -154,8 +157,6 @@ export default {
       } else {
         this.showToast('An error occurred. Please try again later.')
       }
-      // console.log(result)
-      // $('#myModal').modal('hide')
       this.$refs.closeButton.click()
     },
   },

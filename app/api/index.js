@@ -251,6 +251,36 @@ app.get('/getRestaurants', async (req, res) => {
     }
 })
 
+app.get('/getReviews', async (req, res) => {
+    const id = req.query.id;
+    const connection = await mysql.createConnection(connectionSetup)
+    try {
+        const [rows] = await connection.execute(
+            "SELECT Reviews.*, Users.FirstName, Users.LastName From Reviews, Users where Reviews.UserID = Users.Email AND Reviews.RestaurantID = ?", [id]
+        )
+        if (rows.length) {
+            res.send({
+                success: true,
+                reviews: rows,
+            })
+        } else {
+            res.send({
+                success: false,
+                errorCode: 'notFound',
+            })
+        }
+    } catch (error) {
+        console.log(error)
+        res.send({
+            success: false,
+            errorCode: 'unknown',
+        })
+    } finally {
+        await connection.end();
+    }
+})
+
+
 app.post('/addReview', async (req, res) => {
     const restaurantId = req.body.restaurantId
     const JWT = req.body.token
