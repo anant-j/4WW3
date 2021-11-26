@@ -8,18 +8,8 @@
     <!-- Display the list component with results -->
     <div class="col-md-3">
       <div class="text-center">
-        <button
-          class="btn btn-primary"
-          @click="$refs.liveMap.recenterBounds()"
-        >
-          Focus Map
-        </button>
-        <button
-          class="btn btn-info"
-          @click="$refs.liveMap.panCenter()"
-        >
-          Where am I?
-        </button>
+        <button class="btn btn-primary" @click="$refs.liveMap.recenterBounds()">Focus Map</button>
+        <button class="btn btn-info" @click="$refs.liveMap.panCenter()">Where am I?</button>
       </div>
       <br />
       <List />
@@ -68,10 +58,11 @@ export default {
       this.fetchRestaurant()
     } else if (searchBy === 'rating') {
       this.type = 'rating'
+      this.fetchRestaurant("rating", this.$route.query.value)
     } else if (searchBy === 'keyword') {
       this.type = 'keyword'
       console.log(this.$route.query.value)
-      this.fetchRestaurant(this.$route.query.value)
+      this.fetchRestaurant("keyword", this.$route.query.value)
     } else {
       this.$router.push({ path: '/' })
     }
@@ -89,13 +80,16 @@ export default {
       }
       return false
     },
-    async fetchRestaurant(name = null) {
+    async fetchRestaurant(type = null, value = null) {
       let response;
-      if(name){
-      response = await this.$api.getRestaurants(name)
+      if(type === "keyword"){
+      response = await this.$api.getRestaurants(value)
+      }
+      else if(type === "rating"){
+      response = await this.$api.getRestaurants(null, value)
       }
       else{
-      response = await this.$api.getRestaurants()
+        response = await this.$api.getRestaurants()
       }
       const result = await response.json()
       if (result.success) {
