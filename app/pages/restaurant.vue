@@ -67,23 +67,10 @@
         <div class="col-md-8">
           <div class="row">
             <!-- Number of reviews -->
-            <h4
-              v-if="
-                restaurantDetails.reviews &&
-                restaurantDetails.reviews.length == 1
-              "
-              class="col"
-            >
-              1 Review
-            </h4>
-            <h4
-              v-else-if="
-                restaurantDetails.reviews &&
-                restaurantDetails.reviews.length > 1
-              "
-              class="col"
-            >
-              {{ restaurantDetails.reviews.length }} Reviews
+            <h4 v-if="reviews && reviews.length == 1" class="col">1 Review</h4>
+            <h4 v-else-if="reviews && reviews.length > 1" class="col">
+              {{ reviews.length }} Reviews | Average Rating :
+              {{ averageRating }}
             </h4>
             <!-- Add your own review Modal component -->
             <SubmitReview class="col" />
@@ -93,7 +80,7 @@
           <!-- Reusing the review component as defined in components/Review.vue -->
           <section id="reviews">
             <Review
-              v-for="(review, id) in restaurantDetails.reviews"
+              v-for="(review, id) in reviews"
               :key="id"
               :title="review.title"
               :rating="review.rating"
@@ -124,6 +111,7 @@ export default {
     return {
       restaurantId: -1,
       restaurantDetails: {},
+      reviews: {},
     }
   },
   head() {
@@ -167,6 +155,23 @@ export default {
       ],
     }
   },
+  computed: {
+    averageRating() {
+      if (this.reviews.length === 0) {
+        return 0
+      } else {
+        const rating =
+          this.reviews.reduce((acc, review) => acc + review.rating, 0) /
+          this.reviews.length
+        return Math.round(rating * 100) / 100
+      }
+    },
+  },
+  watch: {
+    async '$store.state.loadReviewState'() {
+      await this.fetchReviews(this.restaurantId)
+    },
+  },
   async created() {
     const id = this.$route.query.id
     const fetchFromCache = this.getRestaurantFromStore(id)
@@ -177,8 +182,8 @@ export default {
         return
       }
     }
-    await this.fetchReviews(id)
     this.getRestaurantFromStore(id)
+    await this.fetchReviews(id)
     this.$store.commit('centerMap')
   },
   methods: {
@@ -198,11 +203,23 @@ export default {
       const response = await this.$api.getReviews(id)
       const result = await response.json()
       if (result.success) {
-        const payload = {
-          id,
-          reviews: result.reviews,
+        this.reviews = []
+        const orderedReviews = []
+        for (const review of result.reviews) {
+          orderedReviews.push({
+            title: review.Title,
+            rating: review.Rating,
+            review: review.Review,
+            username: review.FirstName + ' ' + review.LastName,
+            imageurl: `https://randomuser.me/api/portraits/men/${Math.floor(
+              Math.random() * 100
+            )}.jpg`,
+            date: review.Date
+          })
         }
-        this.$store.commit('addReviews', payload)
+        orderedReviews.sort((a, b) => (a.date < b.date) ? 1 : -1)
+        this.reviews=orderedReviews;
+        this.$store.commit('loadReviews', false)
         return true
       } else {
         return false

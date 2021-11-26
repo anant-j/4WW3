@@ -157,6 +157,7 @@ export default {
       } else {
         this.showToast('An error occurred. Please try again later.')
       }
+      this.$store.commit('loadReviews', true);
       this.$refs.closeButton.click()
     },
   },
