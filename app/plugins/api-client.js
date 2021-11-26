@@ -58,6 +58,9 @@ const api = {
     } else {
       return getAPI('/api/getRestaurants')
     }
+  },
+  getReviews(id) {
+    return getAPI('/api/getReviews', { id })
   }
 }
 
