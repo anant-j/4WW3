@@ -222,8 +222,7 @@ app.get('/getRestaurants', async (req, res) => {
             [rows] = await connection.execute(
                 "SELECT * FROM Restaurants WHERE NAME LIKE CONCAT(?, '%')", [name]
             )
-        }
-        if (rating) {
+        } else if (rating) {
             // Do query here
         } else {
             [rows] = await connection.execute(
