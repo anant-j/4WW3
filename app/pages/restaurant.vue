@@ -172,12 +172,13 @@ export default {
     const fetchFromCache = this.getRestaurantFromStore(id)
     if (!fetchFromCache) {
       const fetchFromDatabase = await this.fetchRestaurant(id)
-      if (fetchFromDatabase) {
-        this.getRestaurantFromStore(id)
-      } else {
+      if (!fetchFromDatabase) {
         this.$router.push({ path: '/' })
+        return
       }
     }
+    await this.fetchReviews(id)
+    this.getRestaurantFromStore(id)
     this.$store.commit('centerMap')
   },
   methods: {
@@ -192,6 +193,20 @@ export default {
         return false
       }
       // Fetching the restaurant details from the API
+    },
+    async fetchReviews(id) {
+      const response = await this.$api.getReviews(id)
+      const result = await response.json()
+      if (result.success) {
+        const payload = {
+          id,
+          reviews: result.reviews,
+        }
+        this.$store.commit('addReviews', payload)
+        return true
+      } else {
+        return false
+      }
     },
     getRestaurantFromStore(id) {
       const details = this.$store.state.restaurants[id]

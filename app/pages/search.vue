@@ -8,8 +8,12 @@
     <!-- Display the list component with results -->
     <div class="col-md-3">
       <div class="text-center">
-        <button class="btn btn-primary" @click="$refs.liveMap.recenterBounds()">Focus Map</button>
-        <button class="btn btn-info" @click="$refs.liveMap.panCenter()">Where am I?</button>
+        <button class="btn btn-primary" @click="$refs.liveMap.recenterBounds()">
+          Focus Map
+        </button>
+        <button class="btn btn-info" @click="$refs.liveMap.panCenter()">
+          Where am I?
+        </button>
       </div>
       <br />
       <List />
@@ -58,11 +62,10 @@ export default {
       this.fetchRestaurant()
     } else if (searchBy === 'rating') {
       this.type = 'rating'
-      this.fetchRestaurant("rating", this.$route.query.value)
+      this.fetchRestaurant('rating', this.$route.query.value)
     } else if (searchBy === 'keyword') {
       this.type = 'keyword'
-      console.log(this.$route.query.value)
-      this.fetchRestaurant("keyword", this.$route.query.value)
+      this.fetchRestaurant('keyword', this.$route.query.value)
     } else {
       this.$router.push({ path: '/' })
     }
@@ -81,30 +84,28 @@ export default {
       return false
     },
     async fetchRestaurant(type = null, value = null) {
-      let response;
-      if(type === "keyword"){
-      response = await this.$api.getRestaurants(value)
-      }
-      else if(type === "rating"){
-      response = await this.$api.getRestaurants(null, value)
-      }
-      else{
+      let response
+      if (type === 'keyword') {
+        response = await this.$api.getRestaurants(value)
+      } else if (type === 'rating') {
+        response = await this.$api.getRestaurants(null, value)
+      } else {
         response = await this.$api.getRestaurants()
       }
       const result = await response.json()
       if (result.success) {
-        this.$store.commit('clearActiveRestaurants');
-        for(const restaurant of result.restaurant){
-        this.$store.commit('addRestaurant', restaurant)
-        this.$store.commit('addActiveRestaurant', restaurant.ID)}
+        this.$store.commit('clearActiveRestaurants')
+        for (const restaurant of result.restaurant) {
+          this.$store.commit('addRestaurant', restaurant)
+          this.$store.commit('addActiveRestaurant', restaurant.ID)
+        }
         this.$store.commit('centerMap')
-        console.log(result.restaurant)
         return true
       } else {
         return false
       }
       // Fetching the restaurant details from the API
-    }
+    },
   },
 }
 </script>

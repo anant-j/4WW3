@@ -53,7 +53,7 @@ app.get('/ping', (req, res) => {
     res.send('UP');
 });
 
-app.post('/login', async(req, res) => {
+app.post('/login', async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
     const connection = await mysql.createConnection(connectionSetup)
@@ -103,11 +103,11 @@ app.post('/login', async(req, res) => {
             errorCode: 'unknown',
         })
     } finally {
-        connection.end();
+        await connection.end();
     }
 })
 
-app.post('/register', async(req, res) => {
+app.post('/register', async (req, res) => {
     const email = req.body.email;
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
@@ -146,11 +146,11 @@ app.post('/register', async(req, res) => {
             })
         }
     } finally {
-        connection.end();
+        await connection.end();
     }
 })
 
-app.post('/addRestaurant', async(req, res) => {
+app.post('/addRestaurant', async (req, res) => {
     const name = req.body.name;
     const phone = req.body.phone;
     const website = req.body.website;
@@ -180,11 +180,11 @@ app.post('/addRestaurant', async(req, res) => {
             errorCode: 'unknown',
         })
     } finally {
-        connection.end();
+        await connection.end();
     }
 })
 
-app.get('/getRestaurant', async(req, res) => {
+app.get('/getRestaurant', async (req, res) => {
     const id = req.query.id;
     const connection = await mysql.createConnection(connectionSetup)
     try {
@@ -208,11 +208,11 @@ app.get('/getRestaurant', async(req, res) => {
             errorCode: 'unknown',
         })
     } finally {
-        connection.end();
+        await connection.end();
     }
 })
 
-app.get('/getRestaurants', async(req, res) => {
+app.get('/getRestaurants', async (req, res) => {
     const name = req.query.name;
     const rating = req.query.rating;
     const connection = await mysql.createConnection(connectionSetup)
@@ -250,11 +250,41 @@ app.get('/getRestaurants', async(req, res) => {
             errorCode: 'unknown',
         })
     } finally {
-        connection.end();
+        await connection.end();
     }
 })
 
-app.post('/addReview', async(req, res) => {
+app.get('/getReviews', async (req, res) => {
+    const id = req.query.id;
+    const connection = await mysql.createConnection(connectionSetup)
+    try {
+        const [rows] = await connection.execute(
+            "SELECT Reviews.*, Users.FirstName, Users.LastName From Reviews, Users where Reviews.UserID = Users.Email AND Reviews.RestaurantID = ?", [id]
+        )
+        if (rows.length) {
+            res.send({
+                success: true,
+                reviews: rows,
+            })
+        } else {
+            res.send({
+                success: false,
+                errorCode: 'notFound',
+            })
+        }
+    } catch (error) {
+        console.log(error)
+        res.send({
+            success: false,
+            errorCode: 'unknown',
+        })
+    } finally {
+        await connection.end();
+    }
+})
+
+
+app.post('/addReview', async (req, res) => {
     const restaurantId = req.body.restaurantId
     const JWT = req.body.token
     const title = req.body.title
