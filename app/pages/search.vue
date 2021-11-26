@@ -65,6 +65,7 @@ export default {
     const searchBy = this.$route.query.by
     if (searchBy === 'location') {
       this.type = 'location'
+      this.fetchRestaurant()
     } else if (searchBy === 'rating') {
       this.type = 'rating'
     } else if (searchBy === 'keyword') {
@@ -88,8 +89,14 @@ export default {
       }
       return false
     },
-    async fetchRestaurant(name) {
-      const response = await this.$api.getRestaurantByName(name)
+    async fetchRestaurant(name = null) {
+      let response;
+      if(name){
+      response = await this.$api.getRestaurants(name)
+      }
+      else{
+      response = await this.$api.getRestaurants()
+      }
       const result = await response.json()
       if (result.success) {
         this.$store.commit('clearActiveRestaurants');
