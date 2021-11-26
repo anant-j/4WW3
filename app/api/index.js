@@ -222,8 +222,11 @@ app.get('/getRestaurants', async (req, res) => {
             [rows] = await connection.execute(
                 "SELECT * FROM Restaurants WHERE NAME LIKE CONCAT(?, '%')", [name]
             )
+
         } else if (rating) {
-            // Do query here
+            [rows] = await connection.execute(
+                'SELECT Restaurants.*, Rating FROM Restaurants, (SELECT RestaurantID AS ID, Avg(Rating) as Rating from Reviews GROUP BY RestaurantID) AS SUBQUERY WHERE Restaurants.ID = SUBQUERY.ID AND RATING>=?', [rating]
+            )
         } else {
             [rows] = await connection.execute(
                 "SELECT * FROM Restaurants"
@@ -292,8 +295,7 @@ app.post('/addReview', async (req, res) => {
     if (decoded) {
         try {
             const [rows] = await connection.query(
-                'INSERT INTO Reviews (RestaurantID, UserID, Title, Rating, Review, Date) VALUES (?,?,?,?,?,?)',
-                [restaurantId, decoded.user.email, title, rating, review, new Date()]
+                'INSERT INTO Reviews (RestaurantID, UserID, Title, Rating, Review, Date) VALUES (?,?,?,?,?,?)', [restaurantId, decoded.user.email, title, rating, review, new Date()]
             )
             if (rows.affectedRows === 1) {
                 res.send({

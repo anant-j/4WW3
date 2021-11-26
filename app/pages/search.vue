@@ -62,9 +62,10 @@ export default {
       this.fetchRestaurant()
     } else if (searchBy === 'rating') {
       this.type = 'rating'
+      this.fetchRestaurant('rating', this.$route.query.value)
     } else if (searchBy === 'keyword') {
       this.type = 'keyword'
-      this.fetchRestaurant(this.$route.query.value)
+      this.fetchRestaurant('keyword', this.$route.query.value)
     } else {
       this.$router.push({ path: '/' })
     }
@@ -82,10 +83,12 @@ export default {
       }
       return false
     },
-    async fetchRestaurant(name = null) {
+    async fetchRestaurant(type = null, value = null) {
       let response
-      if (name) {
-        response = await this.$api.getRestaurants(name)
+      if (type === 'keyword') {
+        response = await this.$api.getRestaurants(value)
+      } else if (type === 'rating') {
+        response = await this.$api.getRestaurants(null, value)
       } else {
         response = await this.$api.getRestaurants()
       }

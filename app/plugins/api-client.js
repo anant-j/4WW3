@@ -53,18 +53,13 @@ const api = {
   getRestaurants(name = null, rating = null) {
     if (name) {
       return getAPI('/api/getRestaurants', { name })
-    }
-    if (rating) {
+    } else if (rating) {
       return getAPI('/api/getRestaurants', { rating })
     } else {
       return getAPI('/api/getRestaurants')
     }
-  },
-  getReviews(id) {
-    return getAPI('/api/getReviews', { id })
   }
 }
-
 
 function postAPI(url, body) {
   const data = fetch(url, {
