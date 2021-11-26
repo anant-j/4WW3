@@ -41,8 +41,15 @@ const api = {
     getRestaurant(id) {
         return getAPI('/api/getRestaurant', { id })
     },
-    getRestaurantByName(name) {
-        return getAPI('/api/getRestaurantByName', { name })
+    getRestaurants(name = null, rating = null) {
+        if (name) {
+            return getAPI('/api/getRestaurants', { name })
+        }
+        if (rating) {
+            return getAPI('/api/getRestaurants', { rating })
+        } else {
+            return getAPI('/api/getRestaurants')
+        }
     }
 }
 
@@ -58,15 +65,17 @@ function postAPI(url, body) {
     return data
 }
 
-function getAPI(url, parameters) {
+function getAPI(url, parameters = null) {
     let urlString = `http://localhost:8080${url}`;
     let firstAdded = false;
-    for (const parameter of Object.keys(parameters)) {
-        if (!firstAdded) {
-            urlString += `?${parameter}=${parameters[parameter]}`
-            firstAdded = true;
-        } else {
-            urlString += `&${parameter}=${parameters[parameter]}`
+    if (parameters) {
+        for (const parameter of Object.keys(parameters)) {
+            if (!firstAdded) {
+                urlString += `?${parameter}=${parameters[parameter]}`
+                firstAdded = true;
+            } else {
+                urlString += `&${parameter}=${parameters[parameter]}`
+            }
         }
     }
     const data = fetch(urlString, {
