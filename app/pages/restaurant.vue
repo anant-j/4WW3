@@ -17,7 +17,9 @@
     </div>
     <div class="container mt-5">
       <!-- Restaurant's title -->
-      <h3 class="pb-4 mb-4 border-bottom text-center">{{ restaurantDetails.name }}</h3>
+      <h3 class="pb-4 mb-4 border-bottom text-center">
+        {{ restaurantDetails.name }}
+      </h3>
       <div class="row g-5">
         <div class="col-md-4">
           <div class="position-sticky">
@@ -47,7 +49,8 @@
                   :href="restaurantDetails.website"
                   class="plain-link"
                   target="_"
-                >{{ restaurantDetails.website }}</a>
+                  >{{ restaurantDetails.website }}</a
+                >
               </section>
               <section v-if="restaurantDetails.phone" id="phone">
                 <h4 class="fst-italic">Phone</h4>
@@ -55,16 +58,33 @@
                   :href="`tel:` + restaurantDetails.phone"
                   class="plain-link"
                   target="_"
-                >{{ restaurantDetails.phone }}</a>
+                  >{{ restaurantDetails.phone }}</a
+                >
               </section>
             </div>
           </div>
         </div>
-        <div v-if="restaurantDetails.reviews" class="col-md-8">
+        <div class="col-md-8">
           <div class="row">
             <!-- Number of reviews -->
-            <h4 v-if="restaurantDetails.reviews.length == 1" class="col">1 Review</h4>
-            <h4 v-else class="col">{{ restaurantDetails.reviews.length }} Reviews</h4>
+            <h4
+              v-if="
+                restaurantDetails.reviews &&
+                restaurantDetails.reviews.length == 1
+              "
+              class="col"
+            >
+              1 Review
+            </h4>
+            <h4
+              v-else-if="
+                restaurantDetails.reviews &&
+                restaurantDetails.reviews.length > 1
+              "
+              class="col"
+            >
+              {{ restaurantDetails.reviews.length }} Reviews
+            </h4>
             <!-- Add your own review Modal component -->
             <SubmitReview class="col" />
           </div>
@@ -158,7 +178,7 @@ export default {
         this.$router.push({ path: '/' })
       }
     }
-    this.$store.commit('centerMap');
+    this.$store.commit('centerMap')
   },
   methods: {
     // This method is called when the page is loaded
@@ -181,7 +201,7 @@ export default {
         this.$store.commit('setActiveRestaurant', id)
         return true
       }
-        return false
+      return false
     },
   },
 }

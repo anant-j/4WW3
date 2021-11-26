@@ -7,8 +7,10 @@
       class="btn btn-info"
       data-bs-toggle="modal"
       data-bs-target="#staticBackdrop"
+      :disabled="!$store.state.user.loggedIn"
     >
-      Add your review
+      <span v-if="$store.state.user.loggedIn">Add your review</span>
+      <span v-else>Login to add your review</span>
     </button>
     <div
       id="staticBackdrop"
@@ -16,6 +18,7 @@
       data-bs-backdrop="static"
       data-bs-keyboard="false"
       tabindex="-1"
+      ref="myModal"
       aria-labelledby="staticBackdropLabel"
       aria-hidden="true"
     >
@@ -38,6 +41,7 @@
               class="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
+              ref="closeButton"
             ></button>
           </div>
           <div
@@ -50,10 +54,16 @@
             }"
           >
             <form class="align-items-center">
-              <div class="row justify-content-center">
+              <div class="row justify-content-center mt-3">
                 <div class="col">
-                  <label for="dov">When did you visit</label>
-                  <input id="dov" type="date" class="form-control" />
+                  <label for="title">Review Title</label>
+                  <input
+                    id="title"
+                    v-model="title"
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter Review Title"
+                  />
                 </div>
               </div>
               <div class="row justify-content-center mt-3">
@@ -61,6 +71,7 @@
                   <label for="experienceRating">Rate your experience</label>
                   <select
                     id="experienceRating"
+                    v-model="rating"
                     class="form-select"
                     aria-label="Experience"
                   >
@@ -75,23 +86,13 @@
               </div>
               <div class="row justify-content-center mt-3">
                 <div class="col">
-                  <label for="reviewTitle">Review Title</label>
-                  <input
-                    id="reviewTitle"
-                    type="text"
-                    class="form-control"
-                    placeholder="Enter Review Title"
-                  />
-                </div>
-              </div>
-              <div class="row justify-content-center mt-3">
-                <div class="col">
-                  <label for="description">Description</label>
+                  <label for="description">Review</label>
                   <textarea
-                    id="description"
+                    id="review"
+                    v-model="review"
                     type="text"
                     class="form-control"
-                    placeholder="Enter Description"
+                    placeholder="Enter Review"
                   />
                 </div>
               </div>
@@ -113,11 +114,7 @@
             >
               Close
             </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-bs-dismiss="modal"
-            >
+            <button type="button" class="btn btn-primary" @click="submitReview">
               Submit
             </button>
           </div>
@@ -126,3 +123,41 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      title: '',
+      rating: '',
+      review: '',
+    }
+  },
+  methods: {
+    async submitReview() {
+      // this.apiCallInProgress = true
+      const restaurantId = parseInt(this.$route.query.id)
+      if (!restaurantId) {
+        return
+      }
+      const response = await this.$api.addReview(
+        restaurantId,
+        this.title,
+        this.rating,
+        this.review,
+        this.$store.state.user.jwt
+      )
+      const result = await response.json()
+      if (result.success) {
+        // this.$store.commit('addReview', result.data)
+        this.showToast('Review added successfully')
+      } else {
+        this.showToast('An error occurred. Please try again later.')
+      }
+      // console.log(result)
+      // $('#myModal').modal('hide')
+      this.$refs.closeButton.click()
+    },
+  },
+}
+</script>
