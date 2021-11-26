@@ -212,14 +212,24 @@ app.get('/getRestaurant', async(req, res) => {
     }
 })
 
-app.get('/getRestaurantByName', async(req, res) => {
+app.get('/getRestaurants', async(req, res) => {
     const name = req.query.name;
+    const rating = req.query.rating;
     const connection = await mysql.createConnection(connectionSetup)
     try {
-        const [rows] = await connection.execute(
-            "SELECT * FROM Restaurants WHERE NAME LIKE CONCAT(?, '%')", [name]
-        )
-        console.log(rows)
+        let rows;
+        if (name) {
+            [rows] = await connection.execute(
+                "SELECT * FROM Restaurants WHERE NAME LIKE CONCAT(?, '%')", [name]
+            )
+        }
+        if (rating) {
+            // Do query here
+        } else {
+            [rows] = await connection.execute(
+                "SELECT * FROM Restaurants"
+            )
+        }
         if (rows.length) {
             res.send({
                 success: true,
