@@ -103,7 +103,7 @@ app.post('/login', async (req, res) => {
             errorCode: 'unknown',
         })
     } finally {
-        connection.end();
+        await connection.end();
     }
 })
 
@@ -146,7 +146,7 @@ app.post('/register', async (req, res) => {
             })
         }
     } finally {
-        connection.end();
+        await connection.end();
     }
 })
 
@@ -180,7 +180,7 @@ app.post('/addRestaurant', async (req, res) => {
             errorCode: 'unknown',
         })
     } finally {
-        connection.end();
+        await connection.end();
     }
 })
 
@@ -208,7 +208,7 @@ app.get('/getRestaurant', async (req, res) => {
             errorCode: 'unknown',
         })
     } finally {
-        connection.end();
+        await connection.end();
     }
 })
 
@@ -247,7 +247,7 @@ app.get('/getRestaurants', async (req, res) => {
             errorCode: 'unknown',
         })
     } finally {
-        connection.end();
+        await connection.end();
     }
 })
 
