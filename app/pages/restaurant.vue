@@ -33,9 +33,7 @@
               <!-- Restaurant's about info -->
               <section v-if="restaurantDetails.about" id="about">
                 <h4 class="fst-italic">About</h4>
-                <p class="mb-0">
-                  {{ restaurantDetails.about }}
-                </p>
+                <p class="mb-0">{{ restaurantDetails.about }}</p>
               </section>
               <br />
               <!-- Restaurant's location info -->
@@ -43,7 +41,7 @@
                 <h4 class="fst-italic">Location</h4>
                 <p class="mb-0">{{ restaurantDetails.address }}</p>
               </section>
-              <br /> -->
+              <br />-->
               <!-- Restaurant's website  -->
               <section v-if="restaurantDetails.website" id="website">
                 <h4 class="fst-italic">Website</h4>

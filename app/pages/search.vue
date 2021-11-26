@@ -65,10 +65,13 @@ export default {
     const searchBy = this.$route.query.by
     if (searchBy === 'location') {
       this.type = 'location'
+      this.fetchRestaurant()
     } else if (searchBy === 'rating') {
       this.type = 'rating'
     } else if (searchBy === 'keyword') {
       this.type = 'keyword'
+      console.log(this.$route.query.value)
+      this.fetchRestaurant(this.$route.query.value)
     } else {
       this.$router.push({ path: '/' })
     }
@@ -86,6 +89,28 @@ export default {
       }
       return false
     },
+    async fetchRestaurant(name = null) {
+      let response;
+      if(name){
+      response = await this.$api.getRestaurants(name)
+      }
+      else{
+      response = await this.$api.getRestaurants()
+      }
+      const result = await response.json()
+      if (result.success) {
+        this.$store.commit('clearActiveRestaurants');
+        for(const restaurant of result.restaurant){
+        this.$store.commit('addRestaurant', restaurant)
+        this.$store.commit('addActiveRestaurant', restaurant.ID)}
+        this.$store.commit('centerMap')
+        console.log(result.restaurant)
+        return true
+      } else {
+        return false
+      }
+      // Fetching the restaurant details from the API
+    }
   },
 }
 </script>
