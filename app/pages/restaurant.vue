@@ -66,13 +66,25 @@
             </div>
           </div>
         </div>
-        <div v-if="restaurantDetails.reviews" class="col-md-8">
+        <div class="col-md-8">
           <div class="row">
             <!-- Number of reviews -->
-            <h4 v-if="restaurantDetails.reviews.length == 1" class="col">
+            <h4
+              v-if="
+                restaurantDetails.reviews &&
+                restaurantDetails.reviews.length == 1
+              "
+              class="col"
+            >
               1 Review
             </h4>
-            <h4 v-else class="col">
+            <h4
+              v-else-if="
+                restaurantDetails.reviews &&
+                restaurantDetails.reviews.length > 1
+              "
+              class="col"
+            >
               {{ restaurantDetails.reviews.length }} Reviews
             </h4>
             <!-- Add your own review Modal component -->
@@ -168,7 +180,7 @@ export default {
         this.$router.push({ path: '/' })
       }
     }
-    this.$store.commit('centerMap');
+    this.$store.commit('centerMap')
   },
   methods: {
     // This method is called when the page is loaded

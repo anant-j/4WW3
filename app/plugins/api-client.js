@@ -38,6 +38,15 @@ const api = {
       image,
     })
   },
+  addReview(restaurantId, title, rating, review, token) {
+    return postAPI('/api/addReview', {
+      restaurantId,
+      title,
+      rating,
+      review,
+      token,
+    })
+  },
   getRestaurant(id, token) {
     return getAPI('/api/getRestaurant', { id })
   }

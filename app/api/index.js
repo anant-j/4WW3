@@ -53,7 +53,7 @@ app.get('/ping', (req, res) => {
     res.send('UP');
 });
 
-app.post('/login', async(req, res) => {
+app.post('/login', async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
     const connection = await mysql.createConnection(connectionSetup)
@@ -108,7 +108,7 @@ app.post('/login', async(req, res) => {
     }
 })
 
-app.post('/register', async(req, res) => {
+app.post('/register', async (req, res) => {
     const email = req.body.email;
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
@@ -148,11 +148,11 @@ app.post('/register', async(req, res) => {
         }
     }
     finally {
-      connection.end()
-  }
+        connection.end()
+    }
 })
 
-app.post('/addRestaurant', async(req, res) => {
+app.post('/addRestaurant', async (req, res) => {
     const name = req.body.name;
     const phone = req.body.phone;
     const website = req.body.website;
@@ -183,11 +183,11 @@ app.post('/addRestaurant', async(req, res) => {
         })
     }
     finally {
-      connection.end()
-  }
+        connection.end()
+    }
 })
 
-app.get('/getRestaurant', async(req, res) => {
+app.get('/getRestaurant', async (req, res) => {
     const id = req.query.id;
     const connection = await mysql.createConnection(connectionSetup)
     try {
@@ -212,11 +212,11 @@ app.get('/getRestaurant', async(req, res) => {
         })
     }
     finally {
-      connection.end()
-  }
+        connection.end()
+    }
 })
 
-app.get('/getRestaurantByName', async(req, res) => {
+app.get('/getRestaurantByName', async (req, res) => {
     const name = req.query.name;
     const connection = await mysql.createConnection(connectionSetup)
     try {
@@ -240,8 +240,46 @@ app.get('/getRestaurantByName', async(req, res) => {
             errorCode: 'unknown',
         })
     }
-        finally {
+    finally {
         connection.end()
+    }
+})
+
+app.post('/addReview', async (req, res) => {
+    const restaurantId = req.body.restaurantId
+    const JWT = req.body.token
+    const title = req.body.title
+    const rating = req.body.rating
+    const review = req.body.review
+    const connection = await mysql.createConnection(connectionSetup)
+    const decoded = verifyJWTToken(JWT)
+    if (decoded) {
+        try {
+            const [rows] = await connection.query(
+                'INSERT INTO Reviews (RestaurantID, UserID, Title, Rating, Review, Date) VALUES (?,?,?,?,?,?)',
+                [restaurantId, decoded.user.email, title, rating, review, new Date()]
+            )
+            if (rows.affectedRows === 1) {
+                res.send({
+                    success: true,
+                    id: rows.insertId,
+                })
+            } else {
+                res.send({
+                    success: false,
+                    errorCode: 'unknown',
+                })
+            }
+        } catch (error) {
+            res.send({
+                success: false,
+                errorCode: 'unknown',
+            })
+        } finally {
+            connection.end()
+        }
+    } else {
+        res.status(401).send({ success: false, errorCode: 'unauthorized' })
     }
 })
 
