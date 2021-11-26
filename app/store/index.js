@@ -17,43 +17,8 @@ export const state = () => ({
       longitude: null,
     },
   },
-  restaurants: {
-    1103: {
-      name: 'HAMBRGR',
-      about: 'Burgers, burgers, burgers',
-      address: '49 King William St, Hamilton, ON L8R 1A2',
-      phone: '(289) 389-1212',
-      website: 'https://hambrgr.ca/',
-      rating: '4',
-      reviews: [],
-      image:
-        'https://s3-media0.fl.yelpcdn.com/bphoto/DkVWVakp7cCgRm8OsC5IDw/l.jpg',
-      latitude: 43.2572222,
-      longitude: -79.8691331,
-      id: 1103,
-    },
-    1104: {
-      name: 'The Yonge St Warehouse',
-      about:
-        'A casual, family-friendly restaurant serving a variety of traditional and contemporary cuisines.',
-      address: '336 Yonge St, Toronto, ON M5B 1R8',
-      phone: '(416) 599-5788',
-      website: 'http://www.warehousegroup.ca/yonge-street-warehouse/',
-      rating: '5',
-      reviews: [],
-      image:
-        'https://media.blogto.com/uploads/2018/02/21/20180216-2048-YongeWarehouse10.jpg?cmd=resize&quality=70&w=1400&height=2500',
-      latitude: 43.657502,
-      longitude: -79.3838113,
-      id: 1104,
-    },
-  },
-  restaurantsInFocus: new Set()
-    .add(1011)
-    .add(1012)
-    .add(1102)
-    .add(1103)
-    .add(1104),
+  restaurants: {},
+  restaurantsInFocus: new Set(),
   highlighted: null,
   centerMapBool: false,
   user: {
