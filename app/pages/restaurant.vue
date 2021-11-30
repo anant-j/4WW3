@@ -211,9 +211,7 @@ export default {
             rating: review.Rating,
             review: review.Review,
             username: review.FirstName + ' ' + review.LastName,
-            imageurl: `https://randomuser.me/api/portraits/men/${Math.floor(
-              Math.random() * 100
-            )}.jpg`,
+            imageurl: `https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${review.FirstName}+${review.LastName}`,
             date: review.Date
           })
         }
