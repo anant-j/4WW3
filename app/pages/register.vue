@@ -221,10 +221,10 @@
 
 <script>
 import geolocation from '~/mixins/geolocation.js'
-import validation from '~/mixins/validations.js'
 import notification from '~/mixins/notification.js'
+import { validateEmail, validatePassword, validateDateOfBirth, validateLatitude, validateLongitude } from '~/mixins/validations.js'
 export default {
-  mixins: [geolocation, validation, notification],
+  mixins: [geolocation, notification],
   data() {
     return {
       page: 1,
@@ -245,12 +245,12 @@ export default {
     validate() {
       const firstnameValidation = this.firstname.length
       const lastnameValidation = this.lastname.length
-      const emailValidation = this.validateEmail(this.email)
-      const passwordValidation = this.validatePassword(this.password)
-      const dobValidation = this.validateDateOfBirth(this.dob)
+      const emailValidation = validateEmail(this.email)
+      const passwordValidation = validatePassword(this.password)
+      const dobValidation = validateDateOfBirth(this.dob)
       const searchResultValidation = this.queryResults[this.searchQuery]
-      const latitudeValidation = this.validateLatitude(this.latitude)
-      const longitudeValidation = this.validateLongitude(this.longitude)
+      const latitudeValidation = validateLatitude(this.latitude)
+      const longitudeValidation = validateLongitude(this.longitude)
       // const nameValidation = this.
       return {
         firstname: firstnameValidation,

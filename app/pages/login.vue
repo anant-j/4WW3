@@ -62,10 +62,10 @@
 </template>
 
 <script>
-import validations from '~/mixins/validations.js'
 import notification from '~/mixins/notification.js'
+import { validateEmail, validatePassword } from '~/mixins/validations.js'
 export default {
-  mixins: [validations, notification],
+  mixins: [notification],
   data() {
     return {
       email: '', // Data property for the email entered
@@ -77,8 +77,8 @@ export default {
   },
   computed: {
     validate() {
-      const emailValidation = this.validateEmail(this.email)
-      const passwordValidation = this.validatePassword(this.password)
+      const emailValidation = validateEmail(this.email)
+      const passwordValidation = validatePassword(this.password)
       return {
         email: emailValidation,
         password: passwordValidation,

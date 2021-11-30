@@ -167,7 +167,6 @@
 </template>
 
 <script>
-import validations from '~/mixins/validations.js'
 import geolocation from '~/mixins/geolocation.js'
 import notification from '~/mixins/notification.js'
 import MapModal from '~/components/MapModal.vue'
@@ -177,7 +176,7 @@ export default {
     MapModal,
     ImageModal
   },
-  mixins: [validations, geolocation, notification],
+  mixins: [geolocation, notification],
   middleware: 'auth',
   data() {
     return {
