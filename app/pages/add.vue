@@ -136,20 +136,9 @@
               @change="processFile($event)"
             />
           </div>
-          <div class="col-5">
-            <label for="image">Or :</label>&nbsp;
-            <input
-              id="image"
-              v-model="imageUrl"
-              type="url"
-              class="form-control"
-              placeholder="Enter Image URL"
-              name="image"
-            />
-          </div>
           <div class="col-1">
             <br />
-            <ImageModal :url="imageUrl"/>
+            <ImageModal :url="imageUrl" />
           </div>
         </div>
       </div>
@@ -174,7 +163,7 @@ import ImageModal from '~/components/ImageModal.vue'
 export default {
   components: {
     MapModal,
-    ImageModal
+    ImageModal,
   },
   mixins: [geolocation, notification],
   middleware: 'auth',
@@ -187,6 +176,8 @@ export default {
       website: '',
       phone: '',
       imageUrl: '',
+      imageUpload: null,
+      imageB64: null,
       apiCallInProgress: false,
     }
   },
@@ -203,7 +194,8 @@ export default {
         this.longitude,
         this.website,
         this.phone,
-        this.$store.state.user.jwt
+        this.$store.state.user.jwt,
+        this.imageB64
       )
       const result = await response.json()
       if (result.success) {
@@ -225,8 +217,18 @@ export default {
       }
     },
     processFile(event) {
-      const image = event.target.files[0]
-      console.log(image)
+      if (event.target.files.length) {
+        this.imageUpload = event.target.files[0]
+        this.imageUrl = URL.createObjectURL(this.imageUpload)
+        const reader = new FileReader()
+        reader.readAsDataURL(event.target.files[0])
+        reader.onload = () => {
+          this.imageB64 = reader.result
+        }
+      } else {
+        this.imageUpload = null
+        this.imageUrl = null
+      }
     },
   },
 }

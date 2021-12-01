@@ -18,25 +18,48 @@ const api = {
       password,
       dob,
       latitude,
-      longitude
+      longitude,
     })
   },
   verifyToken(token) {
     return postAPI('/api/verifyJWT', {
-      token
+      token,
     })
   },
-  addRestaurant(name, description, latitude, longitude, website = null, phone = null, token = null, image = null) {
-    return postAPI('/api/addRestaurant', {
-      name,
-      description,
-      latitude,
-      longitude,
-      website,
-      phone,
-      token,
-      image,
+  addRestaurant(
+    name,
+    description,
+    latitude,
+    longitude,
+    website = null,
+    phone = null,
+    token = null,
+    image = null
+  ) {
+    const formData = new FormData()
+    formData.append('name', name)
+    formData.append('description', description)
+    formData.append('latitude', latitude)
+    formData.append('longitude', longitude)
+    formData.append('website', website)
+    formData.append('phone', phone)
+    formData.append('token', token)
+    formData.append('image', image)
+    const data = fetch('/api/addRestaurant', {
+      method: 'POST',
+      body: formData,
     })
+    return data
+    // return postAPI('/api/addRestaurant', {
+    //   name,
+    //   description,
+    //   latitude,
+    //   longitude,
+    //   website,
+    //   phone,
+    //   token,
+    //   image
+    // })
   },
   addReview(restaurantId, title, rating, review, token) {
     return postAPI('/api/addReview', {
@@ -61,7 +84,7 @@ const api = {
   },
   getReviews(id) {
     return getAPI('/api/getReviews', { id })
-  }
+  },
 }
 
 function postAPI(url, body) {
@@ -76,13 +99,13 @@ function postAPI(url, body) {
 }
 
 function getAPI(url, parameters = null) {
-  let urlString = `http://localhost:8080${url}`;
-  let firstAdded = false;
+  let urlString = `http://localhost:8080${url}`
+  let firstAdded = false
   if (parameters) {
     for (const parameter of Object.keys(parameters)) {
       if (!firstAdded) {
         urlString += `?${parameter}=${parameters[parameter]}`
-        firstAdded = true;
+        firstAdded = true
       } else {
         urlString += `&${parameter}=${parameters[parameter]}`
       }
