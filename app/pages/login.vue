@@ -112,9 +112,9 @@ export default {
             this.$router.push({ path: '/' })
           }
         } else if (!result.success) {
-          if (result.errorCode === 'email') {
+          if (result.errorCode === 'emailNotFound') {
             this.showToast('Email not found. Please register first', 'error')
-          } else if (result.errorCode === 'password') {
+          } else if (result.errorCode === 'passwordIncorrect') {
             this.showToast(
               'The password you’ve entered is incorrect. Please try again.',
               'error'

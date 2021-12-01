@@ -376,7 +376,7 @@ export default {
               this.$router.push({ path: '/' })
             }
           } else if (!result.success) {
-            if (result.errorCode === 'email') {
+            if (result.errorCode === 'emailAlreadyExists') {
               this.showToast(
                 'Email already exists. Kindly login instead',
                 'error'

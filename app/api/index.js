@@ -1,4 +1,5 @@
 import { json } from 'body-parser'
+import { validateDateOfBirth, validateEmail, validateLatitude, validatePassword } from '../mixins/validations'
 const app = require('express')()
 const helmet = require('helmet')
 const rateLimit = require('express-rate-limit')
@@ -54,6 +55,20 @@ app.get('/ping', (req, res) => {
 app.post('/login', async (req, res) => {
     const email = req.body.email
     const password = req.body.password
+    if(!validateEmail(email)){
+        res.status(400).send({
+            success: false,
+            errorCode: "emailInvalid"
+        })
+        return
+    }
+    if(!validatePassword(password)){
+        res.status(400).send({
+            success: false,
+            errorCode: "passwordInvalid"
+        })
+        return
+    }
     const connection = await mysql.createConnection(connectionSetup)
     try {
         if (!email) {
@@ -94,13 +109,13 @@ app.post('/login', async (req, res) => {
             } else {
                 res.send({
                     success: false,
-                    errorCode: 'password',
+                    errorCode: 'passwordIncorrect',
                 })
             }
         } else {
             res.send({
                 success: false,
-                errorCode: 'email',
+                errorCode: 'emailNotFound',
             })
         }
     } catch (error) {
@@ -120,8 +135,37 @@ app.post('/register', async (req, res) => {
     const dob = req.body.dob
     const latitude = req.body.latitude
     const longitude = req.body.longitude
+    const password = req.body.password
+    if(!validateEmail(email)){
+        res.status(400).send({
+            success: false,
+            errorCode: "emailInvalid"
+        })
+        return
+    }
+    if(!validatePassword(password)){
+        res.status(400).send({
+            success: false,
+            errorCode: "passwordInvalid"
+        })
+        return
+    }
+    if(!validateDateOfBirth(dob)){
+        res.status(400).send({
+            success: false,
+            errorCode: "dobInvalid"
+        })
+        return
+    }
+    if(!validateLatitude(latitude) || !validateLatitude(longitude)){
+        res.status(400).send({
+            success: false,
+            errorCode: "latitudeLongitudeInvalid"
+        })
+        return
+    }
     const connection = await mysql.createConnection(connectionSetup)
-    const hashedPassword = await hashPassword(req.body.password)
+    const hashedPassword = await hashPassword(password)
     try {
         const [rows] = await connection.query(
             'INSERT INTO Users (Email, Password, FirstName, LastName, DOB, Latitude, Longitude) VALUES (?,?,?,?,?,?,?)',
@@ -144,7 +188,7 @@ app.post('/register', async (req, res) => {
         if (error.code === 'ER_DUP_ENTRY') {
             res.send({
                 success: false,
-                errorCode: 'email',
+                errorCode: 'emailAlreadyExists',
             })
         } else {
             res.send({
@@ -165,6 +209,13 @@ app.post('/addRestaurant', async (req, res) => {
     const longitude = req.body.longitude
     const description = req.body.description
     const image = req.body.image
+    if(!validateLatitude(latitude) || !validateLatitude(longitude)){
+        res.status(400).send({
+            success: false,
+            errorCode: "latitudeLongitudeInvalid"
+        })
+        return
+    }
     const connection = await mysql.createConnection(connectionSetup)
     try {
         const [rows] = await connection.query(
