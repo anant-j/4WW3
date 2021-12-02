@@ -296,7 +296,7 @@ app.get('/getRestaurants', async (req, res) => {
   try {
     const name = req.query.name
     const rating = req.query.rating
-    const connection = await mysql.createConnection(connectionSetup)
+    connection = await mysql.createConnection(connectionSetup)
     let rows
     if (name) {
       ;[rows] = await connection.execute(

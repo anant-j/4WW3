@@ -100,7 +100,11 @@ function postAPI(url, body) {
 }
 
 function getAPI(url, parameters = null) {
-  let urlString = `http://localhost:8080${url}`
+  let baseUrl="https://4ww3.anant-j.com";
+  if (process.browser){
+    baseUrl = window.location.origin;
+  }
+  let urlString = `${baseUrl}${url}`
   let firstAdded = false
   if (parameters) {
     for (const parameter of Object.keys(parameters)) {
