@@ -93,19 +93,21 @@
       </div>
     </div>
   </div>
-  <div v-else>Please wait while we load the restaurant...</div>
+  <Loader v-else/>
 </template>
 
 <script>
 import Review from '@/components/Review.vue'
 import SubmitReview from '@/components/SubmitReview.vue'
 import Map from '@/components/Map.vue'
+import Loader from '@/components/Loader.vue'
 export default {
   components: {
     // Registering components
     SubmitReview,
     Review,
     Map,
+    Loader
   },
   data() {
     return {

@@ -1,6 +1,7 @@
 <template>
   <!-- This is the results page that is displayed after a search has been made -->
-  <div class="row container-fluid mt-3">
+  <Loader v-if="loading" />
+  <div v-else class="row container-fluid mt-3">
     <div class="col mb-1 searchMap">
       <!-- Display the map component with results -->
       <Map ref="liveMap" class="col mb-1 h-100" />
@@ -24,16 +25,19 @@
 <script>
 import List from '@/components/List.vue'
 import Map from '@/components/Map.vue'
+import Loader from '@/components/Loader.vue'
 export default {
   components: {
     // Registering components
     List,
     Map,
+    Loader,
   },
   data() {
     return {
       // Initializing data
       type: null,
+      loading: true,
     }
   },
   watch: {
@@ -55,20 +59,22 @@ export default {
       }
     },
   },
-  created() {
+  async created() {
     const searchBy = this.$route.query.by
+    this.loading = true
     if (searchBy === 'location') {
       this.type = 'location'
-      this.fetchRestaurant()
+      await this.fetchRestaurant()
     } else if (searchBy === 'rating') {
       this.type = 'rating'
-      this.fetchRestaurant('rating', this.$route.query.value)
+      await this.fetchRestaurant('rating', this.$route.query.value)
     } else if (searchBy === 'keyword') {
       this.type = 'keyword'
-      this.fetchRestaurant('keyword', this.$route.query.value)
+      await this.fetchRestaurant('keyword', this.$route.query.value)
     } else {
       this.$router.push({ path: '/' })
     }
+    this.loading = false
   },
   methods: {
     // Methods
@@ -93,8 +99,8 @@ export default {
         response = await this.$api.getRestaurants()
       }
       const result = await response.json()
+      this.$store.commit('clearActiveRestaurants')
       if (result.success) {
-        this.$store.commit('clearActiveRestaurants')
         for (const restaurant of result.restaurant) {
           this.$store.commit('addRestaurant', restaurant)
           this.$store.commit('addActiveRestaurant', restaurant.ID)
