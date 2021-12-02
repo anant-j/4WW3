@@ -222,7 +222,13 @@
 <script>
 import geolocation from '~/mixins/geolocation.js'
 import notification from '~/mixins/notification.js'
-import { validateEmail, validatePassword, validateDateOfBirth, validateLatitude, validateLongitude } from '~/mixins/validations.js'
+import {
+  validateEmail,
+  validatePassword,
+  validateDateOfBirth,
+  validateLatitude,
+  validateLongitude,
+} from '~/mixins/validations.js'
 export default {
   mixins: [geolocation, notification],
   data() {
@@ -341,6 +347,36 @@ export default {
         this.$router.push({ path: 'Login' })
       }
     },
+    async sendResult(latitude, longitude) {
+      const response = await this.$api.register(
+        this.email,
+        this.password,
+        this.firstname,
+        this.lastname,
+        this.dob,
+        latitude,
+        longitude
+      )
+      const result = await response.json()
+      if (result.success) {
+        this.showToast('Successfully registered')
+        this.$store.commit('login', result)
+        if (this.$route.query.callback) {
+          this.$router.push(this.$route.query.callback)
+        } else {
+          this.$router.push({ path: '/' })
+        }
+      } else if (!result.success) {
+        if (result.errorCode === 'emailAlreadyExists') {
+          this.showToast('Email already exists. Kindly login instead', 'error')
+        } else {
+          this.showToast(
+            'Something went wrong. Please try again later.',
+            'error'
+          )
+        }
+      }
+    },
     async submit() {
       if (this.page === 1) {
         this.blur = true
@@ -353,41 +389,19 @@ export default {
       if (this.page === 2) {
         this.blur = true
         if (this.validate.searchResult) {
-          alert('Form Submitted')
-          return
-        }
-        if (this.validate.latitude && this.validate.longitude) {
-          const response = await this.$api.register(
-            this.email,
-            this.password,
-            this.firstname,
-            this.lastname,
-            this.dob,
-            this.latitude,
-            this.longitude
+          const locationId = this.queryResults[this.searchQuery]
+          const data = await fetch(
+            `https://geocoder.ls.hereapi.com/6.2/geocode.json?locationid=${locationId}&jsonattributes=1&gen=9&apiKey=${process.env.VUE_APP_HERE_API_KEY}`
           )
-          const result = await response.json()
-          if (result.success) {
-            this.showToast('Successfully registered')
-            this.$store.commit('login', result)
-            if (this.$route.query.callback) {
-              this.$router.push(this.$route.query.callback)
-            } else {
-              this.$router.push({ path: '/' })
-            }
-          } else if (!result.success) {
-            if (result.errorCode === 'emailAlreadyExists') {
-              this.showToast(
-                'Email already exists. Kindly login instead',
-                'error'
-              )
-            } else {
-              this.showToast(
-                'Something went wrong. Please try again later.',
-                'error'
-              )
-            }
-          }
+          const result = await data.json()
+          const latitude =
+            result.response.view[0].result[0].location.displayPosition.latitude
+          const longitude =
+            result.response.view[0].result[0].location.displayPosition.longitude
+          await this.sendResult(latitude, longitude)
+        }
+        else if (this.validate.latitude && this.validate.longitude) {
+          await this.sendResult(this.latitude, this.longitude)
         }
       }
     },
