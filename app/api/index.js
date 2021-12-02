@@ -233,12 +233,14 @@ app.post('/addRestaurant', async (req, res) => {
         success: false,
         errorCode: 'imageUploadFailed',
       })
+      return
     }
   } catch (error) {
     res.status(400).send({
       success: false,
       errorCode: 'imageUploadFailed',
     })
+    return
   }
   const connection = await mysql.createConnection(connectionSetup)
   try {

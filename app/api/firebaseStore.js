@@ -4,7 +4,7 @@ import {
   ref,
   // uploadBytes,
   uploadString,
-  getDownloadURL
+  getDownloadURL,
 } from 'firebase/storage'
 
 const firebaseConfig = {
@@ -19,14 +19,16 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig)
 const storage = getStorage(firebaseApp)
 
-export async function uploadImage(file, filePath) {
-  const storageRef = ref(storage, 'images/testImage')
-  let resultUrl=""
+export async function uploadImage(file) {
+  const time = new Date().getTime()
+  const storageRef = ref(storage, `images/${time}`)
+  let resultUrl = ''
   try {
-    await uploadString(storageRef, file, 'base64');
+    await uploadString(storageRef, file, 'base64')
     // await uploadBytes(storageRef, file)
-    resultUrl = await getDownloadURL(storageRef);
+    resultUrl = await getDownloadURL(storageRef)
   } catch (error) {
+    console.log(error)
     return { success: false }
   }
   return { success: true, url: resultUrl }

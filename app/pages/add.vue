@@ -126,7 +126,7 @@
       <!-- The div below allows the user to upload an image of the restaurant -->
       <div class="row justify-content-center mt-3">
         <div class="col-md-6 row">
-          <div class="col-5">
+          <div class="col-10">
             <label for="image">Upload an Image :</label>&nbsp;
             <input
               id="image"
