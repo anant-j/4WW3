@@ -104,7 +104,6 @@
           <button
             type="button"
             class="col-3 btn btn-outline-info"
-            :disabled="email != '' || password != ''"
             @click="openPage()"
           >
             Go to Login Page
@@ -128,9 +127,9 @@
             />
             <datalist id="queryList">
               <option
-                v-for="item in queryResults"
-                :key="item"
-                :value="item"
+                v-for="key in Object.keys(queryResults)"
+                :key="key"
+                :value="key"
               ></option>
             </datalist>
             <div class="invalid-feedback">
@@ -222,9 +221,17 @@
 
 <script>
 import geolocation from '~/mixins/geolocation.js'
-import validation from '~/mixins/validations.js'
+import notification from '~/mixins/notification.js'
+import errorFactory from '~/mixins/errorFactory.js'
+import {
+  validateEmail,
+  validatePassword,
+  validateDateOfBirth,
+  validateLatitude,
+  validateLongitude,
+} from '~/mixins/validations.js'
 export default {
-  mixins: [geolocation, validation],
+  mixins: [geolocation, notification, errorFactory],
   data() {
     return {
       page: 1,
@@ -237,7 +244,7 @@ export default {
       searchQueryEnabled: true,
       latitude: '',
       longitude: '',
-      queryResults: new Set(),
+      queryResults: {},
       blur: false,
     }
   },
@@ -245,12 +252,12 @@ export default {
     validate() {
       const firstnameValidation = this.firstname.length
       const lastnameValidation = this.lastname.length
-      const emailValidation = this.validateEmail(this.email)
-      const passwordValidation = this.validatePassword(this.password)
-      const dobValidation = this.validateDateOfBirth(this.dob)
-      const searchResultValidation = this.queryResults.has(this.searchQuery)
-      const latitudeValidation = this.validateLatitude(this.latitude)
-      const longitudeValidation = this.validateLongitude(this.longitude)
+      const emailValidation = validateEmail(this.email)
+      const passwordValidation = validatePassword(this.password)
+      const dobValidation = validateDateOfBirth(this.dob)
+      const searchResultValidation = this.queryResults[this.searchQuery]
+      const latitudeValidation = validateLatitude(this.latitude)
+      const longitudeValidation = validateLongitude(this.longitude)
       // const nameValidation = this.
       return {
         firstname: firstnameValidation,
@@ -279,11 +286,11 @@ export default {
   watch: {
     searchQuery(val) {
       if (val.length >= 3) {
-        if (!this.queryResults.has(val)) {
+        if (!this.queryResults[val]) {
           this.populateSearchData(val)
         }
       } else {
-        this.queryResults = new Set()
+        this.queryResults = {}
       }
     },
   },
@@ -304,7 +311,7 @@ export default {
         `https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=${process.env.VUE_APP_HERE_API_KEY}&maxresults=5&query=${val}`
       )
       const result = await data.json()
-      this.queryResults = new Set()
+      this.queryResults = {}
       if (result.suggestions && result.suggestions.length > 0) {
         for (const suggestion of result.suggestions) {
           let suggestionLabel = ''
@@ -327,14 +334,44 @@ export default {
           if (suggestion.address.country) {
             suggestionLabel += suggestion.address.country
           }
-          this.queryResults.add(suggestionLabel)
+          this.queryResults[suggestionLabel.toString()] = suggestion.locationId
         }
       }
     },
     openPage() {
-      this.$router.push({ path: 'Login' }) // Switch view to Login.vue
+      if (this.$route.query.callback) {
+        this.$router.push({
+          path: 'Login',
+          query: { callback: this.$route.query.callback },
+        })
+      } else {
+        this.$router.push({ path: 'Login' })
+      }
     },
-    submit() {
+    async sendResult(latitude, longitude) {
+      const response = await this.$api.register(
+        this.email,
+        this.password,
+        this.firstname,
+        this.lastname,
+        this.dob,
+        latitude,
+        longitude
+      )
+      const result = await response.json()
+      if (result.success) {
+        this.showToast('Successfully registered')
+        this.$store.commit('login', result)
+        if (this.$route.query.callback) {
+          this.$router.push(this.$route.query.callback)
+        } else {
+          this.$router.push({ path: '/' })
+        }
+      } else {
+      this.showToast(this.errorHandler[result.errorCode].message, this.errorHandler[result.errorCode].severity)
+      }
+    },
+    async submit() {
       if (this.page === 1) {
         this.blur = true
         if (this.validate.resultPage1) {
@@ -345,11 +382,20 @@ export default {
       }
       if (this.page === 2) {
         this.blur = true
-        if (
-          this.validate.searchResult ||
-          (this.validate.latitude && this.validate.longitude)
-        ) {
-          alert('Form Submitted')
+        if (this.validate.searchResult) {
+          const locationId = this.queryResults[this.searchQuery]
+          const data = await fetch(
+            `https://geocoder.ls.hereapi.com/6.2/geocode.json?locationid=${locationId}&jsonattributes=1&gen=9&apiKey=${process.env.VUE_APP_HERE_API_KEY}`
+          )
+          const result = await data.json()
+          const latitude =
+            result.response.view[0].result[0].location.displayPosition.latitude
+          const longitude =
+            result.response.view[0].result[0].location.displayPosition.longitude
+          await this.sendResult(latitude, longitude)
+        }
+        else if (this.validate.latitude && this.validate.longitude) {
+          await this.sendResult(this.latitude, this.longitude)
         }
       }
     },

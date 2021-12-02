@@ -2,7 +2,7 @@
   <!-- This is the page that is displayed when a user wants to add a restaurant -->
   <div class="container mt-3 align-form">
     <h1>Add a Restaurant</h1>
-    <form class="align-items-center addForm" @submit.prevent="onSubmit">
+    <form class="align-items-center addForm" @submit.prevent="submit">
       <!-- The div below takes the name of the restaurant -->
       <div class="row justify-content-center">
         <div class="col-md-6">
@@ -39,7 +39,7 @@
       <div class="row justify-content-center">
         <!-- The div below takes the latitude of the restaurant -->
         <div class="col-md-6 row">
-          <div id="addObjectLocationInput" class="col">
+          <div id="addObjectLocationInput" class="col-5">
             <label for="latitude">Latitude</label>
             <input
               id="latitude"
@@ -56,7 +56,7 @@
             />
           </div>
           <!-- The div below takes the longitude of the restaurant -->
-          <div class="col">
+          <div class="col-5">
             <label for="longitude">Longitude</label>
             <input
               id="longitude"
@@ -72,7 +72,7 @@
               oninput="this.setCustomValidity('')"
             />
           </div>
-          <div class="col-1">
+          <div v-if="!(latitude && longitude)" class="col-1">
             <br />
             <button
               class="btn btn-primary"
@@ -81,6 +81,13 @@
             >
               <font-awesome-icon :icon="['fas', 'location-arrow']" />
             </button>
+          </div>
+          <div v-else class="col-1">
+            <br />
+            <MapModal
+              :latitude="parseFloat(latitude)"
+              :longitude="parseFloat(longitude)"
+            />
           </div>
         </div>
       </div>
@@ -99,37 +106,68 @@
           />
         </div>
       </div>
-      <!-- The div below allows the user to upload an image of the restaurant -->
-      <div class="row justify-content-center mt-3">
+
+      <div class="row justify-content-center">
         <div class="col-md-6">
-          <label for="image">Upload an Image :</label>&nbsp;
+          <label for="website">Restaurant's Phone Number (123-456-7890)</label>
           <input
-            id="image"
-            type="file"
-            name="image"
-            accept="image/png, image/jpeg"
+            id="phone"
+            v-model="phone"
+            type="tel"
+            class="form-control"
+            placeholder="Enter Phone Number"
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+            required
+            oninvalid="this.setCustomValidity('Please enter a valid phone number.')"
+            oninput="this.setCustomValidity('')"
           />
         </div>
       </div>
-      <!-- The div below allows the user to upload a video of the restaurant -->
-      <div class="row justify-content-center">
-        <div class="col-md-6">
-          <label for="video">Upload a Video &nbsp;&nbsp;&nbsp;:</label>&nbsp;
-          <input id="video" type="file" name="video" accept="video/*" />
+      <!-- The div below allows the user to upload an image of the restaurant -->
+      <div class="row justify-content-center mt-3">
+        <div class="col-md-6 row">
+          <div class="col-10">
+            <label for="image">Upload an Image :</label>&nbsp;
+            <input
+              id="image"
+              type="file"
+              name="image"
+              accept="image/png, image/jpeg"
+              @change="processFile($event)"
+            />
+          </div>
+          <div class="col-1">
+            <br />
+            <ImageModal :url="imageUrl" />
+          </div>
         </div>
       </div>
       <div class="row justify-content-center mt-3">
-        <button type="submit" class="col-3 btn btn-primary">Submit</button>
+        <button
+          type="submit"
+          class="col-3 btn btn-primary"
+          :disabled="apiCallInProgress"
+        >
+          Submit
+        </button>
       </div>
     </form>
   </div>
 </template>
 
 <script>
-import validations from '~/mixins/validations.js'
 import geolocation from '~/mixins/geolocation.js'
+import notification from '~/mixins/notification.js'
+import MapModal from '~/components/MapModal.vue'
+import ImageModal from '~/components/ImageModal.vue'
+import errorFactory from '~/mixins/errorFactory.js'
 export default {
-  mixins: [validations, geolocation],
+  components: {
+    MapModal,
+    ImageModal,
+  },
+  mixins: [geolocation, notification, errorFactory],
+  middleware: 'auth',
   data() {
     return {
       name: '',
@@ -137,18 +175,42 @@ export default {
       latitude: '',
       longitude: '',
       website: '',
-      blur: false,
+      phone: '',
+      imageUrl: '',
+      imageUpload: null,
+      imageB64: null,
+      apiCallInProgress: false,
     }
   },
   methods: {
     openPage() {
       this.$router.push({ path: 'Register' }) // Switch view to Register.vue
     },
-    onSubmit() {
-      alert('Form Submitted')
+    async submit() {
+      this.apiCallInProgress = true
+      const response = await this.$api.addRestaurant(
+        this.name,
+        this.description,
+        this.latitude,
+        this.longitude,
+        this.website,
+        this.phone,
+        this.$store.state.user.jwt,
+        this.imageB64
+      )
+      const result = await response.json()
+      if (result.success) {
+        this.showToast('Restaurant added successfully')
+        this.$router.push({ path: 'Restaurant', query: { id: result.id } })
+      } else {
+        this.showToast(
+          this.errorHandler[result.errorCode].message,
+          this.errorHandler[result.errorCode].severity
+        )
+      }
+      this.apiCallInProgress = false
     },
     async useCurrentLocation() {
-      this.blur = true
       this.searchQueryEnabled = false
       const location = await this.getLocation()
       if (location.success) {
@@ -156,6 +218,20 @@ export default {
         this.longitude = location.longitude
       } else {
         alert("Couldn't get location")
+      }
+    },
+    processFile(event) {
+      if (event.target.files.length) {
+        this.imageUpload = event.target.files[0]
+        this.imageUrl = URL.createObjectURL(this.imageUpload)
+        const reader = new FileReader()
+        reader.readAsDataURL(event.target.files[0])
+        reader.onload = () => {
+          this.imageB64 = reader.result
+        }
+      } else {
+        this.imageUpload = null
+        this.imageUrl = null
       }
     },
   },

@@ -29,10 +29,31 @@
 </template>
 
 <script>
+import { getToken, getEmail } from '../mixins/localStore'
 import Footer from '~/components/Footer.vue'
 import Navbar from '~/components/Navbar.vue'
 export default {
   components: { Navbar, Footer }, // Registering components
   transition: 'fade', // Registering transistion
+  async created() {
+    const token = getToken()
+    const email = getEmail()
+    if (token) {
+      const tokenVerifiedResponse = await this.$api.verifyToken(token, email)
+      const tokenVerified = await tokenVerifiedResponse.json()
+      if (tokenVerified.success) {
+        const payload = {
+          user: tokenVerified.user,
+          JWT: token,
+        }
+        this.$store.commit('login', payload)
+        if (this.$route.query.callback) {
+          this.$router.push({
+            path: this.$route.query.callback,
+          })
+        }
+      }
+    }
+  },
 }
 </script>

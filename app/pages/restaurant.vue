@@ -33,50 +33,15 @@
               <!-- Restaurant's about info -->
               <section v-if="restaurantDetails.about" id="about">
                 <h4 class="fst-italic">About</h4>
-                <p class="mb-0">
-                  {{ restaurantDetails.about }}
-                </p>
+                <p class="mb-0">{{ restaurantDetails.about }}</p>
               </section>
               <br />
               <!-- Restaurant's location info -->
-              <section v-if="restaurantDetails.address" id="location">
+              <!-- <section v-if="restaurantDetails.address" id="location">
                 <h4 class="fst-italic">Location</h4>
                 <p class="mb-0">{{ restaurantDetails.address }}</p>
               </section>
-              <br />
-              <!-- Restaurant's operating hours  -->
-              <section v-if="restaurantDetails.hours" id="hours">
-                <h4 class="fst-italic">Hours</h4>
-                <p v-if="restaurantDetails.hours.monday" class="mb-0">
-                  Monday - {{ restaurantDetails.hours.monday }}
-                </p>
-                <p v-else class="mb-0">Monday - Closed</p>
-                <p v-if="restaurantDetails.hours.tuesday" class="mb-0">
-                  Tuesday - {{ restaurantDetails.hours.tuesday }}
-                </p>
-                <p v-else class="mb-0">Tuesday - Closed</p>
-                <p v-if="restaurantDetails.hours.wednesday" class="mb-0">
-                  Wednesday - {{ restaurantDetails.hours.wednesday }}
-                </p>
-                <p v-else class="mb-0">Wednesday - Closed</p>
-                <p v-if="restaurantDetails.hours.thursday" class="mb-0">
-                  Thursday - {{ restaurantDetails.hours.thursday }}
-                </p>
-                <p v-else class="mb-0">Thursday - Closed</p>
-                <p v-if="restaurantDetails.hours.friday" class="mb-0">
-                  Friday - {{ restaurantDetails.hours.friday }}
-                </p>
-                <p v-else class="mb-0">Friday - Closed</p>
-                <p v-if="restaurantDetails.hours.saturday" class="mb-0">
-                  Saturday - {{ restaurantDetails.hours.saturday }}
-                </p>
-                <p v-else class="mb-0">Saturday - Closed</p>
-                <p v-if="restaurantDetails.hours.sunday" class="mb-0">
-                  Sunday - {{ restaurantDetails.hours.sunday }}
-                </p>
-                <p v-else class="mb-0">Sunday - Closed</p>
-              </section>
-              <br />
+              <br />-->
               <!-- Restaurant's website  -->
               <section v-if="restaurantDetails.website" id="website">
                 <h4 class="fst-italic">Website</h4>
@@ -99,14 +64,13 @@
             </div>
           </div>
         </div>
-        <div v-if="restaurantDetails.reviews" class="col-md-8">
+        <div class="col-md-8">
           <div class="row">
             <!-- Number of reviews -->
-            <h4 v-if="restaurantDetails.reviews.length == 1" class="col">
-              1 Review
-            </h4>
-            <h4 v-else class="col">
-              {{ restaurantDetails.reviews.length }} Reviews
+            <h4 v-if="reviews && reviews.length == 1" class="col">1 Review</h4>
+            <h4 v-else-if="reviews && reviews.length > 1" class="col">
+              {{ reviews.length }} Reviews | Average Rating :
+              {{ averageRating }}
             </h4>
             <!-- Add your own review Modal component -->
             <SubmitReview class="col" />
@@ -116,7 +80,7 @@
           <!-- Reusing the review component as defined in components/Review.vue -->
           <section id="reviews">
             <Review
-              v-for="(review, id) in restaurantDetails.reviews"
+              v-for="(review, id) in reviews"
               :key="id"
               :title="review.title"
               :rating="review.rating"
@@ -129,35 +93,42 @@
       </div>
     </div>
   </div>
-  <div v-else>Please wait while we load the restaurant...</div>
+  <Loader v-else />
 </template>
 
 <script>
 import Review from '@/components/Review.vue'
 import SubmitReview from '@/components/SubmitReview.vue'
 import Map from '@/components/Map.vue'
+import Loader from '@/components/Loader.vue'
+import errorFactory from '@/mixins/errorFactory.js'
+import notification from '@/mixins/notification.js'
+
 export default {
   components: {
     // Registering components
     SubmitReview,
     Review,
     Map,
+    Loader,
   },
+  mixins: [errorFactory, notification],
   data() {
     return {
       restaurantId: -1,
       restaurantDetails: {},
+      reviews: {},
     }
   },
   head() {
     return {
-      title: this.restaurantDetails.name,
+      title: this.restaurantDetails.Name,
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
           name: 'og:title',
-          content: this.restaurantDetails.name,
+          content: this.restaurantDetails.Name,
         },
         {
           name: 'og:type',
@@ -165,7 +136,7 @@ export default {
         },
         {
           name: 'og:image',
-          content: this.restaurantDetails.image,
+          content: this.restaurantDetails.Image,
         },
         {
           name: 'og:url',
@@ -177,7 +148,7 @@ export default {
         },
         {
           name: 'twitter:title',
-          content: this.restaurantDetails.name,
+          content: this.restaurantDetails.Name,
         },
         {
           name: 'twitter:description',
@@ -185,21 +156,93 @@ export default {
         },
         {
           name: 'twitter:image',
-          content: this.restaurantDetails.image,
+          content: this.restaurantDetails.Image,
         },
       ],
     }
   },
-  created() {
+  computed: {
+    averageRating() {
+      if (this.reviews.length === 0) {
+        return 0
+      } else {
+        const rating =
+          this.reviews.reduce((acc, review) => acc + review.rating, 0) /
+          this.reviews.length
+        return Math.round(rating * 100) / 100
+      }
+    },
+  },
+  watch: {
+    async '$store.state.loadReviewState'() {
+      await this.fetchReviews(this.restaurantId)
+    },
+  },
+  async created() {
     const id = this.$route.query.id
-    const details = this.$store.state.restaurants[id]
-    if (details) {
-      this.restaurantId = id
-      this.restaurantDetails = details
-      this.$store.commit('setActiveRestaurant', id)
-    } else {
-      this.$router.push({ path: '/' })
+    const fetchFromCache = this.getRestaurantFromStore(id)
+    if (!fetchFromCache) {
+      const fetchFromDatabase = await this.fetchRestaurant(id)
+      if (!fetchFromDatabase) {
+        this.showToast(
+          this.errorHandler.restaurantNotFound.message,
+          this.errorHandler.restaurantNotFound.severity
+        )
+        this.$router.push({ path: '/' })
+        return
+      }
     }
+    this.getRestaurantFromStore(id)
+    await this.fetchReviews(id)
+    this.$store.commit('centerMap')
+  },
+  methods: {
+    // This method is called when the page is loaded
+    async fetchRestaurant(id) {
+      const response = await this.$api.getRestaurant(id)
+      const result = await response.json()
+      if (result.success) {
+        this.$store.commit('addRestaurant', result.restaurant)
+        return true
+      } else {
+        return false
+      }
+      // Fetching the restaurant details from the API
+    },
+    async fetchReviews(id) {
+      const response = await this.$api.getReviews(id)
+      const result = await response.json()
+      if (result.success) {
+        this.reviews = []
+        const orderedReviews = []
+        for (const review of result.reviews) {
+          orderedReviews.push({
+            title: review.Title,
+            rating: review.Rating,
+            review: review.Review,
+            username: review.FirstName + ' ' + review.LastName,
+            imageurl: `https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${review.FirstName}+${review.LastName}`,
+            date: review.Date,
+          })
+        }
+        orderedReviews.sort((a, b) => (a.date < b.date ? 1 : -1))
+        this.reviews = orderedReviews
+        this.$store.commit('loadReviews', false)
+        return true
+      } else {
+        return false
+      }
+    },
+    getRestaurantFromStore(id) {
+      const details = this.$store.state.restaurants[id]
+      if (details) {
+        this.restaurantId = id
+        this.restaurantDetails = details
+        this.$store.commit('setActiveRestaurant', id)
+        return true
+      }
+      return false
+    },
   },
 }
 </script>

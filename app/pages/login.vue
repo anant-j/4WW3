@@ -42,18 +42,18 @@
         </div>
       </div>
       <div class="row justify-content-center mt-3">
-        <button type="button" class="col-3 btn btn-primary" @click="submit()">
-          Login
+        <button
+          type="button"
+          class="col-3 btn btn-primary"
+          :disabled="apiCallInProgress"
+          @click="submit()"
+        >
+          <span v-if="!apiCallInProgress">Login</span>
+          <span v-else>Please wait...</span>
         </button>
       </div>
       <div class="row justify-content-center mt-3">
-        <!-- Register button that is only enabled if both email and password fields are empty -->
-        <button
-          type="button"
-          class="col-3 btn btn-danger"
-          :disabled="email != '' || password != ''"
-          @click="openPage()"
-        >
+        <button type="button" class="col-3 btn btn-danger" @click="openPage()">
           Register
         </button>
       </div>
@@ -62,20 +62,24 @@
 </template>
 
 <script>
-import validations from '~/mixins/validations.js'
+import notification from '~/mixins/notification.js'
+import { validateEmail, validatePassword } from '~/mixins/validations.js'
+import errorFactory from '~/mixins/errorFactory.js'
 export default {
-  mixins: [validations],
+  mixins: [notification,errorFactory],
   data() {
     return {
       email: '', // Data property for the email entered
       password: '', // Data property for the password entered
       blur: false,
+      toast: null,
+      apiCallInProgress: false,
     }
   },
   computed: {
     validate() {
-      const emailValidation = this.validateEmail(this.email)
-      const passwordValidation = this.validatePassword(this.password)
+      const emailValidation = validateEmail(this.email)
+      const passwordValidation = validatePassword(this.password)
       return {
         email: emailValidation,
         password: passwordValidation,
@@ -85,15 +89,36 @@ export default {
   },
   methods: {
     openPage() {
-      this.$router.push({ path: 'Register' }) // Switch view to Register.vue
-    },
-    submit() {
-      this.blur = true
-      if (this.validate.result) {
-        alert('Form Submitted')
+      if (this.$route.query.callback) {
+        this.$router.push({
+          path: 'Register',
+          query: { callback: this.$route.query.callback },
+        })
       } else {
-        // alert('Not Done')
+        this.$router.push({ path: 'Register' }) // Switch view to Register.vue
       }
+    },
+    async submit() {
+      this.blur = true
+      this.apiCallInProgress = true
+      if (this.validate.result) {
+        const response = await this.$api.login(this.email, this.password)
+        const result = await response.json()
+        if (result.success) {
+          this.showToast('Logged In')
+          this.$store.commit('login', result)
+          if (this.$route.query.callback) {
+            this.$router.push(this.$route.query.callback)
+          } else {
+            this.$router.push({ path: '/' })
+          }
+        } else {
+          this.showToast(this.errorHandler[result.errorCode].message, this.errorHandler[result.errorCode].severity)
+        }
+      } else {
+        this.showToast('Please fix listed errors and try again.', 'error')
+      }
+      this.apiCallInProgress = false
     },
   },
 }

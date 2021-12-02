@@ -31,6 +31,13 @@
       @click="panCenter()"
     />
     <GmapMarker
+      v-if="$store.state.user.loggedIn"
+      :position="{
+        lat: parseFloat($store.state.user.latitude),
+        lng: parseFloat($store.state.user.longitude),
+      }"
+    />
+    <GmapMarker
       v-for="(m, index) in activePinsOnMap"
       :key="index"
       :position="m.position"
@@ -95,13 +102,20 @@ export default {
       return res
     },
   },
+  watch: {
+    '$store.state.centerMapBool'(newVal) {
+      if (newVal) {
+        this.recenterBounds()
+      }
+    },
+  },
   async mounted() {
     if (this.$store.state.userLocation.status === 0) {
       this.updateUserLocation()
     }
     const map = await this.$refs.mapRef.$mapPromise
     this.map = map
-    if (this.$route.name === 'restaurant') {
+    if (this.$store.state.centerMapBool) {
       this.recenterBounds()
     }
   },
@@ -166,6 +180,7 @@ export default {
           new window.google.maps.LatLng(this.coords.lat, this.coords.lng)
         )
         this.map.fitBounds(bounds)
+        this.$store.commit('centerMap', false)
         return true
       }
       return false
