@@ -30,15 +30,17 @@
       </li>
     </ul>
   </div>
-  <div v-else>
-    <h2
+  <div class="col text-center" v-else>
+    <h4
       :class="{
         'text-light': $store.state.nightMode,
         'text-dark': !$store.state.nightMode,
       }"
     >
-      No results found
-    </h2>
+      No restaurants found. Please try searching again with a different
+      criteria.
+    </h4>
+    <button class="btn btn-danger" @click="backToSearch">Search Again</button>
   </div>
 </template>
 
@@ -49,7 +51,10 @@ export default {
   methods: {
     openPage(restaurantId) {
       this.$router.push({ path: 'Restaurant', query: { id: restaurantId } })
-    }
+    },
+    backToSearch() {
+      this.$router.push({ path: '/' })
+    },
   },
 }
 </script>
