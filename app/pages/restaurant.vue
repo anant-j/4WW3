@@ -93,7 +93,7 @@
       </div>
     </div>
   </div>
-  <Loader v-else/>
+  <Loader v-else />
 </template>
 
 <script>
@@ -101,14 +101,18 @@ import Review from '@/components/Review.vue'
 import SubmitReview from '@/components/SubmitReview.vue'
 import Map from '@/components/Map.vue'
 import Loader from '@/components/Loader.vue'
+import errorFactory from '@/mixins/errorFactory.js'
+import notification from '@/mixins/notification.js'
+
 export default {
   components: {
     // Registering components
     SubmitReview,
     Review,
     Map,
-    Loader
+    Loader,
   },
+  mixins: [errorFactory, notification],
   data() {
     return {
       restaurantId: -1,
@@ -180,6 +184,10 @@ export default {
     if (!fetchFromCache) {
       const fetchFromDatabase = await this.fetchRestaurant(id)
       if (!fetchFromDatabase) {
+        this.showToast(
+          this.errorHandler.restaurantNotFound.message,
+          this.errorHandler.restaurantNotFound.severity
+        )
         this.$router.push({ path: '/' })
         return
       }
@@ -214,11 +222,11 @@ export default {
             review: review.Review,
             username: review.FirstName + ' ' + review.LastName,
             imageurl: `https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${review.FirstName}+${review.LastName}`,
-            date: review.Date
+            date: review.Date,
           })
         }
-        orderedReviews.sort((a, b) => (a.date < b.date) ? 1 : -1)
-        this.reviews=orderedReviews;
+        orderedReviews.sort((a, b) => (a.date < b.date ? 1 : -1))
+        this.reviews = orderedReviews
         this.$store.commit('loadReviews', false)
         return true
       } else {

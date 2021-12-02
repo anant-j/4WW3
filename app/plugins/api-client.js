@@ -21,9 +21,10 @@ const api = {
       longitude,
     })
   },
-  verifyToken(token) {
+  verifyToken(token, email) {
     return postAPI('/api/verifyJWT', {
       token,
+      email,
     })
   },
   addRestaurant(

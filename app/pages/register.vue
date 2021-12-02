@@ -222,6 +222,7 @@
 <script>
 import geolocation from '~/mixins/geolocation.js'
 import notification from '~/mixins/notification.js'
+import errorFactory from '~/mixins/errorFactory.js'
 import {
   validateEmail,
   validatePassword,
@@ -230,7 +231,7 @@ import {
   validateLongitude,
 } from '~/mixins/validations.js'
 export default {
-  mixins: [geolocation, notification],
+  mixins: [geolocation, notification, errorFactory],
   data() {
     return {
       page: 1,
@@ -366,15 +367,8 @@ export default {
         } else {
           this.$router.push({ path: '/' })
         }
-      } else if (!result.success) {
-        if (result.errorCode === 'emailAlreadyExists') {
-          this.showToast('Email already exists. Kindly login instead', 'error')
-        } else {
-          this.showToast(
-            'Something went wrong. Please try again later.',
-            'error'
-          )
-        }
+      } else {
+      this.showToast(this.errorHandler[result.errorCode].message, this.errorHandler[result.errorCode].severity)
       }
     },
     async submit() {

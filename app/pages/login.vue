@@ -64,8 +64,9 @@
 <script>
 import notification from '~/mixins/notification.js'
 import { validateEmail, validatePassword } from '~/mixins/validations.js'
+import errorFactory from '~/mixins/errorFactory.js'
 export default {
-  mixins: [notification],
+  mixins: [notification,errorFactory],
   data() {
     return {
       email: '', // Data property for the email entered
@@ -111,17 +112,8 @@ export default {
           } else {
             this.$router.push({ path: '/' })
           }
-        } else if (!result.success) {
-          if (result.errorCode === 'emailNotFound') {
-            this.showToast('Email not found. Please register first', 'error')
-          } else if (result.errorCode === 'passwordIncorrect') {
-            this.showToast(
-              'The password you’ve entered is incorrect. Please try again.',
-              'error'
-            )
-          } else {
-            this.showToast('An error has occurred. Please try again.', 'error')
-          }
+        } else {
+          this.showToast(this.errorHandler[result.errorCode].message, this.errorHandler[result.errorCode].severity)
         }
       } else {
         this.showToast('Please fix listed errors and try again.', 'error')

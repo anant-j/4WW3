@@ -126,9 +126,9 @@
 
 <script>
 import notification from '~/mixins/notification.js'
-
+import errorFactory from '~/mixins/errorFactory.js'
 export default {
-  mixins: [notification],
+  mixins: [notification, errorFactory],
   data() {
     return {
       title: '',
@@ -152,12 +152,14 @@ export default {
       )
       const result = await response.json()
       if (result.success) {
-        // this.$store.commit('addReview', result.data)
         this.showToast('Review added successfully')
       } else {
-        this.showToast('An error occurred. Please try again later.')
+        this.showToast(
+          this.errorHandler[result.errorCode].message,
+          this.errorHandler[result.errorCode].severity
+        )
       }
-      this.$store.commit('loadReviews', true);
+      this.$store.commit('loadReviews', true)
       this.$refs.closeButton.click()
     },
   },

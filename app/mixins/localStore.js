@@ -11,6 +11,12 @@ export function getToken() {
     }
 }
 
+export function getEmail() {
+  if(process.client) {
+    return localStorage.getItem("ousemouseAuthEmail")
+  }
+}
+
 export function clearStore() {
     if(process.client) {
       localStorage.removeItem("ousemouseAuthToken")

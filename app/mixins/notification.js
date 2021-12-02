@@ -7,6 +7,9 @@ export default {
       if(type === 'error') {
         this.$toast.error(message)
       }
+      if(type === 'warning') {
+        this.$toast.warning(message)
+      }
     },
   },
 }

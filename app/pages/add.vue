@@ -160,12 +160,13 @@ import geolocation from '~/mixins/geolocation.js'
 import notification from '~/mixins/notification.js'
 import MapModal from '~/components/MapModal.vue'
 import ImageModal from '~/components/ImageModal.vue'
+import errorFactory from '~/mixins/errorFactory.js'
 export default {
   components: {
     MapModal,
     ImageModal,
   },
-  mixins: [geolocation, notification],
+  mixins: [geolocation, notification, errorFactory],
   middleware: 'auth',
   data() {
     return {
@@ -202,7 +203,10 @@ export default {
         this.showToast('Restaurant added successfully')
         this.$router.push({ path: 'Restaurant', query: { id: result.id } })
       } else {
-        this.showToast('An error occured. Please try again later.', 'error')
+        this.showToast(
+          this.errorHandler[result.errorCode].message,
+          this.errorHandler[result.errorCode].severity
+        )
       }
       this.apiCallInProgress = false
     },

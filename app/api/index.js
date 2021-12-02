@@ -59,34 +59,25 @@ app.get('/ping', (req, res) => {
 })
 
 app.post('/login', async (req, res) => {
-  const email = req.fields.email
-  const password = req.fields.password
-  if (!validateEmail(email)) {
-    res.status(400).send({
-      success: false,
-      errorCode: 'emailInvalid',
-    })
-    return
-  }
-  if (!validatePassword(password)) {
-    res.status(400).send({
-      success: false,
-      errorCode: 'passwordInvalid',
-    })
-    return
-  }
-  const connection = await mysql.createConnection(connectionSetup)
+  let connection
   try {
-    if (!email) {
-      return res.status(400).send({
-        error: 'Email is required',
+    const email = req.fields.email
+    const password = req.fields.password
+    if (!validateEmail(email)) {
+      res.status(400).send({
+        success: false,
+        errorCode: 'emailInvalid',
       })
+      return
     }
-    if (!password) {
-      return res.status(400).send({
-        error: 'Password is required',
+    if (!validatePassword(password)) {
+      res.status(400).send({
+        success: false,
+        errorCode: 'passwordInvalid',
       })
+      return
     }
+    connection = await mysql.createConnection(connectionSetup)
     const [rows] = await connection.execute(
       'SELECT * FROM Users WHERE EMAIL = ?',
       [email]
@@ -135,44 +126,45 @@ app.post('/login', async (req, res) => {
 })
 
 app.post('/register', async (req, res) => {
-  const email = req.fields.email
-  const firstName = req.fields.firstName
-  const lastName = req.fields.lastName
-  const dob = req.fields.dob
-  const latitude = req.fields.latitude
-  const longitude = req.fields.longitude
-  const password = req.fields.password
-  if (!validateEmail(email)) {
-    res.status(400).send({
-      success: false,
-      errorCode: 'emailInvalid',
-    })
-    return
-  }
-  if (!validatePassword(password)) {
-    res.status(400).send({
-      success: false,
-      errorCode: 'passwordInvalid',
-    })
-    return
-  }
-  if (!validateDateOfBirth(dob)) {
-    res.status(400).send({
-      success: false,
-      errorCode: 'dobInvalid',
-    })
-    return
-  }
-  if (!validateLatitude(latitude) || !validateLatitude(longitude)) {
-    res.status(400).send({
-      success: false,
-      errorCode: 'latitudeLongitudeInvalid',
-    })
-    return
-  }
-  const connection = await mysql.createConnection(connectionSetup)
-  const hashedPassword = await hashPassword(password)
+  let connection
   try {
+    const email = req.fields.email
+    const firstName = req.fields.firstName
+    const lastName = req.fields.lastName
+    const dob = req.fields.dob
+    const latitude = req.fields.latitude
+    const longitude = req.fields.longitude
+    const password = req.fields.password
+    if (!validateEmail(email)) {
+      res.status(400).send({
+        success: false,
+        errorCode: 'emailInvalid',
+      })
+      return
+    }
+    if (!validatePassword(password)) {
+      res.status(400).send({
+        success: false,
+        errorCode: 'passwordInvalid',
+      })
+      return
+    }
+    if (!validateDateOfBirth(dob)) {
+      res.status(400).send({
+        success: false,
+        errorCode: 'dobInvalid',
+      })
+      return
+    }
+    if (!validateLatitude(latitude) || !validateLatitude(longitude)) {
+      res.status(400).send({
+        success: false,
+        errorCode: 'latitudeLongitudeInvalid',
+      })
+      return
+    }
+    connection = await mysql.createConnection(connectionSetup)
+    const hashedPassword = await hashPassword(password)
     const [rows] = await connection.query(
       'INSERT INTO Users (Email, Password, FirstName, LastName, DOB, Latitude, Longitude) VALUES (?,?,?,?,?,?,?)',
       [email, hashedPassword, firstName, lastName, dob, latitude, longitude]
@@ -208,23 +200,31 @@ app.post('/register', async (req, res) => {
 })
 
 app.post('/addRestaurant', async (req, res) => {
-  const name = req.fields.name
-  const phone = req.fields.phone
-  const website = req.fields.website
-  const latitude = req.fields.latitude
-  const longitude = req.fields.longitude
-  const description = req.fields.description
-  const imageB64 = req.fields.image
-  // const JWT = req.fields.token
-  if (!validateLatitude(latitude) || !validateLatitude(longitude)) {
-    res.status(400).send({
-      success: false,
-      errorCode: 'latitudeLongitudeInvalid',
-    })
-    return
-  }
-  let imageURL = null
+  let connection
   try {
+    const name = req.fields.name
+    const phone = req.fields.phone
+    const website = req.fields.website
+    const latitude = req.fields.latitude
+    const longitude = req.fields.longitude
+    const description = req.fields.description
+    const imageB64 = req.fields.image
+    const JWT = req.fields.token
+    const decoded = verifyJWTToken(JWT)
+    if (!decoded) {
+      res.status(401).send({
+        success: false,
+        errorCode: 'unauthorized',
+      })
+    }
+    if (!validateLatitude(latitude) || !validateLatitude(longitude)) {
+      res.status(400).send({
+        success: false,
+        errorCode: 'latitudeLongitudeInvalid',
+      })
+      return
+    }
+    let imageURL = null
     const imageUpload = await uploadImage(imageB64.split(',')[1])
     if (imageUpload.success) {
       imageURL = imageUpload.url
@@ -235,15 +235,7 @@ app.post('/addRestaurant', async (req, res) => {
       })
       return
     }
-  } catch (error) {
-    res.status(400).send({
-      success: false,
-      errorCode: 'imageUploadFailed',
-    })
-    return
-  }
-  const connection = await mysql.createConnection(connectionSetup)
-  try {
+    connection = await mysql.createConnection(connectionSetup)
     const [rows] = await connection.query(
       'INSERT INTO Restaurants (Name, About, Phone, Website, Image, Latitude, Longitude) VALUES (?,?,?,?,?,?,?)',
       [name, description, phone, website, imageURL, latitude, longitude]
@@ -260,7 +252,6 @@ app.post('/addRestaurant', async (req, res) => {
       })
     }
   } catch (error) {
-    console.log(error)
     res.send({
       success: false,
       errorCode: 'unknown',
@@ -271,9 +262,10 @@ app.post('/addRestaurant', async (req, res) => {
 })
 
 app.get('/getRestaurant', async (req, res) => {
-  const id = req.query.id
-  const connection = await mysql.createConnection(connectionSetup)
+  let connection
   try {
+    const id = req.query.id
+    connection = await mysql.createConnection(connectionSetup)
     const [rows] = await connection.execute(
       'SELECT * FROM Restaurants WHERE ID = ?',
       [id]
@@ -286,7 +278,7 @@ app.get('/getRestaurant', async (req, res) => {
     } else {
       res.send({
         success: false,
-        errorCode: 'notFound',
+        errorCode: 'restaurantNotFound',
       })
     }
   } catch (error) {
@@ -300,10 +292,11 @@ app.get('/getRestaurant', async (req, res) => {
 })
 
 app.get('/getRestaurants', async (req, res) => {
-  const name = req.query.name
-  const rating = req.query.rating
-  const connection = await mysql.createConnection(connectionSetup)
+  let connection
   try {
+    const name = req.query.name
+    const rating = req.query.rating
+    const connection = await mysql.createConnection(connectionSetup)
     let rows
     if (name) {
       ;[rows] = await connection.execute(
@@ -326,11 +319,10 @@ app.get('/getRestaurants', async (req, res) => {
     } else {
       res.send({
         success: false,
-        errorCode: 'notFound',
+        errorCode: 'restaurantsNotFound',
       })
     }
   } catch (error) {
-    console.log(error)
     res.send({
       success: false,
       errorCode: 'unknown',
@@ -341,9 +333,10 @@ app.get('/getRestaurants', async (req, res) => {
 })
 
 app.get('/getReviews', async (req, res) => {
-  const id = req.query.id
-  const connection = await mysql.createConnection(connectionSetup)
+  let connection
   try {
+    const id = req.query.id
+    connection = await mysql.createConnection(connectionSetup)
     const [rows] = await connection.execute(
       'SELECT Reviews.Date, Reviews.ID, Reviews.Rating, Reviews.Review, Reviews.Title, Users.FirstName, Users.LastName From Reviews, Users where Reviews.UserID = Users.Email AND Reviews.RestaurantID = ?',
       [id]
@@ -356,11 +349,10 @@ app.get('/getReviews', async (req, res) => {
     } else {
       res.send({
         success: false,
-        errorCode: 'notFound',
+        errorCode: 'reviewsNotFound',
       })
     }
   } catch (error) {
-    console.log(error)
     res.send({
       success: false,
       errorCode: 'unknown',
@@ -371,50 +363,50 @@ app.get('/getReviews', async (req, res) => {
 })
 
 app.post('/addReview', async (req, res) => {
-  const restaurantId = req.fields.restaurantId
-  const JWT = req.fields.token
-  const title = req.fields.title
-  const rating = req.fields.rating
-  const review = req.fields.review
-  const connection = await mysql.createConnection(connectionSetup)
-  const decoded = verifyJWTToken(JWT)
-  if (decoded) {
-    try {
-      const [rows] = await connection.query(
-        'INSERT INTO Reviews (RestaurantID, UserID, Title, Rating, Review, Date) VALUES (?,?,?,?,?,?)',
-        [restaurantId, decoded.user.email, title, rating, review, new Date()]
-      )
-      if (rows.affectedRows === 1) {
-        res.send({
-          success: true,
-          id: rows.insertId,
-        })
-      } else {
-        res.send({
-          success: false,
-          errorCode: 'unknown',
-        })
-      }
-    } catch (error) {
+  let connection
+  try {
+    const restaurantId = req.fields.restaurantId
+    const JWT = req.fields.token
+    const title = req.fields.title
+    const rating = req.fields.rating
+    const review = req.fields.review
+    connection = await mysql.createConnection(connectionSetup)
+    const decoded = verifyJWTToken(JWT)
+    if (!decoded) {
+      res.status(401).send({
+        success: false,
+        errorCode: 'unauthorized',
+      })
+    }
+    const [rows] = await connection.query(
+      'INSERT INTO Reviews (RestaurantID, UserID, Title, Rating, Review, Date) VALUES (?,?,?,?,?,?)',
+      [restaurantId, decoded.user.email, title, rating, review, new Date()]
+    )
+    if (rows.affectedRows === 1) {
+      res.send({
+        success: true,
+        id: rows.insertId,
+      })
+    } else {
       res.send({
         success: false,
-        errorCode: 'unknown',
+        errorCode: 'reviewNotAdded',
       })
-    } finally {
-      connection.end()
     }
-  } else {
-    res.status(401).send({ success: false, errorCode: 'unauthorized' })
+  } catch (error) {
+    res.send({
+      success: false,
+      errorCode: 'unknown',
+    })
+  } finally {
+    connection.end()
   }
 })
 
 app.post('/verifyJWT', (req, res) => {
   const decoded = verifyJWTToken(req.fields.token)
-  // const providedEmail = req.fields.email;
-  if (
-    decoded
-    // && providedEmail === decoded.user.email
-  ) {
+  const providedEmail = req.fields.email
+  if (decoded && providedEmail === decoded.user.email) {
     res.send({
       success: true,
       user: decoded.user,
@@ -422,6 +414,7 @@ app.post('/verifyJWT', (req, res) => {
   } else {
     res.send({
       success: false,
+      errorCode: 'unauthorized',
     })
   }
 })

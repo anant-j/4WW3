@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { getToken } from '../mixins/localStore'
+import { getToken, getEmail } from '../mixins/localStore'
 import Footer from '~/components/Footer.vue'
 import Navbar from '~/components/Navbar.vue'
 export default {
@@ -37,8 +37,9 @@ export default {
   transition: 'fade', // Registering transistion
   async created() {
     const token = getToken()
+    const email = getEmail()
     if (token) {
-      const tokenVerifiedResponse = await this.$api.verifyToken(token)
+      const tokenVerifiedResponse = await this.$api.verifyToken(token, email)
       const tokenVerified = await tokenVerifiedResponse.json()
       if (tokenVerified.success) {
         const payload = {
