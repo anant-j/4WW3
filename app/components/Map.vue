@@ -31,6 +31,13 @@
       @click="panCenter()"
     />
     <GmapMarker
+      v-if="$store.state.user.loggedIn"
+      :position="{
+        lat: parseFloat($store.state.user.latitude),
+        lng: parseFloat($store.state.user.longitude),
+      }"
+    />
+    <GmapMarker
       v-for="(m, index) in activePinsOnMap"
       :key="index"
       :position="m.position"
