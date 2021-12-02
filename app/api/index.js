@@ -110,7 +110,7 @@ app.post('/login', async (req, res) => {
         })
       }
     } else {
-      res.send({
+      res.status(404).send({
         success: false,
         errorCode: 'emailNotFound',
       })
@@ -177,19 +177,19 @@ app.post('/register', async (req, res) => {
         JWT: generateJWTToken(user),
       })
     } else {
-      res.send({
+      res.status(500).send({
         success: false,
         errorCode: 'unknown',
       })
     }
   } catch (error) {
     if (error.code === 'ER_DUP_ENTRY') {
-      res.send({
+      res.status(400).send({
         success: false,
         errorCode: 'emailAlreadyExists',
       })
     } else {
-      res.send({
+      res.status(500).send({
         success: false,
         errorCode: 'unknown',
       })
@@ -229,7 +229,7 @@ app.post('/addRestaurant', async (req, res) => {
     if (imageUpload.success) {
       imageURL = imageUpload.url
     } else {
-      res.status(400).send({
+      res.status(500).send({
         success: false,
         errorCode: 'imageUploadFailed',
       })
@@ -246,7 +246,7 @@ app.post('/addRestaurant', async (req, res) => {
         id: rows.insertId,
       })
     } else {
-      res.send({
+      res.status(500).send({
         success: false,
         errorCode: 'unknown',
       })
@@ -276,7 +276,7 @@ app.get('/getRestaurant', async (req, res) => {
         restaurant: rows[0],
       })
     } else {
-      res.send({
+      res.status(404).send({
         success: false,
         errorCode: 'restaurantNotFound',
       })
@@ -317,7 +317,7 @@ app.get('/getRestaurants', async (req, res) => {
         restaurant: rows,
       })
     } else {
-      res.send({
+      res.status(404).send({
         success: false,
         errorCode: 'restaurantsNotFound',
       })
@@ -347,7 +347,7 @@ app.get('/getReviews', async (req, res) => {
         reviews: rows,
       })
     } else {
-      res.send({
+      res.status(404).send({
         success: false,
         errorCode: 'reviewsNotFound',
       })
@@ -388,7 +388,7 @@ app.post('/addReview', async (req, res) => {
         id: rows.insertId,
       })
     } else {
-      res.send({
+      res.status(500).send({
         success: false,
         errorCode: 'reviewNotAdded',
       })
