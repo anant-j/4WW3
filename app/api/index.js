@@ -121,7 +121,9 @@ app.post('/login', async (req, res) => {
       errorCode: 'unknown',
     })
   } finally {
-    await connection.end()
+    if (connection) {
+      await connection.end()
+    }
   }
 })
 
@@ -195,7 +197,9 @@ app.post('/register', async (req, res) => {
       })
     }
   } finally {
-    await connection.end()
+    if (connection) {
+      await connection.end()
+    }
   }
 })
 
@@ -257,7 +261,9 @@ app.post('/addRestaurant', async (req, res) => {
       errorCode: 'unknown',
     })
   } finally {
-    await connection.end()
+    if (connection) {
+      await connection.end()
+    }
   }
 })
 
@@ -287,7 +293,9 @@ app.get('/getRestaurant', async (req, res) => {
       errorCode: 'unknown',
     })
   } finally {
-    await connection.end()
+    if (connection) {
+      await connection.end()
+    }
   }
 })
 
@@ -328,7 +336,9 @@ app.get('/getRestaurants', async (req, res) => {
       errorCode: 'unknown',
     })
   } finally {
-    await connection.end()
+    if (connection) {
+      await connection.end()
+    }
   }
 })
 
@@ -358,7 +368,9 @@ app.get('/getReviews', async (req, res) => {
       errorCode: 'unknown',
     })
   } finally {
-    await connection.end()
+    if (connection) {
+      await connection.end()
+    }
   }
 })
 
@@ -399,7 +411,9 @@ app.post('/addReview', async (req, res) => {
       errorCode: 'unknown',
     })
   } finally {
-    connection.end()
+    if (connection) {
+      await connection.end()
+    }
   }
 })
 
