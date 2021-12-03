@@ -230,6 +230,7 @@ export default {
         this.$store.commit('loadReviews', false)
         return true
       } else {
+        this.showToast(this.errorHandler[result.errorCode].message, this.errorHandler[result.errorCode].severity)
         return false
       }
     },

@@ -54,7 +54,7 @@ export default {
             severity: 'warning',
         },
         reviewsNotFound:{
-            message: 'No reviews were found.',
+            message: 'No reviews were found for this restaurant.',
             severity: 'warning',
         },
         reviewNotAdded:{
