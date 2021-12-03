@@ -14,19 +14,40 @@
 <p>Member 1: Anant Jain, jaina17, 400110406 \</p>
 <p>Member 2: Kuber Khanna, khannk1, 400121439</p>
 <h3 id="access-the-application-here-https4ww3.anant-j.com-or-http3.23.29.177">Access the application here: <a href="https://4ww3.anant-j.com">https://4ww3.anant-j.com</a> or <a href="http://3.23.29.177/">http://3.23.29.177/</a></h3>
-<h2 id="table-of-contents">Table of Contents</h2>
+<p><strong>Table of contents</strong></p>
 <ul>
 <li>
-<p><a href="#part-2">Part 2:</a></p>
+<p><a href="#part-3">Part 3:</a></p>
 </li>
 <li>
 <p><a href="#updates">Updates:</a></p>
 </li>
 <li>
-<p><a href="#notable-features">Notable Features:</a></p>
+<p><a href="#pages">Pages:</a></p>
+</li>
+<li>
+<p><a href="#security-measures">Security Measures:</a></p>
+</li>
+<li>
+<p><a href="#additional-features">Additional Features:</a></p>
 </li>
 <li>
 <p><a href="#additional-notes">Additional Notes:</a></p>
+</li>
+<li>
+<p><a href="#sample-env-file">Sample .env file:</a></p>
+</li>
+<li>
+<p><a href="#part-2">Part 2:</a></p>
+</li>
+<li>
+<p><a href="#updates-1">Updates:</a></p>
+</li>
+<li>
+<p><a href="#notable-features">Notable Features:</a></p>
+</li>
+<li>
+<p><a href="#additional-notes-1">Additional Notes:</a></p>
 </li>
 <li>
 <p><a href="#credentials">Credentials</a></p>
@@ -47,7 +68,7 @@
 <p><a href="#building-for-production">Building for production</a></p>
 </li>
 <li>
-<p><a href="#additional-features">Additional Features</a></p>
+<p><a href="#additional-features-1">Additional Features</a></p>
 </li>
 <li>
 <p><a href="#add-on-tasks">Add On Tasks</a></p>
@@ -68,8 +89,129 @@
 <p><a href="#tutorialsguidance">Tutorials/Guidance</a></p>
 </li>
 </ul>
-<h2 id="part-2">Part 2:</h2>
+<h2 id="part-3">Part 3:</h2>
 <h3 id="updates">Updates:</h3>
+<ul>
+<li>
+<p>Added <a href="app/api/index.js">API</a> written in Node.js to enable server side functionality. Prior permission to use this instead of PHP was obtained from the professor.</p>
+</li>
+<li>
+<p>User Data, Restaurant Data and Reviews are stored in a <a href="https://remotemysql.com">SQL server</a> in 3 separate tables. Look at <a href="datamodel.sql">data model</a> for more details.</p>
+</li>
+<li>
+<p>Images uploaded with restaurants are stored in <a href="app/api/firebaseStore.js">Firebase Cloud Storage</a>.</p>
+</li>
+<li>
+<p>Common components such as navbar, footer, header are abstracted and reused in <a href="app/layouts/default.vue">core container</a> to reduce redundancy.</p>
+</li>
+<li>
+<p>Laitude and longitude is now fetched client side from <a href="http://Here.com">Here.com</a>’s API when registering.</p>
+</li>
+</ul>
+<h3 id="pages">Pages:</h3>
+<ul>
+<li>
+<p><strong><a href="app/pages/index.vue">Search</a> Form</strong>: Users are now able to search for a restaurant from name, rating or locations.</p>
+</li>
+<li>
+<p><strong><a href="app/pages/search.vue">Results</a> Page</strong>: Dynamically generated based on search query by obtaining data from database.</p>
+</li>
+<li>
+<p><strong><a href="app/pages/restaurant.vue">Individual Object</a> Page</strong>: Dynamically generated based on data avaialble in cache or database.</p>
+</li>
+<li>
+<p><strong><a href="app/pages/add.vue">Add Object</a> Page</strong>: Only logged in users can add objects. Both client side and server side validation has been implemented.</p>
+</li>
+<li>
+<p><strong><a href="app/pages/register.vue">User Registration</a>/<a href="app/pages/login.vue">Login</a> Page</strong>: Both client side and server side validation has been implemented.</p>
+</li>
+</ul>
+<h3 id="security-measures">Security Measures:</h3>
+<ul>
+<li>
+<p><strong><a href="https://www.npmjs.com/package/helmet">Express Helmet</a></strong>: Helmet has been used to secure our Express APIs by setting various HTTP headers.</p>
+</li>
+<li>
+<p><strong><a href="https://www.npmjs.com/package/bcrypt">Bcrypt Password Hashing</a></strong>: One way password hashing has been implemented to securely store passwords and never storing them as plaintext.</p>
+</li>
+<li>
+<p><strong><a href="https://www.npmjs.com/package/express-rate-limit">Rate Limiting</a></strong>: Rate Limiting has been implemented to prevent abuse and secure our API server against DOS attacks.</p>
+</li>
+<li>
+<p><strong><a href="https://www.npmjs.com/package/jsonwebtoken">JWT Tokens</a></strong>:JWT tokens are generated for each user at login, then stored client side. Each token is valid for 1 hour. This token is used to validate user identity when adding a restaurant or adding a review.</p>
+</li>
+<li>
+<p><strong>SQL Prepared Statements</strong>: We have used SQL prepared statements to prevent against SQL injection attacks.</p>
+</li>
+<li>
+<p><strong>Sensitive data hidden</strong>: Only the required user data is returned while fetching reviews for a restaurant. User’s email is hidden.</p>
+</li>
+</ul>
+<h3 id="additional-features">Additional Features:</h3>
+<ul>
+<li>
+<p><strong>Adding review</strong>: Users can only add review if they are logged in.</p>
+</li>
+<li>
+<p><strong>Login Cache between Sessions</strong>: Upon logging in or registering, the user’s JWT token is stored in localstore which maintains user’s login state between sessions.</p>
+</li>
+<li>
+<p><strong>Location and Image preview</strong>: Both location and uploaded image can be previewed before adding a restaurant.</p>
+</li>
+<li>
+<p><strong><a href="app/mixins/errorFactory.js">Error Factory</a></strong>: A standard error manager for API error codes has been added in order to streamline error messages.</p>
+</li>
+<li>
+<p><strong>Image Size Limit</strong>: A size limit of maximum 3 Mb per image for adding a restaurant has been implemented on both client side and server side (on Nginx otherwise HTTP error 413 will be returned)</p>
+</li>
+</ul>
+<h3 id="additional-notes">Additional Notes:</h3>
+<ul>
+<li>
+<p>Kindly refer to <a href="#resources-used">Resources Used</a> section for citations.</p>
+</li>
+<li>
+<p>This application is not production ready. We take no responsibility or liability in relation to any loss or damage that you may incur, including damage to your software or hardware, arising from your use of this website.</p>
+</li>
+</ul>
+<h3 id="sample-.env-file">Sample .env file:</h3>
+<pre><code>
+VUE_APP_GOOGLE_MAPS_API_KEY = ""
+
+VUE_APP_HERE_API_KEY = ""
+
+VUE_APP_SQL_HOST = "remotemysql.com"
+
+VUE_APP_SQL_PORT = 3306
+
+VUE_APP_SQL_USER = ""
+
+VUE_APP_SQL_PASSWORD = ""
+
+VUE_APP_SQL_DATABASE = ""
+
+VUE_APP_JWT_SECRET = ""
+
+  
+
+VUE_APP_FIREBASE_APIKEY = ""
+
+VUE_APP_FIREBASE_AUTHDOMAIN = ""
+
+VUE_APP_FIREBASE_PROJECTID = ""
+
+VUE_APP_FIREBASE_STORAGEBUCKET = ""
+
+VUE_APP_FIREBASE_MESSAGINGSENDERID = ""
+
+VUE_APP_FIREBASE_APPID = ""
+
+  
+
+</code></pre>
+<hr>
+<h2 id="part-2">Part 2:</h2>
+<h3 id="updates-1">Updates:</h3>
 <ul>
 <li>
 <p>Added more restaurants in the <a href="app/store/index.js">vuex store</a>.</p>
@@ -108,7 +250,7 @@
 <p>SSL certificate has been added to the AWS deployment.</p>
 </li>
 </ul>
-<h3 id="additional-notes">Additional Notes:</h3>
+<h3 id="additional-notes-1">Additional Notes:</h3>
 <ul>
 <li>
 <p>JavaScript files have been kept with their relevant vue files to reduce clutter and confusion. This is the official method indicated on Nuxt’s documentation and prior permission was obtained from the professor for the same.</p>
@@ -124,6 +266,9 @@
 </li>
 <li>
 <p>Form validation for adding a review has not been added, as it will be done server side during Part 3.</p>
+</li>
+<li>
+<p>Regex expressions for email validation in JavaScript has been borrowed from : <a href="https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript">https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript</a></p>
 </li>
 </ul>
 <h3 id="credentials">Credentials</h3>
@@ -348,7 +493,7 @@ VUE_APP_HERE_API_KEY="KEY HERE(https://www.here.com/)"
 <p>Ensure Firewalls are enabled on server. Monitor usage carefully and scale accordingly.</p>
 </li>
 </ul>
-<h2 id="additional-features">Additional Features</h2>
+<h2 id="additional-features-1">Additional Features</h2>
 <ul>
 <li>
 <p>Dark Mode and Light Mode is present in the application which can be toggled by the user.</p>
@@ -373,6 +518,7 @@ VUE_APP_HERE_API_KEY="KEY HERE(https://www.here.com/)"
 <p>Metadata fields have been added for Twitter Cards.</p>
 </li>
 </ul>
+<hr>
 <h2 id="resources-used">Resources Used</h2>
 <h3 id="technologies-used">Technologies Used</h3>
 <ul>
@@ -402,6 +548,27 @@ VUE_APP_HERE_API_KEY="KEY HERE(https://www.here.com/)"
 </li>
 <li>
 <p>Part 2: <a href="http://Here.com">Here.com</a> address autocomplete</p>
+</li>
+<li>
+<p>Part 3: Express-formidable: <a href="https://www.npmjs.com/package/express-formidable">https://www.npmjs.com/package/express-formidable</a> (server side: middleware)</p>
+</li>
+<li>
+<p>Part 3: Jsonwebtoken: <a href="https://www.npmjs.com/package/jsonwebtoken">https://www.npmjs.com/package/jsonwebtoken</a> (server side)</p>
+</li>
+<li>
+<p>Part 3: Firebase : <a href="https://www.npmjs.com/package/firebase">https://www.npmjs.com/package/firebase</a> (server side: image upload)</p>
+</li>
+<li>
+<p>Part 3: Mysql2 : <a href="https://www.npmjs.com/package/mysql2">https://www.npmjs.com/package/mysql2</a> (server side: data store)</p>
+</li>
+<li>
+<p>Part 3: Helmet : <a href="https://www.npmjs.com/package/helmet">https://www.npmjs.com/package/helmet</a> (server side: security)</p>
+</li>
+<li>
+<p>Part 3: Express-rate-limit : <a href="https://www.npmjs.com/package/express-rate-limit">https://www.npmjs.com/package/express-rate-limit</a> (server side: security)</p>
+</li>
+<li>
+<p>Part 3: Bycrypt : <a href="https://www.npmjs.com/package/bcrypt">https://www.npmjs.com/package/bcrypt</a> (server side: encryption)</p>
 </li>
 </ul>
 <h3 id="dev-environment">Dev Environment</h3>
@@ -439,6 +606,12 @@ VUE_APP_HERE_API_KEY="KEY HERE(https://www.here.com/)"
 <li>
 <p>Nginx Reverse Proxy</p>
 </li>
+<li>
+<p>SQL Server: <a href="https://remotemysql.com/">https://remotemysql.com/</a></p>
+</li>
+<li>
+<p>Firebase Cloud Store: <a href="https://firebase.google.com">https://firebase.google.com</a></p>
+</li>
 </ul>
 <h3 id="tutorialsguidance">Tutorials/Guidance</h3>
 <ul>
@@ -468,6 +641,15 @@ VUE_APP_HERE_API_KEY="KEY HERE(https://www.here.com/)"
 </li>
 <li>
 <p>Had to modify Nginx configs to enable both Domain and IPs access to the node application.</p>
+</li>
+<li>
+<p><a href="https://www.youtube.com/watch?v=KfqO-G7-Lsk">Nuxt Middleware API</a></p>
+</li>
+<li>
+<p>Used for APIs</p>
+</li>
+<li>
+<p><a href="https://firebase.google.com/docs/storage/web/upload-files">Firebase Storage</a></p>
 </li>
 </ul>
 </div>

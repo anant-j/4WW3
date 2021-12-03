@@ -5,19 +5,26 @@ Member 2: Kuber Khanna, khannk1, 400121439
 
 ### Access the application here: https://4ww3.anant-j.com or http://3.23.29.177/
 
-## Table of Contents
 
-- [Part 2:](#part-2)
+**Table of contents**
+- [Part 3:](#part-3)
   - [Updates:](#updates)
-  - [Notable Features:](#notable-features)
+  - [Pages:](#pages)
+  - [Security Measures:](#security-measures)
+  - [Additional Features:](#additional-features)
   - [Additional Notes:](#additional-notes)
+  - [Sample .env file:](#sample-env-file)
+- [Part 2:](#part-2)
+  - [Updates:](#updates-1)
+  - [Notable Features:](#notable-features)
+  - [Additional Notes:](#additional-notes-1)
   - [Credentials](#credentials)
 - [About](#about)
 - [Folder Structure](#folder-structure)
 - [How is it built and rendered](#how-is-it-built-and-rendered)
 - [Running Locally](#running-locally)
 - [Building for production](#building-for-production)
-- [Additional Features](#additional-features)
+- [Additional Features](#additional-features-1)
 - [Add On Tasks](#add-on-tasks)
 - [Resources Used](#resources-used)
   - [Technologies Used](#technologies-used)
@@ -25,6 +32,60 @@ Member 2: Kuber Khanna, khannk1, 400121439
   - [Prod Environment](#prod-environment)
   - [Tutorials/Guidance](#tutorialsguidance)
 
+
+## Part 3:
+### Updates:
+- Added [API](app/api/index.js) written in Node.js to enable server side functionality. Prior permission to use this instead of PHP was obtained from the professor.
+- User Data, Restaurant Data and Reviews are stored in a [SQL server](https://remotemysql.com) in 3 separate tables. Look at [data model](datamodel.sql) for more details.
+- Images uploaded with restaurants are stored in [Firebase Cloud Storage](app/api/firebaseStore.js).
+- Common components such as navbar, footer, header are abstracted and reused in [core container](app/layouts/default.vue) to reduce redundancy. 
+- Laitude and longitude is now fetched client side from Here.com's API when registering.
+### Pages:
+- **[Search](app/pages/index.vue) Form**: Users are now able to search for a restaurant from name, rating or locations.
+- **[Results](app/pages/search.vue) Page**: Dynamically generated based on search query by obtaining data from database.
+- **[Individual Object](app/pages/restaurant.vue) Page**: Dynamically generated based on data avaialble in cache or database.
+- **[Add Object](app/pages/add.vue) Page**: Only logged in users can add objects. Both client side and server side validation has been implemented.
+- **[User Registration](app/pages/register.vue)/[Login](app/pages/login.vue) Page**: Both client side and server side validation has been implemented. 
+
+### Security Measures:
+- **[Express Helmet](https://www.npmjs.com/package/helmet)**: Helmet has been used to secure our Express APIs by setting various HTTP headers.
+- **[Bcrypt Password Hashing](https://www.npmjs.com/package/bcrypt)**: One way password hashing has been implemented to securely store passwords and never storing them as plaintext.
+- **[Rate Limiting](https://www.npmjs.com/package/express-rate-limit)**: Rate Limiting has been implemented to prevent abuse and secure our API server against DOS attacks.
+- **[JWT Tokens](https://www.npmjs.com/package/jsonwebtoken)**:JWT tokens are generated for each user at login, then stored client side. Each token is valid for 1 hour. This token is used to validate user identity when adding a restaurant or adding a review.
+- **SQL Prepared Statements**: We have used SQL prepared statements to prevent against SQL injection attacks.
+- **Sensitive data hidden**: Only the required user data is returned while fetching reviews for a restaurant. User's email is hidden.
+  
+### Additional Features:
+- **Adding review**: Users can only add review if they are logged in.
+- **Login Cache between Sessions**: Upon logging in or registering, the user's JWT token is stored in localstore which maintains user's login state between sessions.
+- **Location and Image preview**: Both location and uploaded image can be previewed before adding a restaurant.
+- **[Error Factory](app/mixins/errorFactory.js)**: A standard error manager for API error codes has been added in order to streamline error messages.
+- **Image Size Limit**: A size limit of maximum 3 Mb per image for adding a restaurant has been implemented on both client side and server side (on Nginx otherwise HTTP error 413 will be returned)
+  
+### Additional Notes:
+- Kindly refer to [Resources Used](#resources-used) section for citations.
+- This application is not production ready. We take no responsibility or liability in relation to any loss or damage that you may incur, including damage to your software or hardware, arising from your use of this website.
+
+### Sample .env file:
+```
+VUE_APP_GOOGLE_MAPS_API_KEY = ""
+VUE_APP_HERE_API_KEY = ""
+VUE_APP_SQL_HOST = "remotemysql.com"
+VUE_APP_SQL_PORT = 3306
+VUE_APP_SQL_USER = ""
+VUE_APP_SQL_PASSWORD = ""
+VUE_APP_SQL_DATABASE = ""
+VUE_APP_JWT_SECRET = ""
+
+VUE_APP_FIREBASE_APIKEY = ""
+VUE_APP_FIREBASE_AUTHDOMAIN = ""
+VUE_APP_FIREBASE_PROJECTID = ""
+VUE_APP_FIREBASE_STORAGEBUCKET = ""
+VUE_APP_FIREBASE_MESSAGINGSENDERID = ""
+VUE_APP_FIREBASE_APPID = ""
+
+```
+---
 ## Part 2:
 
 ### Updates:
@@ -182,6 +243,7 @@ Add‐on task 1: Meta‐data and Microdata has been attempted via our applicatio
 - Metadata fields have been added for Facebook's Open Graph Protocol.
 - Metadata fields have been added for Twitter Cards.
 
+---
 ## Resources Used
 
 ### Technologies Used
@@ -195,7 +257,14 @@ Add‐on task 1: Meta‐data and Microdata has been attempted via our applicatio
 - Nuxt FontAwesome: https://www.npmjs.com/package/nuxt-fontawesome
 - Part 2: VueGoogleMaps: https://www.npmjs.com/package/vue2-google-maps
 - Part 2: Here.com address autocomplete
-
+- Part 3: Express-formidable: https://www.npmjs.com/package/express-formidable (server side: middleware) 
+- Part 3: Jsonwebtoken: https://www.npmjs.com/package/jsonwebtoken (server side)
+- Part 3: Firebase : https://www.npmjs.com/package/firebase (server side: image upload)
+- Part 3: Mysql2 : https://www.npmjs.com/package/mysql2 (server side: data store)
+- Part 3: Helmet : https://www.npmjs.com/package/helmet (server side: security)
+- Part 3: Express-rate-limit : https://www.npmjs.com/package/express-rate-limit (server side: security)
+- Part 3: Bycrypt : https://www.npmjs.com/package/bcrypt (server side: encryption)
+  
 ### Dev Environment
 
 - VsCode (IDE)
@@ -211,6 +280,8 @@ Add‐on task 1: Meta‐data and Microdata has been attempted via our applicatio
 - Amazon EC2 T2 Micro Instance running ubuntu-focal-20.04
 - PM2 Node Process Manager
 - Nginx Reverse Proxy
+- SQL Server: https://remotemysql.com/
+- Firebase Cloud Store: https://firebase.google.com
 
 ### Tutorials/Guidance
 
@@ -223,3 +294,6 @@ Add‐on task 1: Meta‐data and Microdata has been attempted via our applicatio
 - [Adding FontAwesome to Nuxt](https://www.npmjs.com/package/@nuxtjs/fontawesome)
 - [Multiple Domains with Nginx](https://www.serverlab.ca/tutorials/linux/web-servers-linux/how-to-configure-multiple-domains-with-nginx-on-ubuntu/)
   - Had to modify Nginx configs to enable both Domain and IPs access to the node application.
+- [Nuxt Middleware API](https://www.youtube.com/watch?v=KfqO-G7-Lsk)
+  - Used for APIs
+- [Firebase Storage](https://firebase.google.com/docs/storage/web/upload-files)
