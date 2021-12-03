@@ -130,6 +130,7 @@
             <label for="image">Upload an Image :</label>&nbsp;
             <input
               id="image"
+              ref="imgInput"
               type="file"
               name="image"
               accept="image/png, image/jpeg"
@@ -222,7 +223,19 @@ export default {
     },
     processFile(event) {
       if (event.target.files.length) {
-        this.imageUpload = event.target.files[0]
+        const image = event.target.files[0]
+        if (image.size / 1024 / 1024 > 3) {
+          this.showToast(
+            'File size too large. Please try uploading a smaller file (<3 Mb).',
+            'error'
+          )
+          this.$refs.imgInput.value = ''
+          this.imageUpload = null
+          this.imageUrl = null
+          this.imageB64 = null
+          return
+        }
+        this.imageUpload = image
         this.imageUrl = URL.createObjectURL(this.imageUpload)
         const reader = new FileReader()
         reader.readAsDataURL(event.target.files[0])
